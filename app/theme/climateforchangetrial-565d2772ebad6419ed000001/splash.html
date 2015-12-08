@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page_title }}</title>
+
+    <!-- Bootstrap -->
+    <link href="theme.scss" rel="stylesheet">
+
+    {{ content_for_header }}
+
+    <script type="text/javascript">
+      NB.appConfig.userIsLoggedIn = {{request.logged_in?}};
+    </script>
+  </head>
+  <body class="aware-theme v2-theme {{ page.page_class_name }} js">
+    <div id="pattern" class="pattern">
+      <div class="wrap" id="wrap">
+        <div id="body" class="page-{{ request.template }}">
+
+          <div class="header-container clearfix" {% if site.has_background_image? %} style="background: none;" {% endif %}>
+            <div class="container">
+
+              {% if site.has_meta_image? %}
+                <div class="site-logo">
+                  <header class="splash"><a href="/"><img src="{{ site.meta_image_large_url }}"></a></header>
+                </div>
+              {% else %}
+                <header class="splash">
+                  <h1 class="title"><a href="/">{{ site.long_name }}</a></h1>
+                </header>
+              {% endif %}
+
+            </div>
+            <!-- .container -->
+          </div>
+          <!-- .header-container -->
+
+          {% if site.has_header_image? %}
+          <div class="container">
+           <img src="{{ site.header_image_url_1026 }}" class="header-image" border="0" />
+          </div>
+          {% endif %}
+          
+          {% if page.features_count > 0 %}
+            <div class="container">
+             {% include "features" %}
+            </div>
+          {% endif %}
+
+          <div class="main-container" id="middle">
+            <div class="main container clearfix">
+
+            	{{ content_for_notifications }}
+    						
+    					<div class="onecolumn-container clearfix">
+               <div class="content-{{ request.template | replace: '_', '-' }}">
+                {% yield %}
+
+                <div align="center" class="padtopmore padbottom"><a class="submit-button btn btn-primary" id="splash-btn" href="/">Continue to {{ site.name }}</a></div>
+
+                {% if request.is_intern? and page.is_editing_available? %}
+                  <div align="center" class="padtopmore padbottom"><a class="submit-button btn btn-primary" href="{{ page.admin_edit_url }}">{{ "fugue-edit-signiture" | icon }} Edit this page</a></div>
+                {% endif %}
+               </div>
+              </div>
+
+            </div>
+            <!-- #main -->
+          </div>
+          <!-- #main-container -->
+
+            {{ content_for_footer }}
+
+          <!-- .container -->
+
+        </div>
+        <!-- #wrap -->
+      </div>
+      <!-- #body -->
+    </div>
+    <!-- #pattern -->
+
+    <script src="bootstrap.js"></script>
+
+  </body>
+</html>

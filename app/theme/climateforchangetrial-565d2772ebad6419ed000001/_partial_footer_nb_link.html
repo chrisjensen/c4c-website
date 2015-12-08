@@ -1,0 +1,77 @@
+<div id="small-footer">
+  <div class="container">
+    <div class="row" id="footer-nav">
+      <div class="col-xs-8 col-md-6 col-lg-4 col-xs-offset-2 col-md-offset-3 col-lg-offset-4 padbottommore">
+        <a href="/">
+          <img src="{{ site.meta_image_url }}" alt="{{ site.long_name }}"></a>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-8 col-lg-offset-2 padtopmore padbottommore">
+        <div class="center-block">
+          <ul>
+            {% for child in site.supporter_pages %}
+            <li {% if child.is_or_is_ancestor_of_current_page? %}class="active"{% endif %}>
+              <a href="{{ child.url }}" class="uppercase">{{ child.name }}</a>
+            </li>
+            {% endfor %}
+          {% if request.logged_in? %}
+            {% if request.current_signup.is_intern? %}
+            <li>
+              <a href="/admin" class="uppercase">Control Panel</a>
+            </li>
+            {% endif %}
+            <li>
+              <a href="{{ request.current_signup.logout_url }}" class="uppercase">Sign out</a>
+            </li>
+            {% else %}
+            <li>
+              <a href="/login" class="uppercase">Sign in</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        <div class="center-block">
+          <ul id="footer-social-links" class="list-inline">
+            <li>
+              <a href="{{ site.broadcaster.facebook_page_profile_url }}" class="ss-icon ss-social-regular ss-facebook"></a>
+            </li>
+            <li>
+              <a href="{{ site.broadcaster.twitter_profile_url }}" class="ss-icon ss-social-regular ss-twitter"></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row padbottommore">
+      <div class="col-xs-12 col-md-6 col-md-offset-3 col-lg-6">
+        <div class="text-center">
+          {{ site.footer_content }}
+        </div>
+        <div class="text-center white">
+          <small>
+            &copy; {{ 'now' | date: "%Y" }} Climate for Change. All rights reserved.
+          </small>
+          {% comment %}
+          <br>
+          <small>
+            <a href="/privacy_policy">Privacy Policy</a>
+            |
+            <a href="/contact">Contact Us</a>
+          </small>
+          {% endcomment %}
+        </div>
+      </div>
+    </div>
+    {% comment %}{% include "footer_legal_line" %}{% endcomment %}
+    <div class="row top-section">
+      <div class="col-lg-12 text-center white">
+        {% comment %}<a href="http://the.beag.co" title="Site by The Beag Co" class="site-by text-hide">
+          Created with NationBuilder
+        </a>{% endcomment %}
+        <a href="http://www.nationbuilder.com/?recruiter_id=219736" title="Created with NationBuilder" class="nb-link text-hide">
+          Created with NationBuilder
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="labeled-tags-container">
+  {% for labeled_tag in page.signup.labeled_tags %}
+    <div class="row">
+      <div class="col-md-12">
+        {% if page.signup.use_multiple_select_labeled_tags? %}
+          <div class="checkbox">
+            <label for="checkbox_{{ labeled_tag.id }}" class="checkbox"> {{ labeled_tag.checkbox }} {{ labeled_tag.name }} </label>
+          </div>
+        {% else %}
+          <div class="radio">
+            <label for="radio_button_{{ labeled_tag.id }}" class="radio"> {{ labeled_tag.radio_button }} {{ labeled_tag.name }} </label>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>

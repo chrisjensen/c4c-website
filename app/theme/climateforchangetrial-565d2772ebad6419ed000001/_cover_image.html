@@ -1,0 +1,74 @@
+{% if page.headline.size > 0 or profile.published_name.size > 0%}
+{% if page.features.size > 0 %}
+
+{% assign first_feature_height = page.features.first.image_height %}
+
+  {% if page.is_homepage? %}
+
+  {% else %}
+
+    {% for feature in page.features limit:1 %}
+<section style="background-image: url('{{ feature.image_url }}');" id="cover">
+  <div class="bg-header-overlay-color no-margin cover" id="feature">
+    <div class="container headline-wrap">
+      <div class="row">
+        <div class="col-md-12 col-lg-10 col-lg-offset-1">
+          <h3 id="page-parent-headline">
+            {% comment %}{% if page.type_slug == "blog_post" %}{{ page.type_name }}{% elsif page.type_slug == "press_release" %}{{ page.type_name }}{% else %}{{ page.parent.headline }}{% endif %}{% endcomment %}
+            {% for ancestor in page.ancestors %}
+            {% if ancestor.is_homepage? == false %}
+            <a href="{{ ancestor.url }}">{{ ancestor.name }}</a> {% unless forloop.last %}<span class="separator">/</span>{% endunless %}
+            {% endif %}
+            {% endfor %}
+          </h3>
+          <h2 id="page-headline">
+            {{ page.headline }}
+          </h2>
+          {% if page.type_slug == "blog_post" %}
+          <p class="text-center byline">
+            {{ page.published_at | date: '%B %d, %Y' }} / By {{ page.author.published_name }}
+          </p>
+          {% endif %}
+          <div class="spacer"></div>
+          <p class="text-center">
+            {{ feature.headline }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endfor %}
+
+  {% endif %}
+
+{% else %}
+<section id="cover">
+  <div id="page-header">
+    <div class="container headline-wrap">
+      <div class="row">
+        <div class="col-md-12 col-lg-10 col-lg-offset-1">
+          <h3 id="page-parent-headline">
+            {% comment %}{% if page.type_slug == "blog_post" %}{{ page.type_name }}{% elsif page.type_slug == "press_release" %}{{ page.type_name }}{% else %}{{ page.parent.headline }}{% endif %}{% endcomment %}
+            {% for ancestor in page.ancestors %}
+            {% if ancestor.is_homepage? == false %}
+            <a href="{{ ancestor.url }}">{{ ancestor.name }}</a> {% unless forloop.last %}<span class="separator">/</span>{% endunless %}
+            {% endif %}
+            {% endfor %}
+          </h3>
+          <h2 id="page-headline">
+            {% if page.headline.size > 0 %}{{ page.headline }}{% elsif request.template == "profiles_show" or request.template == "profiles_show_wide" %}{{ profile.published_name }}{% endif %}
+          </h2>
+          {% if page.type_slug == "blog_post" %}
+          <p class="text-center byline">
+            {{ page.published_at | date: '%B %d, %Y' }} / By {{ page.author.published_name }}
+          </p>
+          {% endif %}
+          <div class="spacer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endif %}

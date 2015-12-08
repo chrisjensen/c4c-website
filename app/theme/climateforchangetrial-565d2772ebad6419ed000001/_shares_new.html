@@ -1,0 +1,41 @@
+{% if request.sorta_logged_in? %}
+
+<div class="share-container panel panel-default">
+
+  <div class="panel-body">
+    <a href="#" class="share-close close">&times;</a>
+    <div class="padbottom">New recruits using your tracking link below will be credited to you.</div>
+    <div class="form">
+      <form><input type="text" class="text form-control share-url" readonly="readonly" value="{{ page.full_url_with_recruiter }}"></input></form>
+    </div>
+  </div>
+
+  <div class="panel-footer">
+    <a class="btn btn-facebook small-btn facebook-share-link" href="http://www.facebook.com/share.php?u={{ page.full_url_with_recruiter | urlencode }}">Facebook</a>
+    <a class="btn btn-twitter small-btn twitter-share-link" href="{{ page.tweet_url }}">Twitter</a>
+    <a class="btn btn-warning small-btn" href="mailto:?body={{ page.full_url_with_recruiter }}">Email</a>
+  </div>
+
+</div>
+
+{% else %}
+
+<div class="share-container panel panel-default">
+
+  <div class="panel-body">
+    <a href="#" class="share-close close">&times;</a>
+    <div class="padbottom"><a href="/login">Sign in</a> if you'd like new recruits to be credited to you.</div>
+    <div class="form">
+      <form><input type="text" class="text form-control share-url" readonly="readonly" value="{{ page.full_url }}"></input></form>
+    </div>
+  </div>
+
+  <div class="panel-footer">
+    <a class="btn btn-facebook small-btn facebook-share-link" href="http://www.facebook.com/share.php?u={{ page.full_url_with_recruiter | urlencode }}">Facebook</a>
+    <a class="btn btn-twitter small-btn twitter-share-link" href="{{ page.tweet_url }}">Twitter</a>
+    <a class="btn btn-warning small-btn" href="mailto:?body={{ page.full_url_with_recruiter }}">Email</a>
+  </div>
+
+</div>
+
+{% endif %}

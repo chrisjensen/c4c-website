@@ -1,0 +1,72 @@
+@import "type";
+@import url("//s3.amazonaws.com/beag/universal_style.css");
+
+#footer-signup, #footer-share {
+  background: $denim;
+  color: $white;
+  padding: 4rem 0;
+
+  .btn-warning {
+    color: $brand-primary;
+  }
+  .btn-facebook {
+    background: $white;
+    border-color: $white;
+    color: $bc-facebook;
+    &:hover {
+      color: darken($bc-facebook, 10%);
+    }
+  }
+  .input-group-addon {
+    background: $venice-blue;
+    border-color: $venice-blue;
+    color: $white;
+    font-size: 0.8em;
+    padding-top: 0.8em;
+  }
+  input:not(.btn) {
+    border-color: $white;
+    &:active, &:focus {
+      border-color: $venice-blue;
+    }
+  }
+}
+
+#small-footer {
+  padding: 4rem 0;
+  ul:not(.list-inline) {
+    text-align: center;
+    @include list-unstyled;
+
+    @media (min-width: $screen-lg-min) {
+      margin-left: -5px;
+
+      > li {
+        display: inline-block;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+    }
+  }
+  ul.list-inline {
+    text-align: center;
+  }
+  .nb-link, .site-by {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    max-width: 100%;
+    margin: 30px auto;
+    background-color: transparent;
+    background-size: 100%;
+    background-position: 0% 22%;
+    background-repeat: no-repeat;
+  }
+
+  .nb-link {
+    background-image: url('nb_logo_black.png');
+  }
+  .site-by {
+    background-image: url('beag_logo_black.png');
+  }
+}

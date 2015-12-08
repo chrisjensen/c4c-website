@@ -1,0 +1,14 @@
+#sidebar {
+  .inline-list li {
+  float: none;
+  display: inline-block;
+  }
+
+  .profile-photo {
+    width: 70%;
+  }
+
+  hr:first-child {
+    margin-top: 0;
+  }
+}

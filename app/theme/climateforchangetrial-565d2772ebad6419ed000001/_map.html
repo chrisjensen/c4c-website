@@ -1,0 +1,63 @@
+<script src='//maps.googleapis.com/maps/api/js?v=3&sensor=false' type='text/javascript'></script>
+<div class="map" id="events_map" style="height:220px;">
+</div>
+
+<script type="text/javascript">
+(function($){
+  $(document).ready(function(){
+    var $mapCanvas = $('#events_map'),
+         infoWindow = null,
+         nbMap = NB.GeoMap.map($mapCanvas,{infoWindow: infoWindow}),
+         buildIcon = new NB.GeoMap.Icon(),
+         markers = {{ markers }} || [],
+         totalMarkers = markers.length,
+         bounds = new google.maps.LatLngBounds();
+
+    $.each(markers, function(index,data){
+      var markerOptions = {};
+      markerOptions.eventIds = data[2];
+
+      // add a marker icon. if there is no count then
+      // use the googles default marker icon
+
+      if(markerOptions.eventIds.length > 1){
+        markerOptions.icon = buildIcon.withNumber(markerOptions.eventIds.length);
+      }
+      else {
+        markerOptions.icon = buildIcon.withColor('red');
+      }
+
+      // we only need one infowindow per map so lets make
+      // one if we haven't yet
+      infoWindow = infoWindow || new google.maps.InfoWindow({content: '&nbsp;'});
+
+      // register a 'click' event on the marker
+      markerOptions.event = {
+        type: 'click',
+        callback: function(gMap, marker){
+          nbMap.setReturnPosition();
+
+          $.get('/users/event_pages/marker_info_content' ,{event_ids : markerOptions.eventIds})
+            .done(function(data){
+              infoWindow.setContent(data.content);
+              infoWindow.open(gMap,marker);
+            })
+            .fail(function(){
+              infoWindow.setContent('No events found');
+              infoWindow.open(gMap,marker);
+            })
+
+        }
+      }
+
+      marker = nbMap.addMarker(data[0], data[1], markerOptions);
+      bounds.extend(marker.position);
+    });
+
+    if(totalMarkers > 0 ){
+      nbMap.getMap().fitBounds(bounds);
+    }
+
+  });
+})(jQuery)
+</script>

@@ -1,0 +1,31 @@
+<div class="padcontainer">
+
+{% include "breadcrumbs" %}
+
+<div class="content_container">
+
+{% if page.headline.size > 0 %}
+	<div id="headline">
+		<h2>{{ page.headline }}</h2>
+	</div>
+{% endif %}
+
+	<div id="content">
+		<div id="intro">
+			<div class="text-content">
+			{{ page.directory.content }}
+			</div>
+		</div>
+
+		<div class="padtop padbottom">
+			<b>{{ page.directory.listings_count }}</b> directory listings
+		</div>
+
+		{% for signup in page.directory.listings %}
+		  {% include "signup_show" %}
+		  <div class="clear"></div>
+			<hr />
+		{% endfor %}
+
+	{{ page.directory.listings | paginate }}
+	</div>

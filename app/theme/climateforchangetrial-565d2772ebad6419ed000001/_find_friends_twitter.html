@@ -1,0 +1,69 @@
+{% if request.current_signup.crawling_twitter? %}
+
+  <div class="panel-body">
+    <p class="twitter-followings" id="twitter_followings">
+      <img src="{{ "bert-loader-small.gif" | asset_path }}" border="0"> Checking Twitter for people who have joined...
+      {{ request.current_signup.crawling_twitter_status_url | auto_refresh }}
+    </p>
+  </div>
+
+{% else %}
+
+  {% if request.current_signup.followings_count_from_twitter == 0 %}
+
+    <div class="panel-body">
+      <p>None of the people you follow on Twitter have joined.</p>
+    </div>
+
+  {% else %}
+    <div class="panel-body">
+      <p><strong>{{ request.current_signup.followings_count_from_twitter }}</strong> people you follow on Twitter have joined.<br/>
+    You are automatically following them.</p>
+
+      {% if request.current_signup.followings_count_from_twitter > 6 %}
+      <p><span class="supporter-follow-details">Including...</span></p>
+      {% endif %}
+    </div>
+
+     <ul class="list-group">
+      {% for signup in request.current_signup.followings_from_twitter %}
+      <li class="list-group-item">
+        <div class="media {% cycle 'odd', 'even' %}">
+          <div class="media-left">{{ signup.bigger_profile_image }}</div>
+          <div class="media-body media-middle">{{ signup.published_name_linked }}</div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+  {% endif %}
+
+  {% if request.current_signup.followers_count_from_twitter == 0 %}
+
+    <div class="panel-body">
+      <p>None of your Twitter followers have joined.</p>
+    </div>
+
+  {% else %}
+    <div class="panel-body">
+      <p><strong>{{ request.current_signup.followers_count_from_twitter }}</strong> of your Twitter followers have already joined.<br/>
+    They are automatically following <em>you</em>.</p>
+      {% if request.current_signup.followers_count_from_twitter > 6 %}
+      <p><span class="supporter-follow-details">Including...</span></p>
+      {% endif %}
+    </div>
+
+    <ul class="list-group">
+    {% for signup in request.current_signup.followers_from_twitter %}
+      <li class="list-group-item">
+        <div class="media {% cycle 'odd', 'even' %}">
+          <div class="media-left">{{ signup.bigger_profile_image }}</div>
+          <div class="media-body media-middle">{{ signup.published_name_linked }}</div>
+        </div>
+      </li>
+    {% endfor %}
+    </ul>
+
+  {% endif %}
+
+{% endif %}

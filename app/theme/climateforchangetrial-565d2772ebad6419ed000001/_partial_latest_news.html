@@ -1,0 +1,11 @@
+  <div class="row">
+    {% for post in page.blog.most_recent_blog_posts limit:2 %}
+      {% include "partial_home_posts" %}
+    {% endfor %}
+  </div>
+
+  <div class="row padtopmore">
+    <div class="col-sm-12 col-md-4 col-md-offset-4 text-center">
+      <a href="{{ page.url }}" class="btn btn-primary btn-lg">More News</a>
+    </div>
+  </div>

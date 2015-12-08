@@ -1,0 +1,13 @@
+<div class="col-sm-12 col-md-4 col-lg-4 homepage-feature" id="{{ page.slug }}">
+  <a href="{{ page.url }}_link">
+    {% if page.has_meta_image? %}
+    <img src="{{ page.meta_image_url }}" class="features img-rounded">
+    {% else %}
+    <img src="feature-fallback.png" class="features img-rounded">
+    {% endif %}
+    <div class="text-center">
+      <h3>{{ page.headline }}</h3>
+      <p>{{ page.basic.content }}</p>
+    </div>
+  </a>
+</div>

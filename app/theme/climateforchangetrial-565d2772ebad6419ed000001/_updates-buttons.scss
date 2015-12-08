@@ -1,0 +1,39 @@
+.btn {
+  font-family: $headings-font-family;
+  text-transform: uppercase;
+
+  i.ss-icon {
+    position: absolute;
+    left: 1.25em;
+    top: 20%;
+    font-size: 1.25em;
+  }
+
+  &.btn-facebook {
+    background: $bc-facebook;
+    border-color: $bc-facebook;
+    color: $white;
+    &:hover {
+      background: darken($bc-facebook, 10%);
+      border-color: darken($bc-facebook, 10%);
+    }
+  }
+  &.btn-twitter {
+    background: $bc-twitter;
+    border-color: $bc-twitter;
+    color: $white;
+    &:hover {
+      background: darken($bc-twitter, 10%);
+      border-color: darken($bc-twitter, 10%);
+    }
+  }
+  &.btn-email {
+    background: $denim;
+    border-color: $denim;
+    color: $white;
+    &:hover {
+      background: darken($denim, 10%);
+      border-color: darken($denim, 10%);
+    }
+  }
+}

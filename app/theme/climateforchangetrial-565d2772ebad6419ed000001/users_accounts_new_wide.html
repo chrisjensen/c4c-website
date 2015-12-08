@@ -1,0 +1,39 @@
+<h2 class="headline">Create a {{ site.name }} account</h2>
+<div class="form-wrap">
+<div class="form">
+
+  {% form_for account %}
+
+  	<div class="form-errors">{% error_messages_for account %}</div>
+
+    <div class="row">
+      <div class="col-md-6"><div class="form-group"><label for="account_email">Email</label>{% email_field "email", class:"text form-control" %}</div></div>
+    </div>
+
+    <div class="row">
+ 	  	<div class="col-md-12">{% submit_tag "Send account activation instructions", class:"submit-button btn btn-primary" %}</div>
+  	  <div class="form-submit"></div>
+  	</div>
+
+    <div class="row padtop">
+      <div class="col-md-12"><a href="{{ request.new_password_reset_url }}">Reset my password</a></div>
+    </div>
+
+		{% if request.logged_in? == false %}
+  	<div class="row padtop">
+      <div class="col-md-12">
+  	  <h4>Or sign in instantly with:</h4>
+  	 </div>
+    </div>
+
+  	<div class="row">
+      <div class="col-md-12">
+  	  <a href="{{ request.facebook_connect_url }}" class="btn btn-default connect-button facebook"><i class="icon-facebook-squared"></i> Sign in with Facebook</a>
+  	  <a href="{{ request.twitter_connect_url }}" class="btn btn-default connect-button twitter"><i class="icon-twitter-squared"></i> Sign in with Twitter</a>
+      </div>
+  	</div>
+		{% endif %}
+
+  {% endform_for %}
+
+</div>

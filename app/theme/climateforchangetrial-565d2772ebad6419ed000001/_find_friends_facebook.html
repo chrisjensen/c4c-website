@@ -1,0 +1,40 @@
+{% if request.current_signup.crawling_facebook? %}
+
+  <div class="panel-body">
+    <p class="facebook-followings" id="facebook_followings">
+      <img src="{{ "bert-loader-small.gif" | asset_path }}" border="0"> Checking Facebook for people who have joined...
+      {{ request.current_signup.crawling_facebook_status_url | auto_refresh }}
+    </p>
+  </div>
+
+{% else %}
+
+  <div class="panel-body">
+    <p>
+    {% if request.current_signup.followings_count_from_facebook == 0 %}
+      None of your Facebook friends have joined yet.
+    {% else %}
+    <strong>{{ request.current_signup.followings_count_from_facebook }}</strong> of your Facebook friends have joined.<br/>
+    You are automatically following them, and vice versa.
+    {% endif %}
+    </p>
+
+    {% if request.current_signup.followings_count_from_facebook > 6 %}
+    <p>
+      <span class="supporter-follow-details">Including...</span>
+    </p>
+    {% endif %}
+  </div>
+
+  <ul class="list-group">
+    {% for signup in request.current_signup.followings_from_facebook %}
+    <li class="list-group-item">
+      <div class="media {% cycle 'odd', 'even' %}">
+        <div class="media-left">{{ signup.bigger_profile_image }}</div>
+        <div class="media-body media-middle">{{ signup.published_name_linked }}</div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+
+{% endif %}

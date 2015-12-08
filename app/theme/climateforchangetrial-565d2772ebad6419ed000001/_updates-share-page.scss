@@ -1,0 +1,54 @@
+.share-page {
+  ul {
+    margin: 0;
+    list-style: none;
+    text-align: center;
+    position: fixed;
+    z-index: 9999;
+    right: 0;
+    top: 50%;
+  }
+  p {
+    color: #657789;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+  }
+  a {
+    color: $white;
+    outline: none !important;
+    background: $gray-lighter;
+    display: block;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 20px;
+    padding-top: 0.2em;
+    &:hover, &:focus, &:active {
+      color: $white;
+      text-decoration: none;
+    }
+  }
+  .facebook a {
+    background: $bc-facebook;
+    &:hover {
+      background: darken($bc-facebook, 10%);
+    }
+  }
+  .twitter a {
+    background: $bc-twitter;
+    &:hover {
+      background: darken($bc-twitter, 10%);
+    }
+  }
+  .email a {
+    background: $denim;
+    color: $white;
+    &:hover {
+      background: darken($denim, 10%);
+    }
+  }
+}

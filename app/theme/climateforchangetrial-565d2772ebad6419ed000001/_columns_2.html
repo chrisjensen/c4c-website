@@ -1,0 +1,30 @@
+{% if page.type_name == "Activity Stream" or page.type_name == "Basic" or page.type_name == "Blog" or page.type_name == "Blog Post" or page.type_name == "Calendar" or page.type_name == "FAQ" or page.type_name == "Leaderboard" or page.type_name == "Press Release" or page.type_name == "Recruiting" or page.type_name == "Rules" or page.type_name == "Suggestion Box" or page.type_name == "Suggestion" or page.type_name == "Voter Registration" or page.type_name == "Followers" or page.type_name == "Follows" or page.type_name == "Find Friends" or page.type_name == "Question" or page.type_name == "Political Capital" %}
+<div class="row">
+  <!-- Main Blog Content -->
+  <div class="content-{{ request.template  | replace: '_', '-' }} col-md-8">
+      <div class="columns-2-flash">{{ content_for_notifications }}</div>
+
+    {% include "breadcrumbs" %}
+
+    {% yield %}
+  </div>
+
+  <!-- End Main Content -->
+
+  <!-- Sidebar -->
+  {% include "sidebar" %}
+  <!-- End Sidebar -->
+</div>
+{% else %}
+<div class="row">
+  <!-- Main Blog Content -->
+  <div class="content-{{ request.template  | replace: '_', '-' }} col-sm-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+    <div class="columns-2-flash">{{ content_for_notifications }}</div>
+
+    {% include "breadcrumbs" %}
+
+    {% yield %}
+  </div>
+  <!-- End Main Content -->
+</div>
+{% endif %}

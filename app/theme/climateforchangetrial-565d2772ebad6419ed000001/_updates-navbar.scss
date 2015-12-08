@@ -1,0 +1,52 @@
+.navbar-static-top {
+  border-width: 0 0 2px;
+}
+
+.navbar {
+  font-family: $headings-font-family;
+  margin-bottom: 0;
+  .navbar-brand {
+    padding: $font-size-base $navbar-padding-horizontal;
+    img {
+      height: 62px;
+    }
+  }
+
+  ul {
+    li {
+      a {
+        font-size: 0.8em;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+    }
+    &.dropdown-menu {
+      li a {
+        font-weight: normal;
+        text-transform: none;
+
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+// .nav {
+//   li {
+//     padding: inherit 10px;
+//     a {
+//       padding: inherit 0;
+//     }
+//   }
+// }
+
+// Hover Dropdowns
+
+@media only screen and (min-width : $screen-md-min) {
+    /* Make Navigation Toggle on Desktop Hover */
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+}

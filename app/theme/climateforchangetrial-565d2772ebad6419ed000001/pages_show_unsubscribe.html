@@ -1,0 +1,20 @@
+{% include "breadcrumbs" %}
+
+
+
+<div class="form">
+
+  {% form_for unsubscribe %}
+
+  <div class="form-errors">{% error_messages_for unsubscribe %}</div>
+
+  <div class="row">
+    <div class="col-md-12"><div class="form-group"><label for="unsubscribe_email">Email</label>{% email_field "email", class:"text form-control" %}</div></div>
+  </div>
+
+  {% submit_tag "Unsubscribe", class:"submit-button btn btn-danger" %}
+  <div class="form-submit"></div>
+
+  {% endform_for %}
+
+</div>

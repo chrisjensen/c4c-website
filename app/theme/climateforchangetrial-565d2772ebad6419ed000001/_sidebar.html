@@ -1,0 +1,35 @@
+<aside class="col-lg-3 col-md-4 col-lg-offset-1 hidden-xs hidden-sm" id="sidebar">
+  {% if request.logged_in? %}
+  {% include "sidebar_profile_photo" %}
+  {% include "sidebar_profile_checklist" %}
+  <div class="row">
+    <div class="col-sm12 col-md12 col-lg-12 text-center">
+      <p>
+        <small>
+          <a href="{{ request.current_signup.logout_url }}">Click here to sign out</a>.
+        </small>
+      </p>
+    </div>
+  </div>
+  {% elsif request.sorta_logged_in? %}
+  {% include "sidebar_sorta_logged_in" %}
+  {% else %}
+  {% subpage "sidebar_signup" with "sidebar_signup_form" %}
+  {% endif %}
+
+  {% if site.has_button1? or site.has_button2? or site.has_button3? %}
+    <div class="btn-group-vertical btn-block" role="group">
+      {% if site.has_button1? %}
+      <a class="btn btn-default supporter-nav-btn" href="{{ site.button1_page.full_url_with_profile_recruiter }}">{{ site.button1_text }}</a>
+      {% endif %}
+
+  {% if site.has_button2? %}
+      <a class="btn btn-default supporter-nav-btn" href="{{ site.button2_page.full_url_with_profile_recruiter }}">{{ site.button2_text }}</a>
+      {% endif %}
+
+  {% if site.has_button3? %}
+      <a class="btn btn-default supporter-nav-btn" href="{{ site.button3_page.full_url_with_profile_recruiter }}">{{ site.button3_text }}</a>
+      {% endif %}
+    </div>
+    {% endif %}
+</aside>

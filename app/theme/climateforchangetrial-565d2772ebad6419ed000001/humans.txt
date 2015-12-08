@@ -1,0 +1,16 @@
+/* TEAM */
+
+Designer & Developer: Ian Patrick Hines
+Site: http://www.ianpatrickhines.com
+Twitter: @ianpatrickhines
+Location: Anne Arundel County, Maryland, USA
+
+/* THANKS */
+
+Thanks to @mdo, @fat, and the rest of the core team for Bootstrap (http://getbootstrap.com).
+Thanks to NationBuilder (http://nationbuilder.com/) for their amazing community organizing system.
+
+/* SITE */
+
+Components: Modernizr, jQuery, Bootstrap 3, Colors (http://clrs.cc/), Brand Colors (http://brandcolors.net/)
+Software: Coded by hand in Sublime Text 2 and created with NationBuilder

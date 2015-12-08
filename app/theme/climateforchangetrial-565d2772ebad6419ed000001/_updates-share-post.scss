@@ -1,0 +1,45 @@
+.share-page ul {
+  margin: 0;
+  list-style: none;
+  text-align: center;
+  position: fixed;
+  z-index: 9999;
+  right: 0;
+  top: 25%;
+}
+.share-page ul {
+  top: 30%;
+}
+.get-involved .share-page ul {
+  top: 30%;
+}
+.share-page p {
+  color: #657789;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+}
+.share-page a {
+  color: #fff;
+  outline: none !important;
+  background: #efefef;
+  display: block;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 20px;
+  padding-top: 0.2em;
+}
+.share-page a:hover {
+  color: #fff;
+}
+.share-page .facebook a { background: #3b5998; }
+.share-page .facebook a:hover { background: #315DB9; }
+.share-page .twitter a { background: #00aced; }
+.share-page .twitter a:hover { background: #0db4f6; }
+.share-page .email a { background: #7698c3; }
+.share-page .email a:hover { background: #5ca6df; }
+

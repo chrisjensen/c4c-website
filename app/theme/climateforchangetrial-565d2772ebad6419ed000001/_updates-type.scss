@@ -1,0 +1,70 @@
+textarea {
+  min-height: 5em;
+}
+
+blockquote {
+  font-style: italic;
+}
+
+hr {
+  border-top: 2px solid $hr-border;
+}
+
+.spacer {
+  width: 80px;
+  height: 2px;
+  background: $denim;
+  margin: 0 auto 1.25rem auto;
+}
+
+.like-page {
+  strong {
+    display: none;
+  }
+}
+
+.panel-heading {
+  font-family: $headings-font-family;
+  text-transform: uppercase;
+}
+
+.success-color {
+  color: $brand-success;
+}
+
+.gray-light {
+  color: $gray-light;
+}
+
+a.ss-icon {
+  &.ss-facebook {
+    color: $bc-facebook;
+    &:hover {
+      color: darken($bc-facebook, 10%);
+    }
+  }
+  &.ss-twitter {
+    color: $bc-twitter;
+    &:hover {
+      color: darken($bc-twitter, 10%);
+    }
+  }
+  &.ss-mail {
+    color: $denim;
+    &:hover {
+      color: darken($denim, 10%);
+    }
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.homepage-feature {
+  a {
+    color: $text-color;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

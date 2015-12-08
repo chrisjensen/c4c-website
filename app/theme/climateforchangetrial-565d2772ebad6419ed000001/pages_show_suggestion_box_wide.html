@@ -1,0 +1,153 @@
+{% include "breadcrumbs" %}
+
+
+
+<div id="content">
+
+  {% if page.suggestion_box.content.size > 0 %}
+  <div id="intro" class="intro">
+    {{ page.suggestion_box.content }}
+  </div>
+  {% endif %}
+
+
+  <div>
+    <div class="form-wrap">
+      <div class="form">
+
+        <div class="padtop">
+          {% form_for suggestion_page %}
+
+          <div class="form-errors">{% error_messages_for suggestion_page %}</div>
+
+          <div id="suggestion-page-page-headline-input" class="suggestion-headline">
+            <div class="row">
+              <div class="col-md-12"><div class="form-group">{% text_field "page_headline", class:"text form-control", placeholder:"Add your suggestion" %}</div></div>
+            </div>
+          </div>
+
+          <div id="suggestion-page-form-expanded" class="suggestion-page-form-expanded padbottom">
+            <div class="row">
+              <div class="col-md-12"><div class="form-group">{% text_area "content_editable form-control" %}</div></div>
+            </div>
+
+            {% if page.suggestion_box.is_image? %}
+            <div class="row">
+              <div class="col-md-12"><div class="form-group"><label for="suggestion_page_image">Upload a picture ({% if page.suggestion_box.require_image? == false %}optional, {% endif %}600px wide)</label>{% file_field "image", class:"file" %}</div></div>
+            </div>
+            {% endif %}
+
+            {% submit_tag "Post", class:"submit-button btn btn-primary" %}
+            <div class="form-submit"></div>
+          </div>
+
+          {% endform_for %}
+        </div>
+
+      </div>
+      {% unless request.logged_in? %}
+      <div class="user-session-form-container hide">
+        {% include "user_session_form" %}
+      </div>
+      {% endunless %}
+    </div>
+
+  </div>
+
+  <ul class="tag-list nav nav-pills padtopmore" role="tablist">
+    <li role="presentation" class="{% if request.url_path == page.url or request.url_path == '/' + page.slug %}active{% endif %}"><a href="{{ page.url }}">Most recent</a></li>
+    {% capture alphabetical_url %}/{{ page.slug }}/alphabetical{% endcapture %}
+    <li role="presentation" class="{% if request.url_path == alphabetical_url %}active{% endif %}"><a href="{{ alphabetical_url }}">Alphabetical</a></li>
+    {% for tag_name in page.suggestion_box.tag_names %}
+    {% capture tag_url %}/{{ page.slug }}/tags/{{ tag_name }}{% endcapture %}
+    <li role="presentation" class="{% if request.url_path == tag_url %}active{% endif %}"><a href="{{ tag_url }}">{{ tag_name | capitalize }}</a></li>
+    {% endfor %}
+  </ul>
+
+  <div class="padtop suggestion-box content-list" id="suggestion-box-page-{{ page.id }}">
+
+  {% if request.url_path == page.url or request.url_path == '/' + page.slug %} <!-- show most recent -->
+    {% assign suggestions = page.suggestion_box.most_recent_suggestions %}
+    {% elsif request.url_path == alphabetical_url %} <!-- show alphabetical -->
+    {% assign suggestions = page.suggestion_box.alphabetical_suggestions %}
+    {% else %} <!-- show tagged -->
+    {% assign suggestions = page.suggestion_box.tagged_suggestion_pages %}
+    {% endif %}
+
+    {% for post in suggestions %}
+    <div class="page-excerpt" id="suggestion-page-{{ post.id }}">
+
+      <h3><a href="{{ post.url }}">{{ post.headline }}</a></h3>
+
+      <div class="byline">
+        Posted by {{ post.author.published_name_linked }} &middot; {{ post.published_at | date: '%B %d, %Y %l:%M %p' }}
+        {% if post.show_stream? %}
+        {% if post.public_activities_count > 0 %}
+        &middot; <a href="{{ post.url }}#reactions">{{ post.public_activities_count }} reaction{% if post.public_activities_count > 1 %}s{% endif %}</a>
+        {% endif %}
+        {% endif %}
+      </div>
+
+      <div class="excerpt truncate-500" data-truncate="500">
+        {% if post.suggestion.content.size > 0 %}
+        {{ post.suggestion.content }}
+        {% else %}
+        <p>
+        {% endif %}
+      </div>
+
+      {% if post.suggestion.is_answered? %}
+      <div class="answer clearfix">
+        <div>
+          <strong>
+            Official response from {{ post.suggestion.answer_author.published_name_linked }}
+            {% if post.suggestion.is_answer_type? %}
+            {{ post.suggestion.answer_type_html }}
+            {% endif %}
+          </strong>
+        </div>
+        {% if post.suggestion.answer.size > 0 %}
+        <div class="row padbottommore">
+          <div class="col-md-12"><div class="answer-wrap truncate-500" data-truncate="500">{{ post.suggestion.answer }}</div>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      {% if post.public_activities_count > 0 %}
+      <a href="{{ post.url }}#addreaction" class="btn btn-default small-btn">{{ post.public_activities_count }} reaction{% if post.public_activities_count > 1 %}s{% endif %}</a>
+      {% else %}
+      <a href="{{ post.url }}#addreaction" class="btn btn-default small-btn">Add your reaction</a>
+      {% endif %}
+
+      {{ "Share" | share_button page_id: post.id | replace:'button small-button','btn btn-default small-btn' }}
+
+    </div>
+
+    <hr />
+
+    {% endfor %}
+
+    {% if request.url_path == page.url %} <!-- show most recent -->
+    {{ page.suggestion_box.most_recent_suggestions | paginate prev_label: "&laquo;" next_label: "&raquo;" | replace:'<div class="pagination">','<nav class="pagination-container">' | replace:'<ul>','<ul class="pagination">' | replace:'</div>','</nav>' }}
+    {% elsif request.url_path == alphabetical_url %}
+    {{ page.suggestion_box.alphabetical_suggestions | paginate prev_label: "&laquo;" next_label: "&raquo;" | replace:'<div class="pagination">','<nav class="pagination-container">' | replace:'<ul>','<ul class="pagination">' | replace:'</div>','</nav>' }}
+    {% else %}
+    {{ page.suggestion_box.tagged_suggestions | paginate prev_label: "&laquo;" next_label: "&raquo;" | replace:'<div class="pagination">','<nav class="pagination-container">' | replace:'<ul>','<ul class="pagination">' | replace:'</div>','</nav>' }}
+    {% endif %}
+
+  </div>
+
+  <div class="like-page">
+    <strong>Like this page to spread the word</strong>
+    {% include "like_page" %}
+  </div>
+
+</div>
+
+<script src="/assets/liquid/suggestions.js"></script>
+<script type="text/javascript">
+  $(function(){
+    new NB.Liquid.Suggestions();
+  });
+</script>

@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-sm-12 col-md-4 profile-info">
+    <a href="{{ profile.full_profile_url }}" class="directory-photo">
+      {% if profile.has_facebook_info? %}
+      <img src="http://graph.facebook.com/{{ profile.facebook_uid }}/picture?width=300&height=300" alt="Photo: {{ profile.published_name }}" class="img-rounded">
+      {% else %}
+      <img src="{{ profile.profile_image_url }}" alt="Profile Photo" class="img-rounded">{% endif %}</a>
+    <h4>{{ profile.published_name }}</h4>
+    <p>{{ profile.occupation }}</p>
+    {% unless profile.tag_list contains "hide contact info" %}
+    <ul class="list-inline">
+      {% unless profile.tag_list contains "hide email" %}
+      {% if profile.has_email? %}
+      <li>
+        <a href="mailto:{{ profile.email }}" title="Email {{ request.current_profile.email }}" class="ss-icon ss-social-regular ss-mail"></a>
+      </li>
+      {% else %}
+      <li>
+        <span class="ss-icon ss-social-regular ss-mail silver"></span>
+      </li>
+      {% endif %}
+      {% endunless %}
+          {% comment %}{% if profile.has_facebook_info? %}
+      <li>
+        <a href="{{ profile.facebook_profile_url }}" title="{{ profile.full_name_or_friend}} on Facebook" class="ss-icon ss-social-regular ss-facebook facebook"></a>
+      </li>
+      {% else %}
+      <li>
+        <span class="ss-icon ss-social-regular ss-facebook silver"></span>
+      </li>
+      {% endif %}{% endcomment %}
+          {% if profile.has_twitter_info? %}
+      <li>
+        <a href="{{ profile.twitter_profile_url }}" title="@{{ profile.twitter_login }} on Twitter" class="ss-icon ss-social-regular ss-twitter twitter"></a>
+      </li>
+      {% else %}
+      <li>
+        <span class="ss-icon ss-social-regular ss-twitter silver"></span>
+      </li>
+      {% endif %}
+    </ul>
+    {% endunless %}
+
+    {% if site.has_button1? or site.has_button2? or site.has_button3? %}
+    <div class="btn-group-vertical" role="group">
+      {% if site.has_button1? %}
+      <a class="btn btn-default supporter-nav-btn" href="{{ site.button1_page.full_url_with_profile_recruiter }}">{{ site.button1_text }}</a>
+      {% endif %}
+
+  {% if site.has_button2? %}
+      <a class="btn btn-default supporter-nav-btn" href="{{ site.button2_page.full_url_with_profile_recruiter }}">{{ site.button2_text }}</a>
+      {% endif %}
+
+  {% if site.has_button3? %}
+      <a class="btn btn-default supporter-nav-btn" href="{{ site.button3_page.full_url_with_profile_recruiter }}">{{ site.button3_text }}</a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+  <div class="col-sm-12 col-md-8">
+    {% if profile.profile_headline.size > 0 %}
+    <h2 class="headline">{{ profile.profile_headline }}</h2>
+    {% endif %}
+
+    {% if profile.profile_content.size > 0 %}
+    <div id="intro" class="intro">{{ profile.profile_content }}</div>
+    {% endif %}
+    <p class="uppercase">
+      <a href="/our_people"> <strong><span class="ss-icon ss-standard ss-navigateleft" style="padding-right: 5px; font-size: .8em;"></span>
+          See the Full Team</strong>
+      </a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+    <h4>Hi {{ request.current_signup.first_name_or_friend }}.</h4>
+    <p>Thank you for your support!</p>
+    <hr>
+    <h5>Sign in with…</h5>
+  </p>
+  <div class="row" id="like-page">
+    <div class="col-xs-12 marginbottom">
+      <a class="btn btn-facebook btn-block" href="{{ request.facebook_connect_url }}"> <i class="ss-icon ss-social-regular ss-facebook"></i>
+        Facebook
+      </a>
+    </div>
+    <div class="col-xs-12 marginbottom">
+      <a class="btn btn-twitter btn-block" href="{{ request.twitter_connect_url }}"> <i class="ss-icon ss-social-regular ss-twitter"></i>
+        Twitter
+      </a>
+    </div>
+    <div class="col-xs-12 marginbottom">
+      <a class="btn btn-warning btn-block" href="/login">
+        <i class="ss-icon ss-standard ss-mail"></i>
+        Email
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12 col-md-12 col-lg-12 text-center">
+  <small>
+    Not {{ request.current_signup.name_or_email }}?<br>
+    <a href="{{ request.current_signup.logout_url }}">Click here</a>.
+  </small>
+</div>
+</div>

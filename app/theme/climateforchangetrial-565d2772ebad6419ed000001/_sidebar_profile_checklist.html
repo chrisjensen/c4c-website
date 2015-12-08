@@ -1,0 +1,114 @@
+<div id="profile-checklist">
+    <h4 class="text-center">
+      {% if request.current_signup.has_facebook_authorization? and request.current_signup.has_twitter_authorization? and request.current_signup.has_email? and request.current_signup.has_full_address? and request.current_signup.is_volunteer? and request.current_signup.is_donor? %}
+        Your Profile is Complete!
+        {% else %}
+        Complete Your Profile
+        {% endif %}
+    </h4>
+    <table class="table table-striped table-bordered">
+      {% comment %}
+      <thead>
+        <tr>
+          <th width="25%">Table Header</th>
+          <th>Table Header</th>
+          <th width="150">Table Header</th>
+          <th width="150">Table Header</th>
+        </tr>
+      </thead>
+      {% endcomment %}
+      <tbody>
+        <tr>
+          {% if request.current_signup.has_facebook_authorization? %}
+          <td width="25%" class="text-center">
+            <span class="success-color ss-icon ss-standard ss-check"></span>
+          </td>
+          <td>Connected your Facebook account</td>
+          {% else %}
+          <td width="25%" class="text-center">
+            <span class="gray-light ss-icon ss-standard ss-check"></span>
+          </td>
+          <td>
+            <a href="{{ request.facebook_connect_url }}">Connect your Facebook account</a>
+          </td>
+          {% endif %}
+        </tr>
+        <tr>
+          {% if request.current_signup.has_twitter_authorization? %}
+          <td width="25%" class="text-center">
+            <span class="success-color ss-icon ss-standard ss-check"></span>
+          </td>
+          <td>Connected your Twitter account</td>
+          {% else %}
+          <td width="25%" class="text-center">
+            <span class="gray-light ss-icon ss-standard ss-check"></span>
+          </td>
+          <td>
+            <a href="{{ request.twitter_connect_url }}">Connect your Twitter account</a>
+          </td>
+          {% endif %}
+        </tr>
+        <tr>
+          {% if request.current_signup.has_email? %}
+          <td width="25%" class="text-center">
+            <span class="success-color ss-icon ss-standard ss-check"></span>
+          </td>
+          <td>Added your email address</td>
+          {% else %}
+          <td width="25%" class="text-center">
+            <span class="gray-light ss-icon ss-standard ss-check"></span>
+          </td>
+          <td>
+            <a href="{{ request.current_signup.settings_url }}">Add your email address</a>
+          </td>
+          {% endif %}
+        </tr>
+        <tr>
+          {% if request.current_signup.has_full_address? %}
+          <td width="25%" class="text-center">
+            <span class="success-color ss-icon ss-standard ss-check"></span>
+          </td>
+          <td>Added your street address</td>
+          {% else %}
+          <td width="25%" class="text-center">
+            <span class="gray-light ss-icon ss-standard ss-check"></span>
+          </td>
+          <td>
+            <a href="{{ request.current_signup.settings_url }}">Add your street address</a>
+          </td>
+          {% endif %}
+        </tr>
+        {% if site.has_volunteer_page? %}<tr>
+          {% if request.current_signup.is_volunteer? %}
+          <td width="25%" class="text-center">
+            <span class="success-color ss-icon ss-standard ss-check"></span>
+          </td>
+          <td>Signed up to volunteer</td>
+          {% else %}
+          <td width="25%" class="text-center">
+            <span class="gray-light ss-icon ss-standard ss-check"></span>
+          </td>
+          <td>
+            <a href="/{{ site.volunteer_page.slug }}">Sign up to volunteer</a>
+          </td>
+          {% endif %}
+        </tr>{% endif %}
+        {% if site.has_donation_page? %}<tr>
+          {% if request.current_signup.is_donor? %}
+          <td width="25%" class="text-center">
+            <span class="success-color ss-icon ss-standard ss-check"></span>
+          </td>
+          <td>We’ve got your donation!</td>
+          {% else %}
+          <td width="25%" class="text-center">
+            <span class="gray-light ss-icon ss-standard ss-check"></span>
+          </td>
+          <td>
+            <a href="/{{ site.donation_page.slug }}">Make a donation</a>
+          </td>
+          {% endif %}
+        </tr>{% endif %}
+      </tbody>
+    </table>
+
+  </div>

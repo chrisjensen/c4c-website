@@ -1,0 +1,13 @@
+{% unless page.type_slug == "donation" %}
+{% if request.current_signup.has_email? %}
+  {% subpage "footer_share" with "footer_share_prompt" %}
+{% else %}
+  {% subpage "footer_signup" with "footer_signup_form" %}
+{% endif %}
+{% endunless %}
+
+{% comment %}{% if site.has_donation_page? and page.type_name != "Donation" %}
+  {% include "footer_donation_button" %}
+{% endif %}{% endcomment %}
+
+{% include "partial_footer_nb_link" %}

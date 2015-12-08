@@ -1,0 +1,22 @@
+<div class="padtopmore padbottommore">
+  <div class="spacer"></div>
+</div>
+<div class="row" id="like-page">
+  <div class="col-sm-4 col-md-4 col-lg-4 marginbottommore">
+    <a href="http://www.facebook.com/share.php?u={{ page.full_url_with_recruiter | urlencode }}" class="btn btn-block btn-facebook" target="_blank"> <i class="ss-icon ss-social-regular ss-facebook"></i>
+      Share
+    </a>
+  </div>
+
+  <div class="col-sm-4 col-md-4 col-lg-4 marginbottommore">
+    <a href="http://twitter.com/intent/tweet?url={{ page.full_url_with_recruiter | urlencode }}&text={{ page.default_tweet_text | urlencode }}&via={{ site.broadcaster.twitter_login | urlencode}}" class="btn btn-block btn-twitter" target="_blank"> <i class="ss-icon ss-social-regular ss-twitter"></i>
+      Tweet
+    </a>
+  </div>
+
+  <div class="col-sm-4 col-md-4 col-lg-4 marginbottommore">
+    <a href="mailto:?subject={{ page.default_tweet_text | urlencode }}&body={{ page.full_url_with_recruiter | urlencode }}" class="btn btn-block btn-email" target="_blank"> <i class="ss-icon ss-standard ss-mail"></i>
+      Email
+    </a>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+#carousel-generic {
+  @media only screen and (max-width : $screen-sm-min) {
+    display: none;
+  }
+}

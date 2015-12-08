@@ -1,0 +1,193 @@
+<div class="form">
+
+  {% if request.sorta_logged_in? and request.current_signup.has_password? == true %}
+  <h2 class="center">Please verify your password</h2>
+  {% elsif request.sorta_logged_in? and request.current_signup.has_password? == false %}
+  <h2 class="center">Please activate your account{% if request.current_signup.has_facebook_info? %}, or
+    <a href="{{ request.facebook_connect_url }}">sign in with Facebook</a>.{% else %}.{% endif %}</h2>
+  {% else %}
+  <h2 class="center">Sign in with Facebook or Twitter</h2>
+  {% endif %}
+
+  {% if request.sorta_logged_in? and request.current_signup.has_password? == true %}
+
+  {% form_for user_session %}
+
+  <div class="form-errors">{% error_messages_for user_session %}</div>
+
+  {% hidden_field_tag "user_session[email]", request.current_signup.email %}
+
+  <p><label for="user_session_password">Password</label><br>{% password_field "password", class:"text form-control" %}</p>
+
+  {% submit_tag "Sign in with password", class:"submit-button btn btn-primary" %}
+  <div class="form-submit"></div>
+
+  <div class="padtopmore">
+    <a href="{{ request.new_password_reset_url }}">Forgot your password?</a>
+  </div>
+
+  {% if request.current_signup.has_facebook_info? or request.current_signup.has_twitter_info? %}
+  <div class="center">
+    <div class="padtop padbottom">
+      <hr>
+      <div class="orsignin_wrap">
+        <span id="orsignin">Or sign in with {% if request.current_signup.has_facebook_info? %}Facebook{% endif %} {% if request.current_signup.has_twitter_info? %}or Twitter{% endif %}</span>
+      </div>
+    </div>
+    {% if request.current_signup.has_facebook_info? %}
+    <a href="{{ request.facebook_connect_url }}" class="btn btn-default connect-button facebook"><i class="icon-facebook-squared"></i> Sign in with Facebook</a>
+    {% endif %}
+    {% if request.current_signup.has_twitter_info? %}
+    <a href="{{ request.twitter_connect_url }}" class="btn btn-default connect-button twitter"><i class="icon-twitter-squared"></i> Sign in with Twitter</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div class="center padtop">
+    If you're not {{ request.current_signup.name_or_email }},
+    <a href="{{ request.current_signup.logout_url }}">click here</a>.
+  </div>
+
+
+  {% endform_for %}
+
+  {% elsif request.sorta_logged_in? and request.current_signup.has_password? == false %}
+
+  {% if request.current_signup.has_facebook_info? or request.current_signup.has_twitter_info? %}
+  <div class="padtopmore">
+    {% if request.current_signup.has_facebook_info? %}
+    <div class="padtopless">
+      <a href="{{ request.facebook_connect_url }}" class="btn btn-default connect-button facebook"><i class="icon-facebook-squared"></i> Sign in with Facebook</a>
+    </div>
+    {% endif %}
+    {% if request.current_signup.has_twitter_info? %}
+    <div class="padtopless">
+      <a href="{{ request.twitter_connect_url }}" class="btn btn-default connect-button twitter"><i class="icon-twitter-squared"></i> Sign in with Twitter</a>
+    </div>
+    {% endif %}
+    <div class="padtop">or...</div>
+  </div>
+  {% endif %}
+
+  {% form_for account %}
+
+  {% hidden_field_tag "account[email]", request.current_signup.email %}
+
+  <div class="padtopmore">
+    {% submit_tag "Email account activation instructions" , class:"submit-button btn btn-primary" %}
+    <div class="form-submit"></div>
+  </div>
+
+  {% endform_for %}
+
+  <div class="padtop">
+    If you're not {{ request.current_signup.name_or_email }},
+    <a href="{{ request.current_signup.logout_url }}">click here</a>.
+  </div>
+
+  {% else %}
+
+
+  <div class="center">
+
+    <div class="padtop">
+
+      <a href="{{ request.facebook_connect_url }}" class="btn btn-default connect-button facebook"><i class="icon-facebook-squared"></i> Sign in with Facebook</a>
+      <a href="{{ request.twitter_connect_url }}" class="btn btn-default connect-button twitter"><i class="icon-twitter-squared"></i> Sign in with Twitter</a>
+
+    </div>
+
+    <hr/>
+
+    <h3 class="visible-sm-block visible-md-block visible-lg-block padbottommore">Or sign in with your email address</h3>
+
+    <div class="visible-xs-block padbottommore">Or sign in with your email address</div>
+  </div>
+
+  <div class="row padtopmore">
+    <div class="col-md-11 col-md-offset-1">
+
+      <div class="row">
+        <div class="col-md-5">
+
+          <div class="row">
+
+            <div class="col-md-12"><h4 class="padbottommore">I have an account</h4></div>
+
+          </div>
+
+          {% form_for user_session %}
+
+          <div class="row">
+
+            <div class="col-md-12">
+              <div class="form-errors">{% error_messages_for user_session %}</div>
+              <div class="form-group">
+                <label for="user_session_email">Email Address</label>{% email_field "email", class:"text form-control" %}
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="user_session_password">Password</label>{% password_field "password", class:"text form-control" %}
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-12">
+              <div class="checkbox"><label for="user_session_remember_me">{% check_box "remember_me", class:"checkbox" %} Remember me</label></div>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-12">{% submit_tag "Sign in with email", class:"submit-button btn btn-primary" %}
+              <div class="form-submit"></div>
+            </div>
+
+          </div>
+
+          <div class="padtop">
+            <small><a href="{{ request.new_password_reset_url }}">Forgot your password?</a></small>
+          </div>
+
+
+          {% endform_for %}
+
+        </div>
+
+        <div class="col-md-5 col-md-offset-1">
+          <hr class="visible-xs-block"/>
+          <h4 class="padbottommore">Create an account</h4>
+        </div>
+
+        {% form_for account %}
+
+        <div class="col-md-5 col-md-offset-1">
+          <div class="form-errors">{% error_messages_for account %}</div>
+          <div class="form-group">
+            <label for="account_email">Email Address</label>{% email_field "email", class:"text form-control" %}
+          </div>
+        </div>
+
+        <div class="col-md-5 col-md-offset-1">{% submit_tag "Send account activation", class:"submit-button btn btn-primary" %}
+          <div class="form-submit"></div>
+        </div>
+
+        {% endform_for %}
+
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+
+</div>

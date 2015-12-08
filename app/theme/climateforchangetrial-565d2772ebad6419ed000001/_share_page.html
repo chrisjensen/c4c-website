@@ -1,0 +1,21 @@
+{% if page.headline.size > 0 %}
+<div class="share-page hidden-xs hidden-sm">
+  <ul>
+    <li class="facebook">
+      <a href="http://www.facebook.com/share.php?u={{ page.full_url_with_recruiter | urlencode }}" target="_blank">
+        <span class="ss-icon ss-social-regular ss-facebook"></span>
+      </a>
+    </li>
+    <li class="twitter">
+      <a href="http://twitter.com/intent/tweet?url={{ page.full_url_with_recruiter | urlencode }}&text={{ page.default_tweet_text | urlencode }}&via={{ site.broadcaster.twitter_login | urlencode}}">
+        <span class="ss-icon ss-social-regular ss-twitter"></span>
+      </a>
+    </li>
+    <li class="email">
+      <a href="mailto:?subject={{ page.default_tweet_text | urlencode }}&body={{ page.full_url_with_recruiter | urlencode }}" target="_blank">
+        <span class="ss-icon ss-standard ss-mail"></span>
+      </a>
+    </li>
+  </ul>
+</div>
+{% endif %}

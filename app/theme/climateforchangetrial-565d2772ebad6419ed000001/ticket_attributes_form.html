@@ -1,0 +1,24 @@
+<h5>Attendees</h5>
+{% for ticket in tickets limit:100 %}
+  {% assign ticket_field_prefix = ticket_attributes_prefix | append: "[" | append: forloop.index | append: "]" %}
+  <div id="{{ ticket_container_ids_prefix | append: "_" | append: forloop.index }}" class="row-fluid">
+    <div class="span4">
+      {% assign field_name = ticket_field_prefix | append: "[first_name]" %}
+      {% assign error_message = ticket | error: "first_name" %}
+      {% label_tag field_name, "First name" %}
+      {% text_field_tag field_name, ticket.first_name, error_message %}
+    </div>
+    <div class="span4">
+      {% assign field_name = ticket_field_prefix | append: "[last_name]" %}
+      {% assign error_message = ticket | error: "last_name" %}
+      {% label_tag field_name, "Last name" %}
+      {% text_field_tag field_name, ticket.last_name, error_message %}
+    </div>
+    <div class="span4">
+      {% assign field_name = ticket_field_prefix | append: "[email]" %}
+      {% assign error_message = ticket | error: "email" %}
+      {% label_tag field_name, "Email" %}
+      {% text_field_tag field_name, ticket.email, error_message %}
+    </div>
+  </div>
+{% endfor %}

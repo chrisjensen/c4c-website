@@ -1,0 +1,41 @@
+<div class="flash-share panel panel-default">
+  <div class="panel-heading">
+    <h3 class="headline panel-title">{{ flash.message }}</h3>
+  </div>
+
+  <div class="share panel-body">
+    Tell all your friends, they should join you! A link will be included.
+    <small>(<span id="face-tweet-content-charsleft"></span> chars left)</small>
+    <div class="form padtopless">
+      {% form_for face_tweet %}
+      {% hidden_field_tag "face_tweet[page_id]", flash.page_id %}
+      <div class="form-errors">{% error_messages_for face_tweet %}</div>
+      <div class="row">
+        <div class="col-md-12"><div class="form-group">{% text_field "content", class:"face-tweet-content share-url text form-control" %}</div></div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="checkbox"><label for="face_tweet_is_twitter" class="checkbox">{% check_box "is_twitter", class:"checkbox" %} Tweet</label></div>
+                  <div class="checkbox"><label for="face_tweet_is_facebook" class="checkbox">{% check_box "is_facebook", class:"checkbox" %} Post on Facebook</label></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="float text-right">{% submit_tag "Post", class:"submit-button btn btn-primary" %}</div>
+            </div>
+            <div class="col-md-6 padtopless">
+              <div class="float text-right">
+                <small><a href="#" class="flash-close">No Thanks</a></small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endform_for %}
+    </div>
+  </div>
+</div>

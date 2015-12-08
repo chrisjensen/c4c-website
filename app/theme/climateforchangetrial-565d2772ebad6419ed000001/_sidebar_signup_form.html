@@ -1,0 +1,33 @@
+<h4 class="text-center">{{ page.headline }}</h4>
+<div class="spacer"></div>
+<div class="text-center">{{ page.signup.content }}</div>
+{% form_for signup %}
+    {% hidden_field_tag "page_id", page.id %}
+<div class="form-errors">{% error_messages_for signup %}</div>
+<div class="row">
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div class="form-group">
+      <label for="signup_email" class="sr-only">Email</label>
+      {% email_field "email", class:"form-control text text-center", placeholder:"Email address", required: "required" %}
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <div class="form-group">
+      <label for="signup_submitted_address" class="sr-only">Postal Code</label>
+      {% text_field "submitted_address", class:"form-control text text-center", placeholder:"Postal Code" %}
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    {% submit_tag "Sign Up Now", class:"btn btn-warning btn-block" %}
+    <div class="form-submit"></div>
+  </div>
+  {% endform_for %}
+  <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+    <p>or</p>
+  </div>
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <a href="{{ request.facebook_connect_url }}" class="btn btn-facebook btn-block"> <i class="ss-icon ss-social-regular ss-facebook"></i>
+      Connect
+    </a>
+  </div>
+</div>

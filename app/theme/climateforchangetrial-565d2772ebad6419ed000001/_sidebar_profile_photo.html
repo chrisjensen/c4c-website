@@ -1,0 +1,43 @@
+<hr>
+<div class="row">
+  <div class="col-sm-12 col-md-5 col-lg-5 text-center">
+    {% if request.current_signup.has_facebook_info? %}
+    <img src="http://graph.facebook.com/{{ request.current_signup.facebook_uid }}/picture?width=150&height=150" alt="Profile Photo" class="img-rounded">
+    {% else %}
+    <img src="{{ request.current_signup.profile_image_url }}" alt="Profile Photo" class="img-rounded">{% endif %}</div>
+  <div class="col-sm-12 col-md-7 col-lg-7">
+    <h4>{{ request.current_signup.full_name_or_friend }}</h4>
+
+    <ul class="list-inline">
+      {% if request.current_signup.has_email? %}
+      <li>
+        <a href="mailto:{{ request.current_signup.email }}" title="Email {{ request.current_signup.email }}" class="ss-icon ss-social-regular ss-mail"></a>
+      </li>
+      {% else %}
+      <li>
+        <span class="ss-icon ss-social-regular ss-mail silver"></span>
+      </li>
+      {% endif %}
+          {% if request.current_signup.has_facebook_info? %}
+      <li>
+        <a href="{{ request.current_signup.facebook_profile_url }}" title="{{ request.current_signup.full_name_or_friend}} on Facebook" class="ss-icon ss-social-regular ss-facebook facebook"></a>
+      </li>
+      {% else %}
+      <li>
+        <span class="ss-icon ss-social-regular ss-facebook silver"></span>
+      </li>
+      {% endif %}
+          {% if request.current_signup.has_twitter_info? %}
+      <li>
+        <a href="{{ request.current_signup.twitter_profile_url }}" title="@{{ request.current_signup.twitter_login }} on Twitter" class="ss-icon ss-social-regular ss-twitter twitter"></a>
+      </li>
+      {% else %}
+      <li>
+        <span class="ss-icon ss-social-regular ss-twitter silver"></span>
+      </li>
+      {% endif %}
+    </ul>
+
+  </div>
+</div>
+<hr>

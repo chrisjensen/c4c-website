@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page_title }}</title>
+
+    <!-- site author information -->
+    <link rel="author" href="humans.txt" />
+    <!-- /site author information -->
+
+    <!-- Bootstrap -->
+    <link href="theme.scss" rel="stylesheet">
+    <link href="//cdn.symbolset.com/b6beedf0bf7271c2b5fe8113a8c5f63f0b73a01f/symbolset.css" rel="stylesheet">
+
+    {{ content_for_header }}
+
+    <script type="text/javascript">
+      NB.appConfig.userIsLoggedIn = {{request.logged_in?}};
+    </script>
+  </head>
+  <body class="climate-for-change aware-theme v2-theme {{ page.page_class_name }} page-{{ request.template | replace: '_', '-' }} js">
+    <div class="page-container">
+
+      {% include "nav" %}
+
+      {% if page.is_homepage? %}
+      {% include "partial_home_cover_image" %}
+      {% else %}
+      {% include "cover_image" %}
+      {% endif %}
+
+      <div class="main-container" id="middle">
+        <div class="main container clearfix">
+
+          {% if request.is_sidebar? %}
+          {% include "columns_2" %}
+          {% else %}
+          {% include "columns_1" %}
+          {% endif %}
+
+          {% include "share_page" %}
+
+        </div>
+        <!-- .main -->
+      </div>
+      <!-- .main-container -->
+
+      <footer>
+        {% include "partial_big_footer" %}
+      </footer>
+    </div>
+
+    {{ content_for_footer }}
+
+    <script src="bootstrap.js"></script>
+    <script src="//cdn.symbolset.com/b6beedf0bf7271c2b5fe8113a8c5f63f0b73a01f/symbolset.js"></script>
+    <script type="text/javascript">
+      if ($(window).width() >= 992){
+        $('.dropdown-toggle').click(function() {
+          var location = $(this).attr('href');
+          window.location.href = location;
+          return false;
+        });
+      };
+    </script>
+
+    {% if page.is_homepage? %}
+    <script src="jquery.backstretch.min.js"></script>
+    <script src="jquery.localscroll.js"></script>
+    <script type="text/javascript">
+      $("#cover").backstretch([
+          {% for feature in page.features %}"{{ feature.image_url }}"{% unless forloop.last %}, {% endunless %}{% endfor %}
+      ], {duration: 5000, fade: 1000});
+      </script>
+    {% endif %}
+
+    <script type="text/javascript">
+      var _gauges = _gauges || [];
+      (function() {
+        var t   = document.createElement('script');
+        t.type  = 'text/javascript';
+        t.async = true;
+        t.id    = 'gauges-tracker';
+        t.setAttribute('data-site-id', '55248a2dde2e2622a1002070');
+        t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+        t.src = 'https://track.gaug.es/track.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      })();
+    </script>
+
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+
+  </body>
+</html>
+

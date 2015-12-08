@@ -1,0 +1,36 @@
+{% include "breadcrumbs" %}
+
+
+
+<div id="content">
+
+  <div id="intro" class="intro">
+    <div class="text-content">
+<div class="cognito">
+<script src="https://services.cognitoforms.com/s/QbGO7LLnlky5msj7GlqDmQ"></script>
+<script>Cognito.load("forms", { id: "1" });</script>
+</div>
+      {{ page.basic.content }}
+    </div>
+  </div>
+
+  {% if page.tags_count > 0 %}
+  <div class="page-tags">
+    {% include "page_tags" with page %}
+  </div>
+  {% endif %}
+
+  {% if page.is_homepage? == true and site.page_tags contains "homepage" %}
+    {% tag "homepage" with "homepage_widget" %}
+  {% endif %}
+
+  <div class="like-page">
+    <strong>Do you like this page?</strong>
+    {% include "like_page" %}
+  </div>
+
+  {% if page.show_stream? %}
+  {% include "page_stream" %}
+  {% endif %}
+
+</div>

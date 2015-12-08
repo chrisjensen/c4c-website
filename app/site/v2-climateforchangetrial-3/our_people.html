@@ -1,0 +1,37 @@
+<div id="content">
+  {% if request.logged_in? or page.directory.not_user_specific? %}
+  <div id="intro" class="text-content text-center padbottommore">
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+        {{ page.directory.content }}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    {% for signup in page.directory.listings limit:4 %}
+    {% include "partial_directory_tile" %}
+    {% endfor %}
+  </div>
+
+  <div class="row">
+    {% for signup in page.directory.listings limit:4 offset:4 %}
+    {% include "partial_directory_tile" %}
+    {% endfor %}
+  </div>
+
+  <div class="row">
+    {% for signup in page.directory.listings limit:4 offset:8 %}
+    {% include "partial_directory_tile" %}
+    {% endfor %}
+  </div>
+
+  <div class="row">
+    {% for signup in page.directory.listings limit:4 offset:12 %}
+    {% include "partial_directory_tile" %}
+    {% endfor %}
+  </div>
+  {{ page.directory.listings | paginate }}
+
+  {% endif %}
+</div>

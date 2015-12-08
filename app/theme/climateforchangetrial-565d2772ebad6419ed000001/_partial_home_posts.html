@@ -1,0 +1,13 @@
+<div class="col-sm-12 col-md-6 col-lg-6 homepage-feature" id="{{ post.slug }}">
+  <a href="{{ post.url }}">
+    {% if post.has_meta_image? %}
+    <img class="features img-rounded" src="{{ post.meta_image_url }}" />
+    {% else %}
+    <img class="features img-rounded" src="feature-fallback.png" />
+    {% endif %}
+    <div class="text-center">
+      <h3>{{ post.headline }}</h3>
+      <p>{{ post.blog_post.content | truncatewords:40 | strip_html }}</p>
+    </div>
+  </a>
+</div>

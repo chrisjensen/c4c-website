@@ -1,0 +1,67 @@
+<div id="footer-signup">
+  <div class="container">
+    <div class="row padbottommore">
+      <div class="col-sm-12 col-md-8 col-lg-8 col-md-offset-2 col-lg-offset-2 text-center">
+        <h3>{{ page.headline }}</h3>
+        {{ page.signup.content }}
+      </div>
+    </div>
+    {% form_for signup %}
+    <form>
+      <div class="form-errors">{% error_messages_for signup %}</div>
+
+      <div class="row">
+        <div class="col-sm-8 col-md-6 col-lg-6 col-sm-offset-2 col-md-offset-3 col-lg-offset-3">
+          <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label for="signup_email" class="sr-only">Email</label>
+                <div class="input-group">
+                  <span class="input-group-addon ss-icon ss-standard ss-mail" id="sizing-addon1"></span>
+                  {% email_field "email", class:"text form-control", placeholder:"Email address" %}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <div class="form-group">
+                <label for="signup_submitted_address" class="sr-only">Postal Code</label>
+                <div class="input-group">
+                  <span class="input-group-addon ss-icon ss-standard ss-location" id="sizing-addon1"></span>
+                  {% text_field "submitted_address", class:"text form-control", placeholder:"Postal Code" %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+              {% if page.signup.is_all_info_collected? == false %}
+            {% if request.sorta_logged_in? %}
+            {% submit_tag "Update info", class:"btn btn-primary btn-block" %}
+            {% else %}
+            {% submit_tag "Get Updates", class:"btn btn-primary btn-block" %}
+            {% endif %}
+            {% endif %}
+              <div class="form-submit"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    {% endform_for %}
+    <div class="row padtopmore">
+      {% if site.has_twitter? %}
+      <div class="col-sm-8 col-md-6 col-lg-6 col-sm-offset-2 col-md-offset-3 col-lg-offset-3 text-center">
+        <a href="{{ site.broadcaster.twitter_profile_url }}" class="twitter-follow-button" data-show-count="true" data-size="large" data-show-screen-name="false">Follow @{{ site.broadcaster.twitter_login }} on Twitter</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+      </div>
+      {% endif %}
+      {% if site.has_facebook_page? %}
+      <div class="col-sm-8 col-md-6 col-lg-6 col-sm-offset-2 col-md-offset-3 col-lg-offset-3 text-center padbottommore">
+        <div class="fb-like" data-href="{{ site.broadcaster.facebook_page_profile_url }}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

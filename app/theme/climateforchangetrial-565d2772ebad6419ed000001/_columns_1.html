@@ -1,0 +1,14 @@
+{% if page.is_homepage? == true or page.type_slug == "donation" or page.type_slug == "directory" or page.type_slug == "petition" %}
+<div class="column content-{{ request.template  | replace: '_', '-' }}">
+  {% yield %}
+</div>
+<!-- .column -->
+{% else %}
+<div class="row">
+  <div class="content-{{ request.template  | replace: '_', '-' }} col-sm-12 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2">
+
+    <div class="columns-1-flash">{{ content_for_notifications }}</div>
+    {% yield %}
+  </div>
+</div>
+{% endif %}

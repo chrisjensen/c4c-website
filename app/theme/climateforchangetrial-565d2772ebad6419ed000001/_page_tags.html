@@ -1,0 +1,8 @@
+{% if page_tags.tags_count > 0 %}
+<div class="padbottom">
+  <i class="icon-tag"></i>
+  {% for tag in page_tags.tags %}
+    <span class="page-tag"><a class="label label-default" href="{{ tag.url }}">{{ tag.name }}</a></span>
+  {% endfor %}
+</div>
+{% endif %}
