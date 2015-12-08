@@ -1,4 +1,18 @@
-# angular-seed — the seed for AngularJS apps
+# Climate for Change Website
+This project holds code for dynamic sections of the Climate for Change website.
+At the moment this is pages with the slugs:
+* actions - The actions page
+
+## Deployment
+
+The theme files are best edited and updated via NationBuilders ThemeSync app.
+Use the app to sync the theme and site and when prompted for the folder to sync with, choose `app/theme` and `app\site` respectively.
+
+
+
+This project is based on the Angular Seed project
+
+# Angular Seed Documentation
 
 This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
 You can use it to quickly bootstrap your angular webapp projects and dev environment for these
