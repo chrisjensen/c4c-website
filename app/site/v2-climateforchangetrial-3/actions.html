@@ -40,6 +40,8 @@
 	<div ng-repeat="category in categories">
 <!--		{[{ category['Name'] }]}  -->
 	</div>
+	
+	<action-hint />
 </script>
 
 <script type="text/ng-template" id="actions_list.html">
@@ -47,6 +49,7 @@ The list
 </script>
 
 <script type="text/ng-template" id="actions_hint.html">
-The list
+<strong>Not sure where to start?</strong> Many people start with 
+<a href="{[{ hint.link }]}">{[{ hint.name }]}</a>.
 </script>
 {% endraw %}

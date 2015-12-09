@@ -17,14 +17,21 @@ angular.module('c4cWebsite.actions', ['ngRoute', 'times.tabletop'])
 
 .controller('ActionsGridController', ['$scope', 'Tabletop', ActionsGridController])
 
-.controller('ActionsHintController', ['$scope', function($scope) {
-}])
-
 .controller('ActionsListController', [function() {
 
-}]);
+}])
+
+.directive('actionHint', function ActionsHintDirective() {
+  return {
+    restrict: 'E',
+    templateUrl: 'actions_hint.html',
+    controller:  ['$scope', ActionHintsController]
+  }
+});
 
 /**
+  * ActionsGridController
+  *
   * $scope variables
   * * categories	Array of the form [{Name: ".."}, {...}]
   */
@@ -38,6 +45,19 @@ function ActionsGridController($scope, Tabletop) {
 		// Put the categories on the scope
 		$scope.categories = table.all();
     });
+}
+
+/**
+  * ActionsHintController
+  *
+  * $scope variables
+  * * hint	object containing name and link
+  */
+function ActionHintsController($scope) {
+	$scope.hint = {
+		name: 'changing their power',
+		link: '/act_power'
+	}
 }
 
 })();
