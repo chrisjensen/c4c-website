@@ -35,8 +35,11 @@
 
 </div>
 
+{% raw %}
 <script type="text/ng-template" id="actions_grid.html">
-
+	<div ng-repeat="category in categories">
+<!--		{[{ category['Name'] }]}  -->
+	</div>
 </script>
 
 <script type="text/ng-template" id="actions_list.html">
@@ -46,3 +49,4 @@ The list
 <script type="text/ng-template" id="actions_hint.html">
 The list
 </script>
+{% endraw %}
