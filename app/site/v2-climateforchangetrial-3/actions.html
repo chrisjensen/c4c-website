@@ -35,21 +35,37 @@
 
 </div>
 
-{% raw %}
+<!-- Template for actions grid -->
 <script type="text/ng-template" id="actions_grid.html">
 	<div ng-repeat="category in categories">
-<!--		{[{ category['Name'] }]}  -->
+		<a href="#/actions/{[{ category['Name'] }]}">{[{ category['Name'] }]}</a>
 	</div>
 	
 	<action-hint />
 </script>
 
+<!-- Template for actions list -->
 <script type="text/ng-template" id="actions_list.html">
-The list
+	<h2>{[{ category["Name"] }]}</h2>
+	<a href="#/">Go back</a>
+	<p>{[{ category["Description"] }]}</p>
+
+	<div ng-class="action['class']" ng-repeat="action in actions">
+		<h3>{[{ action['Title'] }]}</h3>
+		<p>{[{ action['Description'] }]}</p>
+		<button>Choose This</button>
+	</div>
+
+	<a href="#/">Go back</a>
 </script>
 
+<!-- Template for actions hint -->
 <script type="text/ng-template" id="actions_hint.html">
-<strong>Not sure where to start?</strong> Many people start with 
-<a href="{[{ hint.link }]}">{[{ hint.name }]}</a>.
+	<strong>Not sure where to start?</strong> Many people start with 
+	<a href="{[{ hint.link }]}">{[{ hint.name }]}</a>.
 </script>
-{% endraw %}
+
+<script type="text/javascript">
+    var user_tags = '{{ request.current_signup.tag_list }}';
+	var action_pages = '{{ page.children }}';
+</script>
