@@ -4,13 +4,15 @@
 
 <div id="content">
 
-	this has changed
-
   <div id="intro" class="intro">
     <div class="text-content">
       {{ page.basic.content }}
     </div>
   </div>
+<!--  TagsTags: {{ request.current_signup.tag_list }} -->
+<!--  Child pages {{ page.children }} -->
+  
+  <ng-view></ng-view>
   
   {% if page.tags_count > 0 %}
   <div class="page-tags">
@@ -32,3 +34,15 @@
   {% endif %}
 
 </div>
+
+<script type="text/ng-template" id="actions_grid.html">
+
+</script>
+
+<script type="text/ng-template" id="actions_list.html">
+The list
+</script>
+
+<script type="text/ng-template" id="actions_hint.html">
+The list
+</script>

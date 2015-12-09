@@ -20,7 +20,7 @@
       NB.appConfig.userIsLoggedIn = {{request.logged_in?}};
     </script>
   </head>
-  <body class="climate-for-change aware-theme v2-theme {{ page.page_class_name }} page-{{ request.template | replace: '_', '-' }} js">
+  <body ng-app="c4cWebsite" class="climate-for-change aware-theme v2-theme {{ page.page_class_name }} page-{{ request.template | replace: '_', '-' }} js">
     <div class="page-container">
 
       {% include "nav" %}
@@ -92,7 +92,9 @@
     </script>
 
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
-
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-route.min.js"></script>
+	<script src="app.js"></script>
+	<script src="actions_controllers.js"></script>
   </body>
 </html>
 
