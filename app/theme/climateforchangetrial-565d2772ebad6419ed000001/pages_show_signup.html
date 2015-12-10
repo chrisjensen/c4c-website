@@ -22,8 +22,8 @@
       {% if request.sorta_logged_in? %}
         <h4>Hi {{ request.current_signup.name_or_email }}, thanks for joining!</h4>
 
-      {% if request.logged_in? == false %}
-        <div class="padbottommore"><small>If you're not {{ request.current_signup.name_or_email }}, <a href="{{ request.current_signup.logout_url }}">click here to signup</a>.</small></div>
+      {% if request.logged_in? == true %}
+        <div class="padbottommore"><small>If you're not {{ request.current_signup.name_or_email }}, <a href="{{ request.current_signup.logout_url }}">click here</a>.</small></div>
       {% endif %}
 
       {% endif %}
@@ -92,12 +92,10 @@
         <div class="col-md-12"><div class="form-group"><label for="signup_activity_is_private" class="checkbox">{% check_box "activity_is_private", class:"checkbox" %} Don't publish this on the website</label></div>
       </div>
 
-      {% if page.signup.is_all_info_collected? == false %}
       {% if request.sorta_logged_in? %}
-      {% submit_tag "Update info", class:"submit-button btn btn-primary" %}
+      {% submit_tag "Sign up", class:"submit-button btn btn-primary" %}
       {% else %}
-      {% submit_tag "Signup", class:"submit-button btn btn-primary" %}
-      {% endif %}
+      {% submit_tag "Sign up", class:"submit-button btn btn-primary" %}
       {% endif %}
       <div class="form-submit"></div>
 
