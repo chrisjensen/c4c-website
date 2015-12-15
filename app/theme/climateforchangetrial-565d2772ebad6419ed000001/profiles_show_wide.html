@@ -10,7 +10,8 @@
     <p>{{ profile.occupation }}</p>
     {% unless profile.tag_list contains "hide contact info" %}
     <ul class="list-inline">
-      {% unless profile.tag_list contains "hide email" %}
+      {% comment %} <!-- Don't Show email ever! -->
+       {% unless profile.tag_list contains "hide email" %}
       {% if profile.has_email? %}
       <li>
         <a href="mailto:{{ profile.email }}" title="Email {{ request.current_profile.email }}" class="ss-icon ss-social-regular ss-mail"></a>
@@ -20,7 +21,7 @@
         <span class="ss-icon ss-social-regular ss-mail silver"></span>
       </li>
       {% endif %}
-      {% endunless %}
+      {% endunless %} {% endcomment %}
           {% comment %}{% if profile.has_facebook_info? %}
       <li>
         <a href="{{ profile.facebook_profile_url }}" title="{{ profile.full_name_or_friend}} on Facebook" class="ss-icon ss-social-regular ss-facebook facebook"></a>
@@ -65,7 +66,17 @@
 
     {% if profile.profile_content.size > 0 %}
     <div id="intro" class="intro">{{ profile.profile_content }}</div>
-    {% endif %}
+    {% else %}
+		{% if profile.bio.size > 0 %}
+		<p>{{ profile.bio }}</p>
+		{% endif %}
+	{% endif %}
+
+	<div class="">
+		<!-- Chris has taken the following actions on Climate Change: -->
+		<!-- Insert the badge list (handled by Angular) -->
+		<badges-list />
+	</div>
 
     {% if profile.has_fundraising_goal? %}
     {% assign thermo_width = 100 %}
@@ -90,3 +101,28 @@
     </p>{% endcomment %}
   </div>
 </div>
+
+<!-- Template for badges -->
+<script type="text/ng-template" id="badges_list.html">
+	<ul>
+		<action-list-item ng-repeat="action in actions" action="action" />
+	</ul>
+</script>
+
+<script type="text/ng-template" id="action_list_item.html">
+	<li ng-class="action['class']" ng-click="big = !big" ng-class="{'wide' : big}">
+		{[{ action['Title'] }]}
+		<div ng-show="big">
+			<p>{[{ action['Description'] }]}</p>
+			<button>Choose This</button>
+		</div>
+	</li>
+</script>
+
+<script type="text/javascript">
+(function() {
+	window.c4c = window.c4c || {};
+
+	c4c.demoMode = true;
+})();
+</script>

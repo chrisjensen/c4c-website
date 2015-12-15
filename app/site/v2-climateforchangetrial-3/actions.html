@@ -50,13 +50,21 @@
 	<a href="#/">Go back</a>
 	<p>{[{ category["Description"] }]}</p>
 
-	<div ng-class="action['class']" ng-repeat="action in actions">
-		<h3>{[{ action['Title'] }]}</h3>
-		<p>{[{ action['Description'] }]}</p>
-		<button>Choose This</button>
-	</div>
+	<ul>
+		<action-list-item ng-repeat="action in actions" action="action" />
+	</ul>
 
 	<a href="#/">Go back</a>
+</script>
+
+<script type="text/ng-template" id="action_list_item.html">
+	<li ng-class="action['class']" ng-click="big = !big" ng-class="{'wide' : big}">
+		<h3>{[{ action['Title'] }]}</h3>
+		<div ng-show="big">
+			<p>{[{ action['Description'] }]}</p>
+			<button>Choose This</button>
+		</div>
+	</li>
 </script>
 
 <!-- Template for actions hint -->
@@ -66,6 +74,16 @@
 </script>
 
 <script type="text/javascript">
-    var user_tags = '{{ request.current_signup.tag_list }}';
-	var action_pages = '{{ page.children }}';
+(function() {
+	window.c4c = window.c4c || {};
+
+	c4c.demoMode = true;
+
+    // Save the child pages as an array    
+	c4c.action_pages = [
+    {% for child in page.children %}
+    	'{{ child.slug }}',
+    {% endfor %}
+		];
+})();
 </script>

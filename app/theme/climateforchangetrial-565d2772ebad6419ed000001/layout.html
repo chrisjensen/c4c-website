@@ -97,6 +97,15 @@
 	<script src="TabletopProvider.js"></script>
 	<script src="app.js"></script>
 	<script src="actions_controllers.js"></script>
+
+	<script type="text/javascript">
+	(function() {
+		window.c4c = window.c4c || {};
+
+		// Save the user tags as an array
+		c4c.user_tags = '{{ request.current_signup.tag_list }}'.split(', ');
+	})();
+	</script>
   </body>
 </html>
 
