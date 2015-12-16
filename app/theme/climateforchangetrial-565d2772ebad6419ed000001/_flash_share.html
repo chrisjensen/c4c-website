@@ -8,7 +8,12 @@
 <!-- This is a bit of a dirty hack, but otherwise the user will be prompted to
      share their 'success' when they fail -->
 
+{% if tags_list contains "action" %}
+<div class="flash-share panel panel-default" ng-controller="ActionFlashController"
+	 ng-show="showFlash">
+{% else %}
 <div class="flash-share panel panel-default">
+{% endif %}
   <div class="panel-heading">
 	{% if tags_list contains "action" %}
     <h3 class="headline panel-title">Well done!</h3>

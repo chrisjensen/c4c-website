@@ -1,5 +1,5 @@
 (function() {
-	angular.module('c4cWebsite.actions', ['times.tabletop'])
+	angular.module('c4cWebsite.actions')
 	.factory('ActionService', ['$q', 'Tabletop', actionService]);
 	
 	/**

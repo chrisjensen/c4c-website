@@ -2,7 +2,7 @@
 
 (function() {
 
-angular.module('c4cWebsite.actions', ['ngRoute', 'times.tabletop'])
+angular.module('c4cWebsite.actions')
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
@@ -21,6 +21,8 @@ angular.module('c4cWebsite.actions', ['ngRoute', 'times.tabletop'])
 .controller('ActionsGridController', ['$scope', 'Tabletop', ActionsGridController])
 
 .controller('ActionsListController', ['$scope', '$routeParams', '$log', 'Tabletop', ActionsListController])
+
+.controller('ActionFlashController', ['$scope', 'ActionService', ActionFlashController])
 
 .directive('actionHint', function ActionsHintDirective() {
   return {
@@ -283,7 +285,7 @@ function ActionListItemController($scope, $timeout) {
   *		shareContentElement - The input that contains the text of the post
   */
 function ActionShareController($scope, $log, Tabletop) {
-	var default_share_text = "I just took action on climate change ...";
+	var default_share_text = "I'm taking this action on climate change ...";
 
 	$scope.$watch('shareContentElement', function() {
 		$($scope.shareContentElement).attr('value', default_share_text);
@@ -310,7 +312,7 @@ function ActionShareLink(scope, element, attributes) {
 function ActionSuccessForm($scope, ActionService) {
 	ActionService.then(function(actions) {
 		// Find the correct action
-		action = actions.find_by_page(c4c.page_slug);
+		var action = actions.find_by_page(c4c.page_slug);
 		
 		// Set the tag to the done tag
 		$scope.success_tag = action["end tag"];
@@ -325,7 +327,7 @@ function ActionSuccessForm($scope, ActionService) {
 function ActionFailForm($scope, ActionService) {
 	ActionService.then(function(actions) {
 		// Find the correct action
-		action = actions.find_by_page(c4c.page_slug);
+		var action = actions.find_by_page(c4c.page_slug);
 		
 		// Set the tag to the giveup tag
 		$scope.fail_tag = action["giveup tag"];
@@ -336,6 +338,35 @@ function ActionFailForm($scope, ActionService) {
 	
 	// Set the page_id for failure
 	$('#fail_form').find("input[name='page_id']").attr('value',problem_page);
+}
+
+/**
+  * Hides/unhides the flash message in case it was displayed by accident
+  *
+  * Since we arrive on this page from a signup form (so as to tag the user as
+  * having started the action) NationBuilder will display a flash saying thankyou
+  * for signing up.
+  * This controller will show the flash if:
+  *	  * the user has been tagged as having done the action associated with this 
+  *   * page
+  *
+  * $scope
+  *	*	showFlash - True if the flash should be shown
+  */
+function ActionFlashController($scope, ActionService) {
+	// Hide until we figure out if they've done this
+	$scope.showFlash = false;
+
+	ActionService.then(function(actions) {
+		// What action are we on
+		var action = actions.find_by_page(c4c.page_slug);
+		
+		// If they've done it, then unhide
+		var doneTag = action["end tag"];
+		if (doneTag && ($.inArray(doneTag, c4c.user_tags) > -1)) {
+		  $scope.showFlash = true;
+		}
+	});
 }
 
 })();
