@@ -1,0 +1,64 @@
+  <div class="form-wrap">
+    <div class="form">
+
+	  <!-- Success form -->
+      {% form_for signup %}
+
+      <div class="form-errors">{% error_messages_for signup %}</div>
+
+	  <!-- FIXME: Dynamic -->
+	  <input type="hidden" name="signup[optional_tag]" value="act-power-done" />
+
+	  <div class="row">
+		  <div class="col-md-6">
+			  {% submit_tag "I did it!", class:"pull-right submit-button btn btn-primary" %}
+		  </div>
+
+		  <div class="col-md-6">
+			  <a class="btn btn-info" href="#fail_form" data-toggle="collapse">I couldn't do it</a>
+		  </div>
+	  </div>
+	  <div class="form-submit"></div>
+
+      {% endform_for %}
+
+	  <div id="fail_form" class="collapse">
+
+	  <!-- Fail form -->
+      {% form_for signup %}
+
+      <div class="row">
+        <div class="col-md-12"><div class="form-group"><label for="volunteer_signup_content">What was the problem?</label>
+        To help us fix your problem, please include:
+        <ol><li>Which step you got stuck on</li>
+        <li>What you tried to do</li>
+        <li>What you expected to happen</li>
+        <li>What actually happened</li></ol>
+        {% text_area "content", class:"textarea form-control autogrow" %}</div>
+        </div>
+      </div>
+
+      <div class="form-errors">{% error_messages_for signup %}</div>
+
+	  <!-- FIXME: Dynamic -->
+	  <input type="hidden" name="signup[optional_tag]" value="act-power-giveup" />
+	  <input type="hidden" name="return_to" value="action_problem" />
+
+      {% submit_tag "Send Feedback", class:"submit-button btn btn-primary" %}
+      <div class="form-submit"></div>
+
+      {% endform_for %}
+
+	  </div> <!-- fail_form -->
+
+      {% if page.text_keyword_instructions.size > 0 %}
+      <div class="row padbottom padtopmore">
+        <div class="col-md-12">
+        or {{ page.text_keyword_instructions }}
+        </div>
+      </div>
+      {% endif %}
+
+
+    </div>
+  </div>
