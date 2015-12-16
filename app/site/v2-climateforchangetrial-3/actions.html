@@ -41,9 +41,13 @@
 		<a ng-repeat="category in categories"
 			 class="action-grid action-category col-md-6"
 			href="#/actions/{[{ category['Name'] }]}">{[{ category['Name'] }]}</a>
+		<div class="row-md-12 grid-loading text-center"
+				 ng-hide="categories.length">
+			<img src="assets/bert-loader-small.gif" alt="Loading ..."  />
+		</div>
 	</div>
 	
-	<action-hint />
+	<action-hint ng-show="categories.length"/>
 </script>
 
 <!-- Template for actions list -->
