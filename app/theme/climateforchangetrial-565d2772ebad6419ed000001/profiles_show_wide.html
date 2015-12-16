@@ -77,12 +77,11 @@
 		<!-- Insert the badge list (handled by Angular) -->
 		<badges-list />
 	</div>
-
     {% if profile.has_fundraising_goal? %}
     {% assign thermo_width = 100 %}
     <div class="clearfix">
       <h4 class="bar-goal">
-        I have helped raise {{ profile.donations_raised_amount_format }} for Climate for Change!
+        {{ profile.first_name }} has helped raise {{ profile.donations_raised_amount_format }} for Climate for Change!
         <br>
         <small>
           Goal: {{ profile.donations_to_raise_amount_format }}
@@ -105,7 +104,7 @@
 <!-- Template for badges -->
 <script type="text/ng-template" id="badges_list.html">
 	<ul>
-		<action-list-item ng-repeat="action in actions" action="action" />
+		<action-list-item ng-repeat="badge in badges" action="badge" />
 	</ul>
 </script>
 
