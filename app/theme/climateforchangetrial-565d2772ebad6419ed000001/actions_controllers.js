@@ -90,7 +90,7 @@ function BadgesListController($scope, $log, Tabletop) {
 	
 	Tabletop.then(function(sheets) {
 		// Find this category
-		var actions = sheets[0]["Actions"];
+		var actions = sheets[0]["Actions"].all();
 
 		angular.forEach(actions, function(action) {
 			var showBadge = true;
