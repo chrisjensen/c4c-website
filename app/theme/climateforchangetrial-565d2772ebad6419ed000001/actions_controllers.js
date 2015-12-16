@@ -28,7 +28,7 @@ angular.module('c4cWebsite.actions')
   return {
     restrict: 'E',
     templateUrl: 'actions_hint.html',
-    controller:  ['$scope', 'ActionService', ActionHintsController]
+    controller:  ['$scope', '$timeout', 'ActionService', ActionHintsController]
   }
 })
 
@@ -82,7 +82,7 @@ function ActionsGridController($scope, Tabletop) {
   * $scope variables
   * * hint	object containing name and link
   */
-function ActionHintsController($scope, ActionService) {
+function ActionHintsController($scope, $timeout, ActionService) {
 	$scope.hint = {
 		name: 'changing their power',
 		slug: 'power'
@@ -91,14 +91,14 @@ function ActionHintsController($scope, ActionService) {
 	// Update the form destination
 	ActionService.then(function(actions) {
 		// What action are we on
-		var action = actions.findByPage($scope.hint.slug);
+		var action = actions.findBySlug($scope.hint.slug);
 		var slug = action["Slug"];
-		page_id = c4c.action_pages[$scope.action["page slug"].trim()];
+		var page_id = c4c.action_pages[action["page slug"].trim()];
 
 		// Wait until after the DOM has finished rendering, then update the
 		// destination page_id
 		$timeout(function() {
-			$('hint_form').find("input[name='page_id']").attr('value', page_id);
+			$('#hint_form').find("input[name='page_id']").attr('value', page_id);
 		}, 0);
 	});
 }
