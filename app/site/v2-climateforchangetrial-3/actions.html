@@ -62,7 +62,8 @@
 </script>
 
 <script type="text/ng-template" id="action_list_item.html">
-	<li id="act_{[{ action['Slug'] }]}" ng-class="action['class']" ng-click="big = !big" ng-class="{'wide' : big}" class="action-item">
+	<li id="act_{[{ action['Slug'] }]}" ng-click="big = !big"
+		 ng-class="{'action-wide' : big}" class="action-item {[{action['class']}]}">
 		<h3>{[{ action['Title'] }]}</h3>
 		<div ng-show="big">
 			<p>{[{ action['Description'] }]}</p>
