@@ -1,6 +1,6 @@
 
 .action-grid.action-category {
-	background-color: #00F;
+	background-color: $denim;
 	height: 200px;
 	text-align: center;
 	vertical-align: middle;
@@ -23,9 +23,13 @@
     outline-offset: 0;
     
     /* Additional styles to look like a link */
-    color: blue;
+    color: $link-color;
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
+    
+    &:hover, &:focus {
+		text-decoration: underline;
+	}
 }
 
 .hint-form {

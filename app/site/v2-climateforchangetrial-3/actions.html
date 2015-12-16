@@ -37,10 +37,12 @@
 
 <!-- Template for actions grid -->
 <script type="text/ng-template" id="actions_grid.html">
+	<div class="row">
 		<a ng-repeat="category in categories"
 			 class="action-grid action-category col-md-6"
 			href="#/actions/{[{ category['Name'] }]}">{[{ category['Name'] }]}</a>
-			
+	</div>
+	
 	<action-hint />
 </script>
 
@@ -76,7 +78,7 @@
 
 <!-- Template for actions hint -->
 <script type="text/ng-template" id="actions_hint.html">
-	<div id="hint_form" class="hint-form">
+	<div id="hint_form" class="hint-form" >
     {% form_for signup %}
 
   <input type="hidden" name="signup[optional_tag]" value="{[{ action['start tag'] }]}" />
