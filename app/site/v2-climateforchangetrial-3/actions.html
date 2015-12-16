@@ -68,6 +68,7 @@
 		<div ng-show="big">
 			<p>{[{ action['Description'] }]}</p>
 
+	  <div ng-click="$event.stopPropagation()">
       {% form_for signup %}
 
 	  <input type="hidden" name="signup[optional_tag]" value="{[{ action['start tag'] }]}" />
@@ -75,6 +76,8 @@
 	  {% submit_tag "Choose this action", class:"pull-right submit-button btn btn-primary" %}
 
       {% endform_for %}
+      </div>
+      
 		</div>
 	</li>
 </script>
