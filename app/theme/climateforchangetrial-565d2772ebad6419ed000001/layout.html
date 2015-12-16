@@ -106,7 +106,7 @@
 		c4c.user_tags = '{{ request.current_signup.tag_list }}'.split(', ');
 
 		// Save the slug of the current page
-		c4c.page_slug = '{{ page_slug }}';
+		c4c.page_slug = '{{ page.slug }}';
 	})();
 	</script>
   </body>
