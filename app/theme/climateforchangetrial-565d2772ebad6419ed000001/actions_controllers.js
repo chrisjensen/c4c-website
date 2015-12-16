@@ -44,7 +44,7 @@ angular.module('c4cWebsite.actions', ['ngRoute', 'times.tabletop'])
     restrict: 'E',
     templateUrl: 'action_list_item.html',
     scope: { action: '=' },
-    controller:  ['$scope', ActionListItemController]
+    controller:  ['$scope', '$timeout', ActionListItemController]
   }
 })
 
@@ -211,7 +211,7 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
 		// Does it have a corresponding page?
 		var pageSlug = action["page slug"].trim()
 
-		if (pageSlug && ($.inArray(pageSlug, c4c.action_pages) == -1)) {
+		if (!(pageSlug && c4c.action_pages[pageSlug])) {
 			$log.error("action hidden (slug: " + action["Slug"] + ") Reason: no matching page. You must create a signup page that is a child of this page. The child page must have the slug: " + pageSlug);
 
 			// If demoMode is set, show the action anyway for easy debugging
@@ -261,9 +261,19 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
 /**
   * ActionListItemController
   *
+  * Changes the form page_id to go to the corresponding action page
+  *
   * $scope variables
   */
-function ActionListItemController($scope, Tabletop) {
+function ActionListItemController($scope, $timeout) {
+	var slug = $scope.action["Slug"],
+		page_id = c4c.action_pages[$scope.action["page slug"].trim()];
+
+	// Wait until after the DOM has finished rendering, then update the
+	// destination page_id
+	$timeout(function() {
+		$('#act_' + slug).find("input[name='page_id']").attr('value', page_id);
+	}, 0);
 }
 
 /**
@@ -275,8 +285,6 @@ function ActionListItemController($scope, Tabletop) {
 function ActionShareController($scope, $log, Tabletop) {
 	var default_share_text = "I just took action on climate change ...";
 
-	$log.debug('Element is: ' + $scope.shareContentElement);
-	
 	$scope.$watch('shareContentElement', function() {
 		$($scope.shareContentElement).attr('value', default_share_text);
 	});

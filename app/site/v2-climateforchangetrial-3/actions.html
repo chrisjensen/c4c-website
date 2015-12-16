@@ -58,11 +58,18 @@
 </script>
 
 <script type="text/ng-template" id="action_list_item.html">
-	<li ng-class="action['class']" ng-click="big = !big" ng-class="{'wide' : big}">
+	<li id="act_{[{ action['Slug'] }]}" ng-class="action['class']" ng-click="big = !big" ng-class="{'wide' : big}">
 		<h3>{[{ action['Title'] }]}</h3>
 		<div ng-show="big">
 			<p>{[{ action['Description'] }]}</p>
-			<button>Choose This</button>
+
+      {% form_for signup %}
+
+	  <input type="hidden" name="signup[optional_tag]" value="{[{ action['start tag'] }]}" />
+
+	  {% submit_tag "Choose this action", class:"pull-right submit-button btn btn-primary" %}
+
+      {% endform_for %}
 		</div>
 	</li>
 </script>
@@ -73,6 +80,14 @@
 	<a href="{[{ hint.link }]}">{[{ hint.name }]}</a>.
 </script>
 
+<!-- Template for actions hint -->
+<script type="text/ng-template" id="actions_hint.html">
+	  <!-- Success form -->
+	  <div id="success_form" ng-controller="ActionSuccessForm">
+
+	  </div>
+</script>
+
 <script type="text/javascript">
 (function() {
 	window.c4c = window.c4c || {};
@@ -80,10 +95,11 @@
 	c4c.demoMode = true;
 
     // Save the child pages as an array    
-	c4c.action_pages = [
+	c4c.action_pages = {
     {% for child in page.children %}
-    	'{{ child.slug }}',
+    	'{{ child.slug }}': '{{ child.id}}',
     {% endfor %}
-		];
+		};
 })();
 </script>
+
