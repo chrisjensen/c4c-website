@@ -7,7 +7,7 @@
 
       <div class="form-errors">{% error_messages_for signup %}</div>
 
-	  <input type="hidden" name="signup[optional_tag]" value="{{ success_tag }}" />
+	  <input type="hidden" name="signup[optional_tag]" value="{[{ success_tag }]}" />
 
 	  <div class="row">
 		  <div class="col-md-6">
@@ -42,7 +42,7 @@
 
       <div class="form-errors">{% error_messages_for signup %}</div>
 
-	  <input type="hidden" name="signup[optional_tag]" value="{{ fail_tag }}" />
+	  <input type="hidden" name="signup[optional_tag]" value="{[{ fail_tag }]}" />
 
       {% submit_tag "Send Feedback", class:"submit-button btn btn-primary" %}
       <div class="form-submit"></div>
