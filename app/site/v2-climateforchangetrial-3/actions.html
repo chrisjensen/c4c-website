@@ -50,7 +50,7 @@
 	<a href="#/">Go back</a>
 	<p>{[{ category["Description"] }]}</p>
 
-	<ul>
+	<ul class="action-list">
 		<action-list-item ng-repeat="action in actions" action="action" />
 	</ul>
 
@@ -58,7 +58,7 @@
 </script>
 
 <script type="text/ng-template" id="action_list_item.html">
-	<li id="act_{[{ action['Slug'] }]}" ng-class="action['class']" ng-click="big = !big" ng-class="{'wide' : big}">
+	<li id="act_{[{ action['Slug'] }]}" ng-class="action['class']" ng-click="big = !big" ng-class="{'wide' : big}" class="action-item">
 		<h3>{[{ action['Title'] }]}</h3>
 		<div ng-show="big">
 			<p>{[{ action['Description'] }]}</p>

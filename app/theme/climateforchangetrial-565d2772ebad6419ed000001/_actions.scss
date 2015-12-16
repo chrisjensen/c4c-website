@@ -9,6 +9,7 @@
 	text-transform: uppercase;
 	color: #FFF;
 	text-decoration: none;
+	border: black 1px solid;
 }
 
 .plain-link-button {
@@ -25,4 +26,30 @@
     color: blue;
     cursor: pointer;
     text-decoration: underline;
+}
+
+.hint_form {
+	margin-top: 20px;
+}
+
+ul.action-list {
+	margin-left: 0;
+	padding-left: 0;
+}
+
+li.action-item {
+	list-style: none;
+	width: 30%;
+	margin-left: 1%;
+	margin-right: 23%;
+    display: inline-block;
+    background: #ADD8E6;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    padding: 10px;
+}
+
+.action-item h3 {
+    font-size: 20px;
+    cursor: pointer;
 }
