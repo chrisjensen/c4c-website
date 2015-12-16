@@ -32,20 +32,24 @@
 	  * Find an action by slug
 	  */
 	function findBySlug(slug) {
-		angular.forEach(actionSheet, function(row) {
+		for (var i=0; i<actionSheet.length; i++) {
+			var row = actionSheet[i];
+			
 			if (row["Slug"] == slug)
 			  return row;
-		});
+		}
 	};
 	
 	/**
 	  * Find an action by slug
 	  */
 	function findByPage(page) {
-		angular.forEach(actionSheet, function(row) {
+		for (var i=0; i<actionSheet.length; i++) {
+			var row = actionSheet[i];
+			
 			if (row["page slug"] == page)
 			  return row;
-		});
+		}
 	};
 
 	};
