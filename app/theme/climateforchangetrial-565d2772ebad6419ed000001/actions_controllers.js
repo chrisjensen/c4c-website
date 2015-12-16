@@ -250,10 +250,8 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
   * ActionListItemController
   *
   * $scope variables
-  * * big	True if the element should expand
   */
 function ActionListItemController($scope, Tabletop) {
-	$scope.big = false;	
 }
 
 })();
