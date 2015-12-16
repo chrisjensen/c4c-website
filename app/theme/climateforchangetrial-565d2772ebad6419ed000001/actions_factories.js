@@ -13,8 +13,8 @@
 
 		function init() {
 			var service = {
-				findbBySlug: findBySlug,
-				findbByPage: findByPage,
+				findBySlug: findBySlug,
+				findByPage: findByPage,
 			}
 			
 			var deferred = $q.defer();			
@@ -34,7 +34,7 @@
 	function findBySlug(slug) {
 		angular.forEach(actionSheet, function(row) {
 			if (row["Slug"] == slug)
-			  return row["Slug"];
+			  return row;
 		});
 	};
 	
@@ -43,8 +43,8 @@
 	  */
 	function findByPage(page) {
 		angular.forEach(actionSheet, function(row) {
-			if (row["page slug"] == slug)
-			  return row["page slug"];
+			if (row["page slug"] == page)
+			  return row;
 		});
 	};
 

@@ -312,7 +312,7 @@ function ActionShareLink(scope, element, attributes) {
 function ActionSuccessForm($scope, ActionService) {
 	ActionService.then(function(actions) {
 		// Find the correct action
-		var action = actions.find_by_page(c4c.page_slug);
+		var action = actions.findByPage(c4c.page_slug);
 		
 		// Set the tag to the done tag
 		$scope.success_tag = action["end tag"];
@@ -327,7 +327,7 @@ function ActionSuccessForm($scope, ActionService) {
 function ActionFailForm($scope, ActionService) {
 	ActionService.then(function(actions) {
 		// Find the correct action
-		var action = actions.find_by_page(c4c.page_slug);
+		var action = actions.findByPage(c4c.page_slug);
 		
 		// Set the tag to the giveup tag
 		$scope.fail_tag = action["giveup tag"];
@@ -337,7 +337,7 @@ function ActionFailForm($scope, ActionService) {
 	var problem_page_id = '151';
 	
 	// Set the page_id for failure
-	$('#fail_form').find("input[name='page_id']").attr('value',problem_page);
+	$('#fail_form').find("input[name='page_id']").attr('value', problem_page_id);
 }
 
 /**
@@ -359,7 +359,7 @@ function ActionFlashController($scope, ActionService) {
 
 	ActionService.then(function(actions) {
 		// What action are we on
-		var action = actions.find_by_page(c4c.page_slug);
+		var action = actions.findByPage(c4c.page_slug);
 		
 		// If they've done it, then unhide
 		var doneTag = action["end tag"];
