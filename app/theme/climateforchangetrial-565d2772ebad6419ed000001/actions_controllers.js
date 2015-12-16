@@ -15,6 +15,9 @@ angular.module('c4cWebsite.actions', ['ngRoute', 'times.tabletop'])
   });
 }])
 
+.controller('ActionFailForm', ['$scope', 'ActionService', ActionFailForm])
+.controller('ActionSuccessForm', ['$scope', 'ActionService', ActionSuccessForm])
+
 .controller('ActionsGridController', ['$scope', 'Tabletop', ActionsGridController])
 
 .controller('ActionsListController', ['$scope', '$routeParams', '$log', 'Tabletop', ActionsListController])
@@ -24,6 +27,15 @@ angular.module('c4cWebsite.actions', ['ngRoute', 'times.tabletop'])
     restrict: 'E',
     templateUrl: 'actions_hint.html',
     controller:  ['$scope', ActionHintsController]
+  }
+})
+
+.directive('actionShare', function ActionShareDirective() {
+  return {
+    restrict: 'E',
+    templateUrl: 'action_share.html',
+    controller:  ['$scope', '$log', 'Tabletop', ActionShareController],
+    link: ActionShareLink
   }
 })
 
@@ -252,6 +264,70 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
   * $scope variables
   */
 function ActionListItemController($scope, Tabletop) {
+}
+
+/**
+  * ActionShareController
+  *
+  * $scope variables
+  *		shareContentElement - The input that contains the text of the post
+  */
+function ActionShareController($scope, $log, Tabletop) {
+	var default_share_text = "I just took action on climate change ...";
+
+	$log.debug('Element is: ' + $scope.shareContentElement);
+	
+	$scope.$watch('shareContentElement', function() {
+		$($scope.shareContentElement).attr('value', default_share_text);
+	});
+
+	Tabletop.then(function(sheets) {
+		// Find this category
+		var actions = sheets[0]["Actions"].all();
+		
+		// Change the value of the tweet
+//		$($scope.shareContentElement).attr('value', 'SHARE CONTENT');
+	});
+}
+
+function ActionShareLink(scope, element, attributes) {
+	scope.shareContentElement = $(element).find('#face_tweet_content');
+}
+
+/**
+  * Sets the correct tag for failing
+  * $scope
+  * * success_tag - The tag to be applied to the user if they succeed
+  */
+function ActionSuccessForm($scope, ActionService) {
+	ActionService.then(function(actions) {
+		// Find the correct action
+		action = actions.find_by_page(c4c.page_slug);
+		
+		// Set the tag to the done tag
+		$scope.success_tag = action["end tag"];
+	});
+}
+
+/**
+  * Sets the correct tag for failing
+  * $scope
+  * * fail_tag - The tag to be applied to the user if they give up
+  */
+function ActionFailForm($scope, ActionService) {
+	ActionService.then(function(actions) {
+		// Find the correct action
+		action = actions.find_by_page(c4c.page_slug);
+		
+		// Set the tag to the giveup tag
+		$scope.fail_tag = action["giveup tag"];
+	});
+	
+	// Set the page_id = 151 (action_problem)
+	var problem_page_id = '151';
+	
+	// Set the page_id for failure
+	$('#fail_form').find("input[name='page_id']").attr('value',problem_page);
 }
 
 })();

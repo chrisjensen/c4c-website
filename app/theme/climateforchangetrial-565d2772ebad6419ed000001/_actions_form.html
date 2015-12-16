@@ -2,12 +2,12 @@
     <div class="form">
 
 	  <!-- Success form -->
+	  <div id="success_form" ng-controller="ActionSuccessForm">
       {% form_for signup %}
 
       <div class="form-errors">{% error_messages_for signup %}</div>
 
-	  <!-- FIXME: Dynamic -->
-	  <input type="hidden" name="signup[optional_tag]" value="act-power-done" />
+	  <input type="hidden" name="signup[optional_tag]" value="{{ success_tag }}" />
 
 	  <div class="row">
 		  <div class="col-md-6">
@@ -22,7 +22,9 @@
 
       {% endform_for %}
 
-	  <div id="fail_form" class="collapse">
+	  </div>
+
+	  <div id="fail_form" class="collapse" ng-controller="ActionFailForm">
 
 	  <!-- Fail form -->
       {% form_for signup %}
@@ -40,9 +42,7 @@
 
       <div class="form-errors">{% error_messages_for signup %}</div>
 
-	  <!-- FIXME: Dynamic -->
-	  <input type="hidden" name="signup[optional_tag]" value="act-power-giveup" />
-	  <input type="hidden" name="return_to" value="action_problem" />
+	  <input type="hidden" name="signup[optional_tag]" value="{{ fail_tag }}" />
 
       {% submit_tag "Send Feedback", class:"submit-button btn btn-primary" %}
       <div class="form-submit"></div>
