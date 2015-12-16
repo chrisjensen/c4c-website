@@ -77,11 +77,12 @@
 <!-- Template for actions hint -->
 <script type="text/ng-template" id="actions_hint.html">
 	<div id="hint_form">
-	<strong>Not sure where to start?</strong> Many people start with 
     {% form_for signup %}
 
   <input type="hidden" name="signup[optional_tag]" value="{[{ action['start tag'] }]}" />
   <input type="hidden" name="signup[optional_tag]" value="{[{ action['start tag'] }]}_hint" />
+
+	<strong>Not sure where to start?</strong> Many people start with 
 
   {% submit_tag "{[{ hint.name }]}", class:"submit-button plain-link-button" %}
 
