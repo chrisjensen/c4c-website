@@ -76,8 +76,32 @@
 
 <!-- Template for actions hint -->
 <script type="text/ng-template" id="actions_hint.html">
+	<div id="hint_form">
 	<strong>Not sure where to start?</strong> Many people start with 
-	<a href="{[{ hint.link }]}">{[{ hint.name }]}</a>.
+    {% form_for signup %}
+
+  <input type="hidden" name="signup[optional_tag]" value="{[{ action['start tag'] }]}" />
+  <input type="hidden" name="signup[optional_tag]" value="{[{ action['start tag'] }]}_hint" />
+
+  {% submit_tag "{[{ hint.name }]}", class:"submit-button plain-link-button" %}
+
+	<!--- style this like a link:
+		background: none;
+    border: none;
+    display: inline;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    outline-offset: 0;
+    /* Additional styles to look like a link */
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+    -->
+  
+   {% endform_for %}
+	</div>
 </script>
 
 <script type="text/javascript">
