@@ -1,3 +1,6 @@
+.action-content {
+	margin-top: -15px;
+}
 
 .action-grid.action-category {
 	background-color: $denim;
@@ -45,15 +48,18 @@ li.action-item {
 	list-style: none;
 	width: 30%;
 	margin-left: 1%;
-	margin-right: 23%;
+	margin-right: 2%;
     display: inline-block;
     background: #ADD8E6;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 10px;
+    float: left;
+    height: 100px;
 }
 
 .action-item h3 {
-    font-size: 20px;
+    font-size: 18px;
+    margin-top: 10px;
     cursor: pointer;
 }

@@ -4,15 +4,7 @@
 
 <div id="content">
 
-  <div id="intro" class="intro">
-    <div class="text-content">
-      {{ page.basic.content }}
-    </div>
-  </div>
-<!--  TagsTags: {{ request.current_signup.tag_list }} -->
-<!--  Child pages {{ page.children }} -->
-  
-  <ng-view></ng-view>
+  <ng-view class="action-content"></ng-view>
   
   {% if page.tags_count > 0 %}
   <div class="page-tags">
@@ -53,14 +45,20 @@
 <!-- Template for actions list -->
 <script type="text/ng-template" id="actions_list.html">
 	<h2>{[{ category["Name"] }]}</h2>
-	<a href="#/">Go back</a>
+	<a href="#/" class="pull-right">Go back</a>
 	<p>{[{ category["Description"] }]}</p>
 
+	<div class="row">
 	<ul class="action-list">
 		<action-list-item ng-repeat="action in actions" action="action" />
 	</ul>
+	</div>
 
-	<a href="#/">Go back</a>
+	<div class="row">
+		<div class="col-md-12">
+			<a href="#/" class="pull-right">Go back</a>
+		</div>
+	</div>
 </script>
 
 <script type="text/ng-template" id="action_list_item.html">
