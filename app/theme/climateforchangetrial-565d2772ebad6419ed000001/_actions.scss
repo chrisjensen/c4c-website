@@ -1,0 +1,28 @@
+
+.action-grid.action-category {
+	background-color: #00F;
+	height: 200px;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 90px;
+	font-size: 1.5em;
+	text-transform: uppercase;
+	color: #FFF;
+	text-decoration: none;
+}
+
+.plain-link-button {
+	background: none;
+    border: none;
+    display: inline;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    outline: none;
+    outline-offset: 0;
+    
+    /* Additional styles to look like a link */
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+}

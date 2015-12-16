@@ -37,10 +37,10 @@
 
 <!-- Template for actions grid -->
 <script type="text/ng-template" id="actions_grid.html">
-	<div ng-repeat="category in categories">
-		<a href="#/actions/{[{ category['Name'] }]}">{[{ category['Name'] }]}</a>
-	</div>
-	
+		<a ng-repeat="category in categories"
+			 class="action-grid action-category col-md-6"
+			href="#/actions/{[{ category['Name'] }]}">{[{ category['Name'] }]}</a>
+			
 	<action-hint />
 </script>
 
@@ -85,21 +85,6 @@
 
   {% submit_tag "{[{ hint.name }]}", class:"submit-button plain-link-button" %}
 
-	<!--- style this like a link:
-		background: none;
-    border: none;
-    display: inline;
-    font: inherit;
-    margin: 0;
-    padding: 0;
-    outline: none;
-    outline-offset: 0;
-    /* Additional styles to look like a link */
-    color: blue;
-    cursor: pointer;
-    text-decoration: underline;
-    -->
-  
    {% endform_for %}
 	</div>
 </script>
