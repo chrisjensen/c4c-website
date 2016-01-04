@@ -186,11 +186,11 @@
           <h3>Thank you for rsvp'ing.  We'll see you there!</h3>
           {% endif %}
 
-        {% if request.sorta_logged_in? and request.logged_in? == false %}
+        {% unless request.sorta_logged_in? and request.logged_in? == false %}
 
           If you're not {{ request.current_signup.name_or_email }}, <a href="{{ request.current_signup.logout_url }}">click here</a>.
 
-        {% endif %}
+        {% endunless %}
 
         {% if page.event.current_rsvp.is_canceled? %}
 

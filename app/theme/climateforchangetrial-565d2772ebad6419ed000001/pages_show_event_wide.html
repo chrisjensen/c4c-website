@@ -251,11 +251,11 @@
 
           <h4>Hi {{ request.current_signup.name_or_email }}, will you come?</h4>
 
-        {% if request.logged_in? == false %}
+        {% unless request.logged_in? == false %}
         <div class="padtop text-content">
           If you're not {{ request.current_signup.name_or_email }}, <a href="{{ request.current_signup.logout_url }}">click here</a>.
         </div>
-        {% endif %}
+        {% endunless %}
 
         {% else %}
 
