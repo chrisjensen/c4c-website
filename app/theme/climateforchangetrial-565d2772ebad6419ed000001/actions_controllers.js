@@ -50,6 +50,14 @@ angular.module('c4cWebsite.actions')
   }
 })
 
+.directive('actionSteps', function ActionStepsDirective() {
+  return {
+    restrict: 'A',
+    controller:  ['$scope', '$log', ActionStepsController],
+    link: ActionStepsLink
+  }
+})
+
 .directive('badgesList', function BadgesListDirective() {
   return {
     restrict: 'E',
@@ -380,6 +388,48 @@ function ActionFlashController($scope, ActionService) {
 		if (doneTag && ($.inArray(doneTag, c4c.user_tags) > -1)) {
 		  $scope.showFlash = true;
 		}
+	});
+}
+
+/**
+  * ActionSetpsLink
+  * Links the controller to the element it's tagged on 
+  */
+function ActionStepsLink(scope, element, attributes) {
+	scope.element = $(element);
+}
+
+/**
+  * Attribute for steps to help write the code to
+  * make dynamic functions work (like collapse)
+  */
+function ActionStepsController($scope, $log) {
+
+	// Once link function has found our element
+	// go through and link up the collapse directives
+	$scope.$watch('element', function() {
+		// Set up the accordion collapse on the steps
+		var steps = $scope.element.find('.step-heading');
+
+		steps.attr('data-toggle', 'collapse');
+		steps.attr('data-parent', '#steps');
+
+		steps.each(function() {
+			var step = $(this);
+			var id = step.attr('id');
+			var target = '#' + id.replace('heading', 'details');
+			step.attr('data-target', target);
+		});
+
+		var collapses = $scope.element.find('.toggle-collapse');
+		collapses.attr('data-toggle', 'collapse');
+
+		collapses.each(function() {
+			var step = $(this);
+			var id = step.attr('id');
+			var target = '#' + id.replace('heading', 'details');
+			step.attr('data-target', target);
+		});
 	});
 }
 
