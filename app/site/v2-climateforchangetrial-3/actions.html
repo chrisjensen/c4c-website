@@ -104,7 +104,7 @@
 
 	c4c.demoMode = true;
 
-    // Save the child pages as an array    
+    // Save the child pages as an object mapping slug to id    
 	c4c.action_pages = {
     {% for child in page.children %}
     	'{{ child.slug }}': '{{ child.id}}',
@@ -112,4 +112,3 @@
 		};
 })();
 </script>
-
