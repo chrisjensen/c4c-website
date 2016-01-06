@@ -72,6 +72,7 @@
 	<li id="act_{[{ action['Slug'] }]}" ng-click="big = !big"
 		 ng-class="{'action-wide' : big}" class="action-item {[{action['class']}]}">
 		<h3>{[{ action['Title'] }]}</h3>
+		<span class="glyphicon glyphicon-ok pull-right status-icon" aria-hidden="true" ng-show="action.isDone"></span>
 		<div ng-show="big">
 			<p>{[{ action['Description'] }]}</p>
 

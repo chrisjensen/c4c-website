@@ -205,9 +205,12 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
 		// Remove any actions that we can't show
 		$scope.actions = $.grep($scope.actions, canShow);
 
-		// Set the class for the action		
+		// Set the class for the action and other info on the action
 		$scope.actions.forEach(function(action) {
 			action["class"] = actionCSSClass(action);
+			
+			// Has the user done the action?
+			action["isDone"] = ($.inArray(action["end tag"], c4c.user_tags) > -1);
 		});
     });
     
