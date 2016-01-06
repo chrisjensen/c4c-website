@@ -39,7 +39,11 @@
 		</div>
 	</div>
 	
-	<action-hint ng-show="categories.length"/>
+	<div class="row">
+		<div class="col-md-6">
+			<a href="#/" class="pull-right">Suggest an action for me</a>
+		</div>
+	</div>
 </script>
 
 <!-- Template for actions list -->
@@ -55,8 +59,11 @@
 	</div>
 
 	<div class="row">
-		<div class="col-md-12">
-			<a href="#/" class="pull-right">Go back</a>
+		<div class="col-md-6">
+			<a href="#/" class="pull-right">Suggest an action for me</a>
+		</div>
+		<div class="col-md-6">
+			<a href="#/actions" class="pull-right">Go back</a>
 		</div>
 	</div>
 </script>
@@ -73,7 +80,7 @@
 
 	  <input type="hidden" name="signup[optional_tag]" value="{[{ action['start tag'] }]}" />
 
-	  {% submit_tag "Choose this action", class:"pull-right submit-button btn btn-primary" %}
+	  {% submit_tag "Do this action", class:"pull-right submit-button btn btn-primary" %}
 
       {% endform_for %}
       </div>
@@ -83,18 +90,20 @@
 </script>
 
 <!-- Template for actions hint -->
-<script type="text/ng-template" id="actions_hint.html">
-	<div id="hint_form" class="hint-form" >
-    {% form_for signup %}
+<script type="text/ng-template" id="actions_guide.html">
+	<div class="row-md-12 grid-loading text-center"
+			 ng-hide="action">
+		<img src="assets/bert-loader-small.gif" alt="Loading ..."  />
+	</div>
 
-  <input type="hidden" name="signup[optional_tag]" value="{[{ action['start tag'] }]}" />
-  <input type="hidden" name="signup[optional_tag]" value="{[{ action['start tag'] }]}_hint" />
+	<div ng-show="action">
+		<p>Your suggested action for this week: </p>
 
-	<strong>Not sure where to start?</strong> Many people start with 
-
-  {% submit_tag "{[{ hint.name }]}", class:"submit-button plain-link-button" %}
-
-   {% endform_for %}
+		<div class="row">
+			<action-list-item action="action"></action-list-item>
+		</div>
+	
+		<a href="#/actions" class="btn btn-info">See all actions</a>
 	</div>
 </script>
 
@@ -104,7 +113,7 @@
 
 	c4c.demoMode = true;
 
-    // Save the child pages as an object mapping slug to id    
+    // Save the child pages as an object mapping slug to id
 	c4c.action_pages = {
     {% for child in page.children %}
     	'{{ child.slug }}': '{{ child.id}}',

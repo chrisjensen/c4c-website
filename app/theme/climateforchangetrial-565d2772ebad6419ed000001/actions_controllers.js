@@ -6,6 +6,10 @@ angular.module('c4cWebsite.actions')
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {
+    templateUrl: 'actions_guide.html',
+    controller: 'ActionsGuideController'
+  });
+  $routeProvider.when('/actions', {
     templateUrl: 'actions_grid.html',
     controller: 'ActionsGridController'
   });
@@ -25,13 +29,7 @@ angular.module('c4cWebsite.actions')
 
 .controller('ActionFlashController', ['$scope', 'ActionService', ActionFlashController])
 
-.directive('actionHint', function ActionsHintDirective() {
-  return {
-    restrict: 'E',
-    templateUrl: 'actions_hint.html',
-    controller:  ['$scope', '$timeout', 'ActionService', ActionHintsController]
-  }
-})
+.controller('ActionsGuideController', ['$scope', '$timeout', 'ActionService', ActionsGuideController])
 
 .directive('actionShare', function ActionShareDirective() {
   return {
@@ -104,29 +102,23 @@ function ActionsGridController($scope, Tabletop) {
 }
 
 /**
-  * ActionsHintController
+  * ActionsGuideController
   *
   * $scope variables
-  * * hint	object containing name and link
+  * * action - The suggested action
   */
-function ActionHintsController($scope, $timeout, ActionService) {
+function ActionsGuideController($scope, $timeout, ActionService) {
 	$scope.hint = {
 		name: 'changing their power',
 		slug: 'power'
 	}
 
-	// Update the form destination
+	// Find our suggested action
 	ActionService.then(function(actions) {
 		// What action are we on
 		var action = actions.findBySlug($scope.hint.slug);
-		var slug = action["Slug"];
-		var page_id = c4c.action_pages[action["page slug"].trim()];
 
-		// Wait until after the DOM has finished rendering, then update the
-		// destination page_id
-		$timeout(function() {
-			$('#hint_form').find("input[name='page_id']").attr('value', page_id);
-		}, 0);
+		$scope.action = action;
 	});
 }
 
@@ -309,12 +301,12 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
   * $scope variables
   */
 function ActionListItemController($scope, $timeout) {
-	var slug = $scope.action["Slug"],
-		page_id = c4c.action_pages[$scope.action["page slug"].trim()];
-
 	// Wait until after the DOM has finished rendering, then update the
 	// destination page_id
 	$timeout(function() {
+		var slug = $scope.action["Slug"],
+			page_id = c4c.action_pages[$scope.action["page slug"].trim()];
+
 		$('#act_' + slug).find("input[name='page_id']").attr('value', page_id);
 	}, 0);
 }
