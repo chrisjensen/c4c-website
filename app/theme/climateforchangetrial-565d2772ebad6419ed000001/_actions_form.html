@@ -2,7 +2,7 @@
     <div class="form">
 
 	  <!-- Success form -->
-	  <div id="success_form" ng-controller="ActionSuccessForm">
+	  <div id="question_form" ng-controller="ActionSimpleSuccessForm">
       {% form_for signup %}
 
       <div class="form-errors">{% error_messages_for signup %}</div>
@@ -10,8 +10,14 @@
 	  <input type="hidden" name="signup[optional_tag]" value="{[{ success_tag }]}" />
 
 	  <div class="row">
-		  <div class="col-md-6">
-			  {% submit_tag "I did it!", class:"pull-right submit-button btn btn-primary" %}
+	  	  <!-- Submit straight away if no more data needed -->
+		  <div class="col-md-6" ng-hide="action.hasCustomFields">
+			 {% submit_tag "I did it!", class:"pull-right submit-button btn btn-primary"  %}
+		  </div>
+		  <!-- If custom fields are present, expand the form -->
+		  <div class="col-md-6" ng-show="action.hasCustomFields">
+			  <a class="btn btn-primary pull-right" href="#success_form" data-toggle="collapse">I did it!</a>
+			 
 		  </div>
 
 		  <div class="col-md-6">
@@ -19,6 +25,40 @@
 		  </div>
 	  </div>
 	  <div class="form-submit"></div>
+
+      {% endform_for %}
+
+	  </div>
+
+	  <!-- Custom Fields form -->
+	  <!-- Shown if we want to get extra data from the user -->
+	  <div id="success_form" class="collapse" ng-controller="ActionCustomFieldsSuccessForm">
+
+	  <p>Well done! Could you share some information about your action with us?</p>
+	  <p>It's optional, if you'd prefer to claim your badge and move on, then you can click the "Claim Badge" button below, but providing this information will help us understand how effective these actions are.</p>
+	  <p><a href="#why_custom_fields" data-toggle="collapse">Why do we ask for this?</a></p>
+	  <div class="panel panel-default collapse" id="why_custom_fields">
+		<div class="panel-body">
+		  <p>This information helps us to qualify and quantify the impact that Climate for Change is having.</p>
+		  <p>This enables us to let donors know that their money is being given to a worthwhile cause and is having an impact.</p>
+		</div>
+	  </div>
+
+      {% form_for signup %}
+      <div class="form-errors">{% error_messages_for signup %}</div>
+
+		<div class="row">
+		  <div class="col-md-12">
+
+			<action-custom-field ng-repeat="customField in customFields" custom-field="customField"></action-custom-field>
+
+		  </div>
+		</div>
+
+	  <input type="hidden" name="signup[optional_tag]" value="{[{ success_tag }]}" />
+
+	  {% submit_tag "Claim Badge", class:"pull-right submit-button btn btn-primary" %}
+
 
       {% endform_for %}
 
@@ -62,3 +102,93 @@
 
     </div>
   </div>
+  
+<script type="text/ng-template" id="action_custom_field.html">
+    <ng-switch on="customField.kind">
+		<div ng-switch-when="text">
+			<label for="signup_custom_values_{[{ customField.slug }]}_custom">{[{ customField.name }]}</label>
+			<input class="text" id="signup_custom_values_{[{ customField.slug }]}_custom" name="signup[custom_values][{[{ customField.slug }]}]" type="text">	
+		</div>
+		<div ng-switch-when="number">
+			<label for="signup_custom_values_{[{ customField.slug }]}_custom">{[{ customField.name }]}</label>
+			<input class="text" id="signup_custom_values_{[{ customField.slug }]}_custom" name="signup[custom_values][{[{ customField.slug }]}]" type="text">	
+		</div>
+		<div ng-switch-when="boolean">
+			<label class="checkbox" for="signup_custom_values_{[{ customField.slug }]}_custom">
+			<input class="checkbox" type="checkbox" id="signup_custom_values_{[{ customField.slug }]}_custom" name="signup[custom_values][{[{ customField.slug }]}]"></label>
+		</div>
+		<div ng-switch-when="multiple_choice">
+			<label for="signup_custom_values_{[{ customField.slug }]}_custom">{[{ customField.name }]}</label>
+			<select-field custom-field="customField" class="select" />
+		</div>
+	</ng-switch>
+</script>
+
+<script type="text/ng-template" id="select_field.html">
+	<select id="signup_custom_values_{[{ customField.slug }]}_custom" name="signup[custom_values][{[{ customField.slug }]}]">
+		<option ng-repeat="choice in choices" value="{[{ choice.id }]}">{[{ choice.name  }]}</option>
+	</select>
+</script>
+  
+<script type="text/javascript">
+(function() {
+	window.c4c = window.c4c || {};
+
+	// Save the custom fields in an object that maps the slug to the object
+	// each object will be of the form
+	// {
+	//    slug: 'the_slug',
+	//	  name: 'Name of the field',
+	//    kind: 'text|number|boolean|multiple_choice',
+	//    choices: [ { value: 1, name: "AGL" }, ... ] // Choices for the multiple choice
+	// }
+	c4c.custom_fields = {};
+	
+    {% for cf in custom_fields.signup %}
+		{% assign custom_field = cf[1] %}
+		
+		var cf = {
+			slug: '{{ custom_field.slug }}',
+			name: '{{ custom_field.name }}',
+		{% if custom_field.is_text? %}
+			kind: 'text',
+		{% elsif custom_field.is_number? %}
+			kind: 'number',
+		{% elsif custom_field.is_boolean? %}
+			kind: 'boolean',
+		{% elsif custom_field.is_multiple_choice? %}
+			kind: 'multiple_choice',
+			
+		{% endif %}
+		};
+		
+		{% if custom_field.is_multiple_choice? %}
+		
+		cf.choices = [];
+		
+		{% for choice in custom_fields.signup[custom_field.slug].multiple_choice_options %}
+			var choiceElement = {};
+		
+			var choice = '{{ choice }}';
+			fields = choice.replace(/[:{}>]+/g, '').split(',');
+			for (i=0; i<fields.length; i++) {
+				var field = fields[i];
+				var name = field.split('=')[0].trim();
+				var value = field.split('=')[1].replace(/"/g,'');
+				
+				choiceElement[name] = value;
+			};
+		
+			cf.choices.push(choiceElement);
+		
+		{% endfor %}
+
+		{% endif %}
+
+		c4c.custom_fields['{{ custom_field.slug }}'] = cf;
+
+	{% endfor %}
+	
+		
+})();
+</script>

@@ -16,7 +16,8 @@ angular.module('c4cWebsite.actions')
 }])
 
 .controller('ActionFailForm', ['$scope', 'ActionService', ActionFailForm])
-.controller('ActionSuccessForm', ['$scope', 'ActionService', ActionSuccessForm])
+.controller('ActionSimpleSuccessForm', ['$scope', 'ActionService', ActionSimpleSuccessForm])
+.controller('ActionCustomFieldsSuccessForm', ['$scope', 'ActionService', ActionCustomFieldsSuccessForm])
 
 .controller('ActionsGridController', ['$scope', 'Tabletop', ActionsGridController])
 
@@ -38,6 +39,24 @@ angular.module('c4cWebsite.actions')
     templateUrl: 'action_share.html',
     controller:  ['$scope', '$log', 'Tabletop', ActionShareController],
     link: ActionShareLink
+  }
+})
+
+.directive('actionCustomField', function ActionCustomFieldDirective() {
+  return {
+    restrict: 'E',
+    templateUrl: 'action_custom_field.html',
+    scope: { customField: '=' },
+    controller:  ['$scope', '$log', ActionCustomFieldController],
+  }
+})
+
+.directive('selectField', function SelectFieldDirective() {
+  return {
+    restrict: 'E',
+    templateUrl: 'select_field.html',
+    scope: { customField: '=' },
+    controller:  ['$scope', '$log', SelectFieldController],
   }
 })
 
@@ -328,17 +347,61 @@ function ActionShareLink(scope, element, attributes) {
 
 /**
   * Sets the correct tag for failing
+  *
   * $scope
   * * success_tag - The tag to be applied to the user if they succeed
+  * * hasCustomFields - true if the action has custom fields
   */
-function ActionSuccessForm($scope, ActionService) {
+function ActionSimpleSuccessForm($scope, ActionService) {
 	ActionService.then(function(actions) {
 		// Find the correct action
 		var action = actions.findByPage(c4c.page_slug);
 		
+		$scope.action = action;
+		
 		// Set the tag to the done tag
 		$scope.success_tag = action["end tag"];
+		
+		$scope.action.hasCustomFields = (action["Custom Fields"].trim() ? true : false );
 	});
+}
+
+/**
+  * ActionCustomFieldSuccessForm
+  *
+  * $scope
+  * * success_tag - The tag to be applied to the user if they succeed
+  * * hasCustomFields - True if the action has custom fields
+  * * customFields - Array of the custom fields to display for this action
+  */
+function ActionCustomFieldsSuccessForm($scope, ActionService) {
+	ActionService.then(function(actions) {
+		// Find the correct action
+		var action = actions.findByPage(c4c.page_slug);
+		
+		$scope.action = action;
+		
+		// Set the tag to the done tag
+		$scope.success_tag = action["end tag"];
+		
+		$scope.action.hasCustomFields = (action["Custom Fields"].trim() ? true : false );
+
+		$scope.customFields = selectCustomFields(action,
+			c4c.custom_fields);
+	});
+	
+	function selectCustomFields(action, customFields) {
+		var selectedFields = [];
+		
+		// Split the custom field list on commas or white space
+		var cfList = action["Custom Fields"].trim().split(/[ ,]+/);
+
+		angular.forEach(cfList, function(slug) {
+			selectedFields.push(customFields[slug]);
+		});
+	
+		return selectedFields;
+	}
 }
 
 /**
@@ -431,6 +494,24 @@ function ActionStepsController($scope, $log) {
 			step.attr('data-target', target);
 		});
 	});
+}
+
+/**
+  * Display a custom field element
+  * $scope
+  * * customField - The custom field to display
+  */
+function ActionCustomFieldController($scope, $log) {
+}
+
+/**
+  * Display a select field
+  * $scope
+  * * choices - Array of choices of the form
+  *				[ { id: "value", name: "display name" }, ... ]
+  */
+function SelectFieldController($scope, $log) {
+	$scope.choices = $scope.customField.choices;
 }
 
 })();
