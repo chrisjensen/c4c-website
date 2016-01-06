@@ -17,7 +17,7 @@ angular.module('c4cWebsite.actions')
 
 .controller('ActionFailForm', ['$scope', 'ActionService', ActionFailForm])
 .controller('ActionSimpleSuccessForm', ['$scope', 'ActionService', ActionSimpleSuccessForm])
-.controller('ActionCustomFieldsSuccessForm', ['$scope', 'ActionService', ActionCustomFieldsSuccessForm])
+.controller('ActionCustomFieldsSuccessForm', ['$scope', '$log', 'ActionService', ActionCustomFieldsSuccessForm])
 
 .controller('ActionsGridController', ['$scope', 'Tabletop', ActionsGridController])
 
@@ -374,7 +374,7 @@ function ActionSimpleSuccessForm($scope, ActionService) {
   * * hasCustomFields - True if the action has custom fields
   * * customFields - Array of the custom fields to display for this action
   */
-function ActionCustomFieldsSuccessForm($scope, ActionService) {
+function ActionCustomFieldsSuccessForm($scope, $log, ActionService) {
 	ActionService.then(function(actions) {
 		// Find the correct action
 		var action = actions.findByPage(c4c.page_slug);
@@ -397,7 +397,11 @@ function ActionCustomFieldsSuccessForm($scope, ActionService) {
 		var cfList = action["Custom Fields"].trim().split(/[ ,]+/);
 
 		angular.forEach(cfList, function(slug) {
-			selectedFields.push(customFields[slug]);
+			if (customFields[slug]) {
+				selectedFields.push(customFields[slug]);
+			} else {
+				$log.error('Missing custom field. Tried to display custom field but there is no custom field in Nation Builder with that slug: ' + slug);
+			}
 		});
 	
 		return selectedFields;
