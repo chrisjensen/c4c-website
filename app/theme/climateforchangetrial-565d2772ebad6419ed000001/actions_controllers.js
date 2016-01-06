@@ -62,7 +62,7 @@ angular.module('c4cWebsite.actions')
   return {
     restrict: 'E',
     templateUrl: 'action_list_item.html',
-    scope: { action: '=' },
+    scope: { action: '=', big: '=' },
     controller:  ['$scope', '$log', '$timeout', ActionListItemController]
   }
 })
