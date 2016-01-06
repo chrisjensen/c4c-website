@@ -41,7 +41,7 @@
 		</div>
 	</div>
 	
-	<div class="row">
+	<div class="row padtopmore" ng-show="categories.length">
 		<div class="col-md-6">
 			<a href="#/" class="">Suggest an action for me</a>
 		</div>
@@ -50,6 +50,11 @@
 
 <!-- Template for actions list -->
 <script type="text/ng-template" id="actions_list.html">
+	<div class="row-md-12 grid-loading text-center"
+			 ng-hide="actions.length">
+		<img src="assets/bert-loader-small.gif" alt="Loading ..."  />
+	</div>
+
 	<h2>{[{ category["Name"] }]}</h2>
 	<a href="#/actions" class="pull-right">Go back</a>
 	<p>{[{ category["Description"] }]}</p>
@@ -60,7 +65,7 @@
 	</ul>
 	</div>
 
-	<div class="row padtopmore">
+	<div class="row padtopmore" ng-show="actions.length">
 		<div class="col-md-6">
 			<a href="#/" class="">Suggest an action for me</a>
 		</div>
