@@ -401,16 +401,19 @@ function ActionCustomFieldsSuccessForm($scope, $log, ActionService) {
 	function selectCustomFields(action, customFields) {
 		var selectedFields = [];
 		
-		// Split the custom field list on commas or white space
-		var cfList = action["Custom Fields"].trim().split(/[ ,]+/);
+		// Don't bother iterating through the fields if there are none
+		if (action["Custom Fields"].trim()) {
+			// Split the custom field list on commas or white space
+			var cfList = action["Custom Fields"].trim().split(/[ ,]+/);
 
-		angular.forEach(cfList, function(slug) {
-			if (customFields[slug]) {
-				selectedFields.push(customFields[slug]);
-			} else {
-				$log.error('Missing custom field. Tried to display custom field but there is no custom field in Nation Builder with that slug: ' + slug);
-			}
-		});
+			angular.forEach(cfList, function(slug) {
+				if (customFields[slug]) {
+					selectedFields.push(customFields[slug]);
+				} else {
+					$log.error('Missing custom field. Tried to display custom field but there is no custom field in Nation Builder with that slug: ' + slug);
+				}
+			});
+		}
 	
 		return selectedFields;
 	}
