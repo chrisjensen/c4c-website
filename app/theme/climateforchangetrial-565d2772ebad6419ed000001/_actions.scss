@@ -123,3 +123,11 @@ li.action-item.action-wide {
 .panel-icon .panel-body p {
     padding-left: 110px;
 }
+
+.padrightmore {
+	padding-right: $line-height-computed * .75;
+}
+
+.padright {
+	padding-right: $line-height-computed * .5;
+}
