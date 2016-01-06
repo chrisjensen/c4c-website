@@ -271,11 +271,11 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
     	var done_tag = action["end tag"];
     	
     	if ($.inArray(done_tag, c4c.user_tags) > -1 ) {
-			htmlClass += 'done';
+			htmlClass += ' done';
 		}
     	
     	// Set the class for the category
-    	htmlClass += 'act_cat_' + makeSafeForCSS(action["Category"]);
+    	htmlClass += ' act_cat_' + makeSafeForCSS(action["Category"]);
     	
     	return htmlClass;
     }  
