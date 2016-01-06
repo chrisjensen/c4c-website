@@ -54,3 +54,43 @@
   to { opacity: 0; }
 }
 
+/**** Rotate animation for selecting next action ****/
+/* Moving to the NEXT item. */
+
+.action-container {
+	position: relative;
+	min-height: 280px;
+}
+
+.rotate.ng-enter,
+.rotate.ng-leave {
+	position: absolute; 
+}
+
+.rotate.ng-enter {
+	left: 200px ;
+	right: -200px ;
+	opacity: 0 ;
+	transition: all 0.5s ease ;
+	z-index: 2 ;
+}
+
+.rotate.ng-enter-active {
+	left: 0px ;
+	right: 0px;
+	opacity: 1.0 ;
+}
+
+.rotate.ng-leave {
+	left: 0px ;
+	right: 0px;
+	opacity: 1.0 ;
+	transition: all 0.5s ease ;
+}
+
+.rotate.ng-leave-active {
+	left: -200px ;
+	right: 200px ;
+	opacity: 0 ;
+}
+
