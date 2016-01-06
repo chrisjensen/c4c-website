@@ -5,6 +5,7 @@ angular.module('c4cWebsite.actions', ['ngRoute', 'times.tabletop']);
 // Declare app level module which depends on views, and components
 angular.module('c4cWebsite', [
   'ngRoute',
+  'ngAnimate',
   'c4cWebsite.actions'
 ]).
 config(['$routeProvider', function($routeProvider) {

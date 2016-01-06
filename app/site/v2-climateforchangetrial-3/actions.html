@@ -4,7 +4,9 @@
 
 <div id="content">
 
-  <ng-view class="action-content"></ng-view>
+  <div class="view-container">
+	  <ng-view class="action-content view-frame"></ng-view>
+  </div>
   
   {% if page.tags_count > 0 %}
   <div class="page-tags">
