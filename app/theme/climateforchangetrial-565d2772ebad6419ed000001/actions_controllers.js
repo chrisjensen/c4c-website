@@ -63,7 +63,7 @@ angular.module('c4cWebsite.actions')
     restrict: 'E',
     templateUrl: 'action_list_item.html',
     scope: { action: '=' },
-    controller:  ['$scope', '$timeout', ActionListItemController]
+    controller:  ['$scope', '$log', '$timeout', ActionListItemController]
   }
 })
 
@@ -300,15 +300,28 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
   *
   * $scope variables
   */
-function ActionListItemController($scope, $timeout) {
-	// Wait until after the DOM has finished rendering, then update the
-	// destination page_id
-	$timeout(function() {
-		var slug = $scope.action["Slug"],
-			page_id = c4c.action_pages[$scope.action["page slug"].trim()];
+function ActionListItemController($scope, $log, $timeout) {
+	setDestinationPage($scope.action);
 
-		$('#act_' + slug).find("input[name='page_id']").attr('value', page_id);
-	}, 0);
+	// Update the destination if the action updates
+	$scope.$watch('action', function() {
+		setDestinationPage($scope.action);
+	});
+
+	// Sets the destination page for this action. Only sets it if
+	// action is present
+	function setDestinationPage(action) {
+		if (action) {
+			// Timeout to give the DOM a chance to render so the
+			// element can be found with the dynamic id
+			$timeout(function() {
+				var slug = action["Slug"],
+					page_id = c4c.action_pages[action["page slug"].trim()];
+
+				$('#act_' + slug).find("input[name='page_id']").attr('value', page_id);
+			}, 0);
+		}
+	}
 }
 
 /**
