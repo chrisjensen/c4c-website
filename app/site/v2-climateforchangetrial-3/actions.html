@@ -33,7 +33,7 @@
 <script type="text/ng-template" id="actions_grid.html">
 	<div class="row">
 		<a ng-repeat="category in categories"
-			 class="action-grid action-category col-md-6"
+			 class="action-grid action-category col-md-4"
 			href="#/actions/{[{ category['Name'] }]}">{[{ category['Name'] }]}</a>
 		<div class="row-md-12 grid-loading text-center"
 				 ng-hide="categories.length">
