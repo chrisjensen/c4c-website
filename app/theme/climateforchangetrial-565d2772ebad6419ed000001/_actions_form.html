@@ -70,13 +70,15 @@
       {% form_for signup %}
 
       <div class="row">
-        <div class="col-md-12"><div class="form-group"><label for="volunteer_signup_content">What was the problem?</label>
-        To help us fix your problem, please include:
-        <ol><li>Which step you got stuck on</li>
-        <li>What you tried to do</li>
-        <li>What you expected to happen</li>
-        <li>What actually happened</li></ol>
-        {% text_area "content", class:"textarea form-control autogrow" %}</div>
+        <div class="col-md-12"><div class="form-group"><label for="volunteer_signup_action_problem">What was the problem?</label>
+      	<p>Sorry to hear you had some trouble with this action. Could you provide us some feedback so we can improve it?</p>
+        <p>To help us fix your problem, please answer all the questions below:</p>
+		<textarea class="textarea form-control" id="signup_custom_values_action_problem_custom" name="signup[custom_values][action_problem]" style="height: 10em;">The action I was trying to take was ...
+I was on step ...
+I tried to ...
+What I expected to happen was ...
+But instead ...</textarea>
+        </div>
         </div>
       </div>
 
