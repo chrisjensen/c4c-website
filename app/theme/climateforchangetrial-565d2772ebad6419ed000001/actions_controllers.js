@@ -108,7 +108,7 @@ function ActionsGridController($scope, Tabletop) {
   * * action - The suggested action
   */
 function ActionsGuideController($scope, $timeout, ActionService) {
-	var suggestions = ["power", "super", "facil"];
+	var suggestions = ["power", "super", "facilitate"];
 	var suggestionsIndex = 0;
 	var actions = [];
 
