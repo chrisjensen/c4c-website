@@ -1,11 +1,11 @@
 (function() {
 	angular.module('c4cWebsite.actions')
-	.factory('ActionService', ['$q', 'Tabletop', actionService]);
+	.factory('ActionService', ['$q', '$log', 'Tabletop', actionService]);
 	
 	/**
 	  * Returns a promise when the action service is loaded
 	  */
-	function actionService($q, Tabletop) {
+	function actionService($q, $log, Tabletop) {
 		var service = init(),
 			actionSheet;
 		
@@ -38,6 +38,8 @@
 			if (row["Slug"] == slug)
 			  return row;
 		}
+		
+		$log.error('Could not find action with slug: ' + slug);
 	};
 	
 	/**
@@ -50,6 +52,8 @@
 			if (row["page slug"] == page)
 			  return row;
 		}
+
+		$log.error('Could not find action for page: ' + page);
 	};
 
 	};
