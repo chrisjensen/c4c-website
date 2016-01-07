@@ -101,13 +101,14 @@
 
 <!-- Template for actions guide -->
 <script type="text/ng-template" id="actions_guide.html">
-	<div class="row-md-12 grid-loading text-center"
-			 ng-hide="action">
-		<img src="assets/bert-loader-small.gif" alt="Loading ..."  />
-	</div>
 
-	<div ng-show="action">
+	<div>
 		<p>Your suggested action for this week: </p>
+
+		<div class="row padbottommore padtopmore grid-loading text-center"
+				 ng-hide="action">
+			<img src="assets/bert-loader-small.gif" alt="Loading ..."  />
+		</div>
 
 		<div class="row action-container" ng-if="action">
 			<action-list-item ng-repeat="action in [ action ]" action="action" big="true" class="rotate"></action-list-item>
