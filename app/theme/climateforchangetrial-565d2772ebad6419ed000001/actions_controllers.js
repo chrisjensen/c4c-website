@@ -246,7 +246,7 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
     	// Does it have a name and a slug?
     	if ((action["Title"].trim().length == 0) || 
     		(action["Slug"].trim().length == 0)) {
-			$log.error("action is broken (slug: " + action["Slug"] + ") It must have a slug and title in the actions matrix spreadsheet.");
+			$log.error("action is broken (slug: " + action["Slug"] + " title: " + action["Title"] + ") It must have a slug and title in the actions matrix spreadsheet.");
 
     		return false;
     	}
