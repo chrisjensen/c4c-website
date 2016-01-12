@@ -13,9 +13,11 @@ config(['$routeProvider', function($routeProvider) {
 }]).
 
 config(function(TabletopProvider){
+	var spreadsheetUrl = c4c.actions_spreadsheet;
+
 	// Configure the address of the Spreadsheet to use
 	TabletopProvider.setTabletopOptions({
-	  key: 'https://docs.google.com/spreadsheets/d/1PYC-NIMnCePaeWcCFsP5v-5YBQ1R2o6qu7quw6j784g/pubhtml',
+	  key: spreadsheetUrl + '/pubhtml',
 	  simpleSheet: false
 	  
 	});
