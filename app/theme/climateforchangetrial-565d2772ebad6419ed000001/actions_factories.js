@@ -19,6 +19,8 @@
 			
 			var deferred = $q.defer();			
 
+			$log.debug('Actions are configured in: ' + c4c.actions_spreadsheet);
+
 			Tabletop.then(function(TabletopSheets) {
 				actionSheet = TabletopSheets[0]["Actions"].all();
 			
