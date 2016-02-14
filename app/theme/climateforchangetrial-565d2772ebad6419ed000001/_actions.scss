@@ -63,6 +63,10 @@ li.action-item.action-wide {
     height: auto;
 }
 
+li.action-item.action-wide p {
+	white-space: pre-wrap;
+}
+
 .action-item h3 {
     font-size: 18px;
     margin-top: 10px;
