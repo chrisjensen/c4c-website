@@ -49,3 +49,16 @@
   {% if page.show_stream? %}
   {% include "page_stream" %}
   {% endif %}
+
+<script type="text/javascript">
+$(function () {
+    $('#steps').on('shown.bs.collapse', function (e) {
+        var offset = $(this).find('.collapse.in').prev('.panel-heading');
+        if(offset) {
+            $('html,body').animate({
+                scrollTop: $(offset).offset().top -20
+            }, 500); 
+        }
+    }); 
+});
+</script>
