@@ -52,23 +52,23 @@ img {
 }
 
 .margintop {
-	margin-top: $line-height-computed * .75;
+	margin-top: $line-height-computed * .75 !important;
 }
 
 .margintopmore {
-	margin-top: $line-height-computed;
+	margin-top: $line-height-computed !important;
 }
 
 .marginbottomless {
-	margin-bottom: $line-height-computed * .5;
+	margin-bottom: $line-height-computed * .5 !important;
 }
 
 .marginbottom {
-	margin-bottom: $line-height-computed * .75;
+	margin-bottom: $line-height-computed * .75 !important;
 }
 
 .marginbottommore {
-	margin-bottom: $line-height-computed;
+	margin-bottom: $line-height-computed !important;
 }
 
 .center {
