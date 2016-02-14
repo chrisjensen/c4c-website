@@ -1,0 +1,24 @@
+  <div class="form-wrap">
+    <div class="form">
+
+	  <div id="question_form" ng-controller="ActionSimpleSuccessForm">
+      {% form_for signup %}
+
+      <div class="form-errors">{% error_messages_for signup %}</div>
+
+	  <input type="hidden" name="signup[optional_tag]" value="{{ page.slug }}" />
+
+	  <div class="row">
+	  	  <!-- Submit straight away if no more data needed -->
+		  <div class="col-md-12">
+			 {% submit_tag "I've done this", class:"pull-right submit-button btn btn-primary"  %}
+		  </div>
+	  </div>
+	  <div class="form-submit"></div>
+
+      {% endform_for %}
+
+	  </div>
+
+	</div>
+  </div>

@@ -33,6 +33,8 @@
 
   {% if tags_list contains "action" %}
 	  {% include "actions_form" %}
+  {% elsif tags_list contains "kt" %}
+	  {% include "kt_form" %}
   {% else %}
 	  {% include "signup_form2" %}
   {% endif %}
