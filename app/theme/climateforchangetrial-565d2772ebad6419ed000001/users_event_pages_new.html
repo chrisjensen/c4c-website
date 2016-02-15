@@ -65,11 +65,11 @@
         
         <div class="col-md-6">
           <div class="form-group"><label for="event_page_contact_email">Email</label>{% text_field "contact_email", class:"text form-control" %}</div>
-          <div class="checkbox"><label for="event_page_is_contact_email_private" class="checkbox">{% check_box "is_contact_email_private", class:"check_box" %} Don't publish email address</label></div>
+          <div class="checkbox"><label for="event_page_is_contact_email_private" class="checkbox"><input name="event_page[is_contact_email_private]" type="hidden" value="0"><input class="check_box" id="event_page_is_contact_email_private" name="event_page[is_contact_email_private]" type="checkbox" value="1" checked> Don't publish email address</label></div>
         </div>
         <div class="col-md-6">
           <div class="form-group"><label for="event_page_contact_phone_number">Phone</label>{% text_field "contact_phone_number", class:"text form-control" %}</div>
-          <div class="checkbox"><label for="event_page_is_contact_phone_private" class="checkbox">{% check_box "is_contact_phone_private", class:"check_box" %} Don't publish phone number</label></div>
+          <div class="checkbox"><label for="event_page_is_contact_phone_private" class="checkbox"><input name="event_page[is_contact_phone_private]" type="hidden" value="0"><input class="check_box" id="event_page_is_contact_phone_private" name="event_page[is_contact_phone_private]" type="checkbox" value="1" checked> Don't publish phone number</label></div>
         </div>
         
       </div>
@@ -104,7 +104,7 @@
       </div>
       
       <div class="panel panel-default">
-      <div class="panel-heading" data-toggle="collapse" data-target="#advanced">
+      <div class="panel-heading step-heading" data-toggle="collapse" data-target="#advanced">
       <h3 class="step-title panel-title">Advanced ...</h3>
       </div>
       <div id="advanced" class="panel-collapse collapse">
@@ -140,7 +140,7 @@
           <div class="checkbox"><label for="event_page_accept_rsvps" class="checkbox">{% check_box "accept_rsvps", class:"check_box" %} Allow people to RSVP</label></div>
           <div class="checkbox"><label for="event_page_allow_guests" class="checkbox">{% check_box "allow_guests", class:"check_box" %} Allow people to bring guests (+1)</label></div>
           <div class="checkbox"><label for="event_page_show_guests" class="checkbox">{% check_box "show_guests", class:"check_box" %} Show who is coming</label></div>
-          <div class="checkbox"><label for="event_page_is_private" class="checkbox">{% check_box "is_private", class:"check_box" %} Keep the RSVP page hidden from the rest of the site</label></div>
+          <div class="checkbox"><label for="event_page_is_private" class="checkbox"><input name="event_page[is_private]" type="hidden" value="0"><input class="check_box" id="event_page_is_private" name="event_page[is_private]" type="checkbox" value="1" checked> Keep the RSVP page hidden from the rest of the site</label></div>
         </div>
         
       </div>
