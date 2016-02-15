@@ -72,6 +72,19 @@
 		{% endif %}
 	{% endif %}
 
+	{% assign tags_list = "" %}
+	{% for tag in profile.tags %}
+			{% assign tags_list = tag | append: ", " | append: tags_list %}
+	{% endfor %}
+
+    {% unless tags_list contains "Board" %}
+		{% if tags_list contains "facilitator" %}
+			<p>{{ profile.first_name}} is a facilitator with Climate for Change.</p>
+			<p>Have you been to one of {{ profile.first_name}}'s gatherings and would like to donate?</p>
+			<a href="/donate" class="btn btn-default">Make a Donation</a>
+		{% endif %}
+	{% endunless %}
+
 	<div class="">
 		<!-- Chris has taken the following actions on Climate Change: -->
 		<!-- Insert the badge list (handled by Angular) -->
