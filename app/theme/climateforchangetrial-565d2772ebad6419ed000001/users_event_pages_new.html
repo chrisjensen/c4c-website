@@ -28,7 +28,7 @@
       
       <div class="row">
         
-        <div class="col-md-12"><div class="form-group"><label for="event_page_name">Headline</label>{% text_field "page_headline", class:"text form-control" %}</div></div>
+        <div class="col-md-12"><div class="form-group"><label for="event_page_name">Title</label>{% text_field "page_headline", class:"text form-control" %}</div></div>
         
       </div>
       <div class="row">
@@ -103,6 +103,14 @@
         
       </div>
       
+      <div class="panel panel-default">
+      <div class="panel-heading" data-toggle="collapse" data-target="#advanced">
+      <h3 class="step-title panel-title">Advanced ...</h3>
+      </div>
+      <div id="advanced" class="panel-collapse collapse">
+      
+	  <div class="panel-body">
+
       <h4 class="padtopmore padbottom">Ticket price</h4>
       <div class="padbottom">If free, just leave at 0.00.</div>
       
@@ -125,6 +133,7 @@
         <div class="col-md-12"><div class="so_ie_does_not_put_this_in_the_footer">{% text_area "content_editable", class:"textarea form-control" %}</div></div>
         
       </div>
+      
       <div class="row padtopmore">
         
         <div class="col-md-12">
@@ -134,6 +143,10 @@
           <div class="checkbox"><label for="event_page_is_private" class="checkbox">{% check_box "is_private", class:"check_box" %} Keep the RSVP page hidden from the rest of the site</label></div>
         </div>
         
+      </div>
+      
+      </div>
+      </div>
       </div>
       
       <div class="padtop">
