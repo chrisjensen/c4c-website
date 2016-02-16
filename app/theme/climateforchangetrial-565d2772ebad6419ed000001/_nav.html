@@ -33,6 +33,15 @@
         {% endif %}
         {% endfor %}
 
+		{% for tag in request.current_user.tags %}
+				{% assign tags_list = tag | append: ", " | append: tags_list %}
+		{% endfor %}
+		{% if tags_list contains "facilitator" %}
+        <li>
+          <a href="/facilitator_admin">Facil Admin</a>
+        </li>
+        {% endif %}
+
         {% if request.logged_in? or request.sorta_logged_in? %}
         <li id="user-nav" class="dropdown">
           <a href="#" class="ss-icon ss-standard">
