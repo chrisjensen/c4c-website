@@ -75,6 +75,13 @@ angular.module('c4cWebsite.actions')
   }
 })
 
+.directive('facilitatorAdmin', function FacilitatorAdminDirective() {
+  return {
+    restrict: 'A',
+    controller:  ['$scope', '$log', FacilitatorAdminController],
+  }
+})
+
 .directive('badgesList', function BadgesListDirective() {
   return {
     restrict: 'E',
@@ -537,6 +544,18 @@ function ActionStepsController($scope, $log) {
   * * customField - The custom field to display
   */
 function ActionCustomFieldController($scope, $log) {
+}
+
+/**
+  * Facilitator Admin Controller
+  * $scope
+  * * transactionReference - The reference for facilitator cash transactions
+  */
+function FacilitatorAdminController($scope, $log) {
+	$scope.transactionReference = 'Gath' +
+		c4c.user.first_name.charAt(0).toUpperCase() +
+		c4c.user.last_name.charAt(0).toUpperCase() +
+		c4c.user.id;
 }
 
 /**

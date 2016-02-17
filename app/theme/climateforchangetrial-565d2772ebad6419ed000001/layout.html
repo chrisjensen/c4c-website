@@ -107,6 +107,16 @@
 		// Save the user tags as an array
 		c4c.user_tags = '{{ request.current_signup.tag_list }}'.split(', ');
 
+		{% if request.sorta_logged_in? %}
+
+			// Save the user tags as an array
+			c4c.user = {
+				id: {{ request.current_user.id }},
+				first_name: '{{ request.current_user.first_name }}',
+				last_name: '{{ request.current_user.last_name }}'
+			};
+		{% endif %}
+
 		// Save the slug of the current page
 		c4c.page_slug = '{{ page.slug }}';
 		
