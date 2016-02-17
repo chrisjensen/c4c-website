@@ -77,13 +77,13 @@
 			{% assign tags_list = tag | append: ", " | append: tags_list %}
 	{% endfor %}
 
-    {% unless tags_list contains "Board" %}
-		{% if tags_list contains "facilitator" %}
+	{% if tags_list contains "facilitator" %}
+	    {% unless tags_list contains "Board" %}
 			<p>{{ profile.first_name}} is a facilitator with Climate for Change.</p>
-			<p>Have you been to one of {{ profile.first_name}}'s gatherings and would like to donate?</p>
-			<a href="/donate" class="btn btn-default">Make a Donation</a>
-		{% endif %}
-	{% endunless %}
+			<p>Have you been a part of a gathering conducted by {{ profile.first_name}} and would like to donate?</p>
+			<a href="/donate_in_gathering?recruiter_id={{ profile.id }}" class="btn btn-default">Make a Donation during a Gathering</a>
+		{% endunless %}
+	{% endif %}
 
 	<div class="">
 		<!-- Chris has taken the following actions on Climate Change: -->
