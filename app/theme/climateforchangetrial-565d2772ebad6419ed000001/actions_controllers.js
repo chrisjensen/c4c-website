@@ -277,7 +277,7 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
 		var pageSlug = action["page slug"].trim()
 
 		if (!(pageSlug && c4c.action_pages[pageSlug])) {
-			$log.error("action hidden (slug: " + action["Slug"] + ") Reason: no matching page. You must create a signup page that is a child of this page. The child page must have the slug: " + pageSlug);
+			$log.error("action hidden (slug: " + action["Slug"] + ") Reason: no matching page (did you set it's status to published?). You must create a signup page that is a child of this page. The child page must have the slug: " + pageSlug);
 
 			// If demoMode is set, show the action anyway for easy debugging
 			if (c4c.demoMode) {
