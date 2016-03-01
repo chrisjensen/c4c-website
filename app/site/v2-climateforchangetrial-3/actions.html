@@ -51,14 +51,14 @@
 
 <!-- Template for actions list -->
 <script type="text/ng-template" id="actions_list.html">
+	<a class="go-back" href="#/actions" class="pull-right">Go back</a>
+	<h2>{[{ category["Name"] }]}</h2>
+	<p class="category-description">{[{ category["Description"] }]}</p>
+
 	<div class="col-md-12 grid-loading text-center"
 			 ng-hide="actions.length">
 		<img src="assets/bert-loader-small.gif" alt="Loading ..."  />
 	</div>
-
-	<h2>{[{ category["Name"] }]}</h2>
-	<a href="#/actions" class="pull-right">Go back</a>
-	<p>{[{ category["Description"] }]}</p>
 
 	<div class="row padtopmore">
 	<ul class="action-list">

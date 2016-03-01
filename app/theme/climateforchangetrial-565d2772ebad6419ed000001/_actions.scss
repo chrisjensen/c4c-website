@@ -79,7 +79,8 @@ li.action-item.action-wide {
     height: auto;
 }
 
-li.action-item.action-wide p {
+li.action-item.action-wide p,
+p.category-description {
 	white-space: pre-wrap;
 }
 
@@ -159,4 +160,8 @@ li.action-item.action-wide p {
 
 .kt-steps table h3 {
     font-size: 18px;
+}
+
+.go-back {
+	margin-top: 15px;
 }
