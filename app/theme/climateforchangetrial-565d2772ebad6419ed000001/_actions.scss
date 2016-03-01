@@ -23,6 +23,14 @@
     color: #FFF;	
 }
 
+@media (max-width: 768px) { 
+	.action-grid.action-category {
+		margin: 0 10%;
+		width: 80%;
+		height: 100px;
+    }
+}
+
 .plain-link-button {
 	background: none;
     border: none;
