@@ -110,13 +110,42 @@
 			
 			var action = findBySlug(slug);
 			
-			if (action && canShow(action)) {
+			// Add the action if
+			// + it can be found
+			// + it can be shown
+			// + it should be suggested
+			if (action && canShow(action) && shouldSuggest(action)) {
 				actions.push(action);
 			}
 		}		
 	
 		return actions;
 	};
+	
+	/**
+	  * Should this action be suggested?
+	  * 
+	  * Returns false if the action has been completed or given up on
+      */
+	function shouldSuggest(action) {
+    	// Set done if it's been done
+    	var done_tag = action["end tag"],
+    		giveup_tag = action["giveup tag"];
+    	
+    	if ($.inArray(done_tag, c4c.user_tags) > -1 ) {
+    		$log.debug("Action finished: " + action["Slug"] + ". (user tagged with: " + 
+    			done_tag + ") Won't suggest it.");
+    		return false;
+		}
+		
+    	if ($.inArray(giveup_tag, c4c.user_tags) > -1 ) {
+    		$log.debug("Action given up on: " + action["Slug"] + "(user tagged with: " + 
+    			giveup_tag + ") Won't suggest it.");
+    		return false;
+		}
+		
+		return true;
+	}
 	
     /**
       * Returns true if the action should be displayed,
