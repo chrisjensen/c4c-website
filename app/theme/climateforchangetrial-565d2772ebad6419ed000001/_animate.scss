@@ -62,6 +62,13 @@
 	min-height: 280px;
 }
 
+@media (max-width: 768px) { 
+	.action-container {
+		min-height: 200px;
+	}
+}
+
+
 .rotate.ng-enter,
 .rotate.ng-leave {
 	position: absolute; 

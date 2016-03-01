@@ -20,7 +20,24 @@
     display: table-cell;
     vertical-align: middle;
     text-align: center;
+    text-decoration: none;
     color: #FFF;	
+    padding: 10px 0;
+}
+
+.action-category h2 {
+    font-size: 1em;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.action-category p {
+	margin: 12px 5px 0 5px;
+    font-size: 0.8em;
+    text-align: left;
+    text-transform: none;
+    color: #ddf;
 }
 
 @media (max-width: 768px) { 
@@ -28,6 +45,16 @@
 		margin: 0 10%;
 		width: 80%;
 		height: 100px;
+    }
+}
+    
+@media (min-width: 768px) { 
+    .action-grid:hover p {
+	    display: inline-block;
+    }
+
+    .action-grid p {
+	    display: none;
     }
 }
 

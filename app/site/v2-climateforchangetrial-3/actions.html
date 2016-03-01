@@ -34,7 +34,10 @@
 	<div class="row">
 		<div ng-repeat="category in categories"
 			 class="action-grid action-category col-sm-4">
-			<a href="#/actions/{[{ category['Name'] }]}">{[{ category['Name'] }]}</a>
+		   <a href="#/actions/{[{ category['Name'] }]}">
+				<h2>{[{ category['Name'] }]}</h2>
+				<p>{[{ category['Short'] }]}</p>
+		   </a>
 		</div>
 		<div class="col-md-12 grid-loading text-center"
 				 ng-hide="categories.length">
@@ -120,9 +123,15 @@
 			<action-list-item ng-repeat="action in [ action ]" action="action" big="true" class="rotate"></action-list-item>
 		</div>
 
-		<button class="btn btn-info pull-right" ng-click="nextAction()">Suggest another</button>
+		<div class="row">
+		  <div class="col-sm-4 text-center padbottommore">
+			<button class="btn btn-info" ng-click="nextAction()">Suggest another</button>
+		  </div>
 	
-		<a href="#/actions" class="btn btn-info">See all actions</a>
+		  <div class="col-sm-4 col-sm-offset-4 text-center">
+			<a href="#/actions" class="btn btn-info">See all actions</a>
+		  </div>
+		</div>
 	</div>
 </script>
 
