@@ -204,6 +204,7 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
 		categoryName = $routeParams.categoryName;
 
 	$scope.actions = [];
+	$scope.loaded = false;
 	
 	$scope.category = {
 		Name: categoryName
@@ -239,6 +240,8 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
 			// Has the user done the action?
 			action["isDone"] = ($.inArray(action["end tag"], c4c.user_tags) > -1);
 		});
+		
+		$scope.loaded = true;
     });
     
     /**

@@ -56,8 +56,13 @@
 	<p class="category-description">{[{ category["Description"] }]}</p>
 
 	<div class="col-md-12 grid-loading text-center"
-			 ng-hide="actions.length">
+			 ng-hide="loaded">
 		<img src="assets/bert-loader-small.gif" alt="Loading ..."  />
+	</div>
+
+	<div class="col-md-12 grid-loading text-center"
+			 ng-show="loaded && (actions.length==0)">
+		<p class="bg-warning action-notice">Sorry, there are no actions in this category that you can take right now.</p>
 	</div>
 
 	<div class="row padtopmore">
