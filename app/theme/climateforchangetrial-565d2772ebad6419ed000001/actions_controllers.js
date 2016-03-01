@@ -115,35 +115,33 @@ function ActionsGridController($scope, Tabletop) {
   * * action - The suggested action
   */
 function ActionsGuideController($scope, $timeout, ActionService) {
-	var suggestions = ["power", "super", "facilitate"];
+	var suggestions = [];
 	var suggestionsIndex = 0;
-	var actions = [];
 
 	$scope.nextAction = nextAction;
 
 	$scope.hint = {
-		name: 'changing their power',
 		slug: 'power'
 	}
 
-	// Find our suggested action
-	ActionService.then(function(actionList) {
-		actions = actionList;
+	// Load up the guides
+	ActionService.then(function(actionSheet) {
+		suggestions = actionSheet.guide();
 	
 		loadAction();
 	});
 	
+	// Advance to next action
 	function nextAction() {
 		suggestionsIndex = (suggestionsIndex + 1) % suggestions.length;
 	
-		$scope.hint.slug = suggestions[suggestionsIndex];
-		
 		loadAction();
 	}
 	
+	// Put selected action on the scope
 	function loadAction() {
 		// What action are we on
-		var action = actions.findBySlug($scope.hint.slug);
+		var action = suggestions[suggestionsIndex];
 
 		$scope.action = action;
 	}
