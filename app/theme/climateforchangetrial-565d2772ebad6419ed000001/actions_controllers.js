@@ -25,7 +25,7 @@ angular.module('c4cWebsite.actions')
 
 .controller('ActionsGridController', ['$scope', 'Tabletop', ActionsGridController])
 
-.controller('ActionsListController', ['$scope', '$routeParams', '$log', 'Tabletop', ActionsListController])
+.controller('ActionsListController', ['$scope', '$routeParams', '$log', 'ActionService', ActionsListController])
 
 .controller('ActionFlashController', ['$scope', 'ActionService', ActionFlashController])
 
@@ -197,7 +197,7 @@ function BadgesListController($scope, $log, Tabletop) {
   *				category
   * * category	The category on display
   */
-function ActionsListController($scope, $routeParams, $log, Tabletop) {
+function ActionsListController($scope, $routeParams, $log, ActionService) {
 	var vm = this,
 		categoryName = $routeParams.categoryName;
 
@@ -208,28 +208,13 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
 		Name: categoryName
 	};
 	
-	Tabletop.then(function(sheets) {
-		// Find this category
-		var table = sheets[0]["Categories"];
-		var category = $.grep(table.all(), function(cat){
-			return (cat.Name == categoryName);
-		}).shift();
-		
-		// Put it's details on the scope
-		$scope.category = category;
-	
-		// Get the Actions table
-		var table = sheets[0]["Actions"];
-		
-		$scope.actions = table.all();
-		
-		// Filter actions for this category
-		$scope.actions = $.grep($scope.actions, function(action) {
-			return (action["Category"] == categoryName);
-		});
-		
-		// Remove any actions that we can't show
-		$scope.actions = $.grep($scope.actions, canShow);
+	// Once spreadsheet is loaded
+	ActionService.then(function(actionSheets) {
+		// Put category details on the scope
+		$scope.category = actionSheets.findCategory(categoryName);
+
+		// Get the actions in the category
+		$scope.actions = actionSheets.actionsInCategory(categoryName);
 
 		// Set the class for the action and other info on the action
 		$scope.actions.forEach(function(action) {
@@ -239,64 +224,10 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
 			action["isDone"] = ($.inArray(action["end tag"], c4c.user_tags) > -1);
 		});
 		
+		// We're good to go
 		$scope.loaded = true;
-    });
-    
-    /**
-      * Returns true if the action should be displayed,
-      * ie:
-      * Does it have a name and a slug?
-      * Is it enabled?
-      * Does it have a corresponding page?
-      * Should we hide it because they've finished it and can't repeat?
-      */
-    function canShow(action) {
-    	// Does it have a name and a slug?
-    	if ((action["Title"].trim().length == 0) || 
-    		(action["Slug"].trim().length == 0)) {
-			$log.error("action is broken (slug: " + action["Slug"] + " title: " + action["Title"] + ") It must have a slug and title in the actions matrix spreadsheet.");
-
-    		return false;
-    	}
-    	
-    	// Is it enabled?
-    	if (action["Enabled"] != "Y") {
-			$log.info("action is disabled (slug: " + action["Slug"] + ") Put a 'Y' in it's 'Enabled' column in the actions matrix spreadsheet to enable it.");
-    		return false;
-    	}
-    	
-    	var hideTag = action["hide tag"].trim()
-    	
-    	// Should we hide it because they've finished it and can't repeat?
-		if (hideTag && ($.inArray(hideTag, c4c.user_tags) > -1)) {
-			$log.info("Action hidden (slug:" + action["Slug"] + ") Reason: completed");
-		
-			return false;
-		}
-
-		// Does it have a corresponding page?
-		var pageSlug = action["page slug"].trim();
-		
-		var slugIsGood = ((pageSlug && c4c.action_pages[pageSlug]) ||
-									 action["Ignore Page Missing"] == "Y");
-
-		if (! slugIsGood) {
-			$log.error("action hidden (slug: " + action["Slug"] + ") Reason: no matching page (did you set it's status to published?). You must create a signup page that is a child of this page. The child page must have the slug: " + pageSlug);
-			
-			$log.debug("If the page is located elsewhere (eg host, facilitate), put a Y in the 'Ignore Page Missing' column to force this action to show");
-
-			// If demoMode is set, show the action anyway for easy debugging
-			if (c4c.demoMode) {
-				$log.info("Running in demo mode, showing action anyway: " + pageSlug);
-			}
-			else {
-				return false;
-			}
-		}
-    	
-    	return true;
-    }  
-    
+	});
+	
     /**
       * Returns CSS classes for the action
       */
