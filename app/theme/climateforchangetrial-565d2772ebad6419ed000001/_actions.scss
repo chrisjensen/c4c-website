@@ -7,12 +7,20 @@
 	height: 200px;
 	text-align: center;
 	vertical-align: middle;
-	padding-top: 80px;
 	font-size: 1.5em;
 	text-transform: uppercase;
 	color: #FFF;
 	text-decoration: none;
 	border: black 1px solid;
+    display: table;
+    table-layout: fixed;
+}
+
+.action-category a {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    color: #FFF;	
 }
 
 .plain-link-button {
@@ -122,6 +130,10 @@ li.action-item.action-wide p {
 }
 
 .panel-icon .panel-heading {
+	text-transform: none;
+}
+
+.panel-no-transform.panel-heading {
 	text-transform: none;
 }
 
