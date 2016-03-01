@@ -277,10 +277,15 @@ function ActionsListController($scope, $routeParams, $log, Tabletop) {
 		}
 
 		// Does it have a corresponding page?
-		var pageSlug = action["page slug"].trim()
+		var pageSlug = action["page slug"].trim();
+		
+		var slugIsGood = ((pageSlug && c4c.action_pages[pageSlug]) ||
+									 action["Ignore Page Missing"] == "Y");
 
-		if (!(pageSlug && c4c.action_pages[pageSlug])) {
+		if (! slugIsGood) {
 			$log.error("action hidden (slug: " + action["Slug"] + ") Reason: no matching page (did you set it's status to published?). You must create a signup page that is a child of this page. The child page must have the slug: " + pageSlug);
+			
+			$log.debug("If the page is located elsewhere (eg host, facilitate), put a Y in the 'Ignore Page Missing' column to force this action to show");
 
 			// If demoMode is set, show the action anyway for easy debugging
 			if (c4c.demoMode) {
