@@ -17,6 +17,10 @@ angular.module('c4cWebsite.actions')
     templateUrl: 'actions_list.html',
     controller: 'ActionsListController'
   });
+  $routeProvider.when('/season/:seasonSlug', {
+    templateUrl: 'actions_guide.html',
+    controller: 'ActionsGuideController'
+  });
 }])
 
 .controller('ActionFailForm', ['$scope', 'ActionService', ActionFailForm])
@@ -29,7 +33,7 @@ angular.module('c4cWebsite.actions')
 
 .controller('ActionFlashController', ['$scope', 'ActionService', ActionFlashController])
 
-.controller('ActionsGuideController', ['$scope', '$timeout', 'ActionService', ActionsGuideController])
+.controller('ActionsGuideController', ['$scope', '$routeParams', 'ActionService', ActionsGuideController])
 
 .directive('actionShare', function ActionShareDirective() {
   return {
@@ -113,12 +117,18 @@ function ActionsGridController($scope, Tabletop) {
   *
   * $scope variables
   * * action - The suggested action
+  * * title	 - Title (if any) to display
+  * * description - Description to display
   */
-function ActionsGuideController($scope, $timeout, ActionService) {
+function ActionsGuideController($scope, $routeParams, ActionService) {
 	var suggestions = [];
-	var suggestionsIndex = 0;
+	var suggestionsIndex = 0,
+		seasonSlug = $routeParams.seasonSlug;
 
 	$scope.nextAction = nextAction;
+
+	$scope.title = "";
+	$scope.description = "Your suggested action for this week:";
 
 	$scope.hint = {
 		slug: 'power'
@@ -126,7 +136,24 @@ function ActionsGuideController($scope, $timeout, ActionService) {
 
 	// Load up the guides
 	ActionService.then(function(actionSheet) {
-		suggestions = actionSheet.guide();
+		var slugList = [];
+		
+		// If a season was specified, show the guide for that season
+		if (seasonName) {
+			season = actionSheet.findSeasonBySlug(seasonSlug);
+			$scope.title = season['Title'];
+			$scope.description = season['Notice'];
+			
+			// Convert the action slugs into an array
+			slugList = season["Action Slugs"].trim().split(/[ ,]+/);
+
+			suggestions = actionSheet.actionsFromSlugs(slugList, season);
+		
+		// Otherwise use the default guide
+		} else {
+			slugList = actionSheet.defaultGuide();
+			suggestions = actionSheet.actionsFromSlugs(slugList);
+		}
 	
 		loadAction();
 	});
@@ -401,7 +428,7 @@ function ActionFailForm($scope, ActionService) {
 	var problem_page_id = '151';
 	
 	// Set the page_id for failure
-	$('#fail_form').find("input[name='page_id']").attr('value', problem_page_id);
+	$('.fail_form').find("input[name='page_id']").attr('value', problem_page_id);
 }
 
 /**

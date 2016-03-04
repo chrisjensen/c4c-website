@@ -99,9 +99,10 @@
 	}
 	
 	/**
-	  * Returns an array of actions to display as a guide for the user, in order they should be suggested
+	  * Returns a the slugs to display as a default guide for the user
+	  * Taken from the Slug column of the Guide sheet
 	  */
-	function guide() {
+	function defaultGuide() {
 		var actions = [],
 			guideSheet = allSheets["Guide"].all();
 		
@@ -120,6 +121,19 @@
 		}		
 	
 		return actions;
+	};
+	
+	/**
+	  * Finds a season by slug
+	  */
+	function findSeasonBySlug(slug) {
+	}
+	
+	/**
+	  * Returns an array of actions from an array of slugs
+	  * slugList - The array of slugs to search
+	  */
+	function actionsFromSlugs(slugList, season) {
 	};
 	
 	/**

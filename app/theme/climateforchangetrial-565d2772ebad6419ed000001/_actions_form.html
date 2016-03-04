@@ -65,7 +65,7 @@
 
 	  </div>
 
-	  <div id="fail_form" class="collapse" ng-controller="ActionFailForm">
+	  <div id="fail_form" class="collapse fail_form" ng-controller="ActionFailForm">
 
 	  <!-- Fail form -->
       {% form_for signup %}
@@ -169,6 +169,7 @@ But instead ...</textarea>
 		
 		cf.choices = [];
 		
+		// Save the choices if it's a multiple choice field
 		{% for choice in custom_fields.signup[custom_field.slug].multiple_choice_options %}
 			var choiceElement = {};
 		
