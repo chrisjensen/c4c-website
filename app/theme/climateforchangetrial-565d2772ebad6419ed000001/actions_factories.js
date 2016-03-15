@@ -86,7 +86,7 @@
 			}
 		}
 
-		$log.error('Could not find action for page: ' + page);
+		$log.error('Could not find action with start tag: ' + tag);
 	};
 	
 	/**
@@ -212,7 +212,7 @@
 		var seasons = allActiveSeasons();
 		
 		for (var i=0; i<seasons.length; i++) {
-			if (isActionInSeason(action, season)) {
+			if (isActionInSeason(action, seasons[i])) {
 		
 				seasonalAction = applySeason(action, seasons[i])
 
@@ -301,7 +301,7 @@
 	
 		// Can we find start tag, but neither end or giveup tag?
 		return (($.inArray(action['start tag'], tags) > -1) && 
-				(($.inArray(action['end tag'], tags) == -1) ||
+				(($.inArray(action['end tag'], tags) == -1) &&
 				($.inArray(action['giveup tag'], tags) == -1)));
 	};
 	
@@ -348,12 +348,17 @@
 			// Does this tag start with the prefix of this season (or act_)
 		    if (tag.lastIndexOf(prefix,0) != -1) {
 		    	
-		    	var action = ((prefix == 'act_') ? findActionByStartTag(tag) : 
-		    					findActionByStartTag(tag, seasons[i]))
+		    	// Don't bother examining tags with the suffix _done or _giveup
+		    	if ((tag.lastIndexOf('_done', tag.length - 1) == -1 ) &&
+		    		 (tag.lastIndexOf('_giveup', tag.length - 1) == -1)) {
+				
+					var action = ((prefix == 'act_') ? findActionByStartTag(tag) : 
+									findActionByStartTag(tag, seasons[i]))
 
-				if (action && isActionIncomplete(action)) {
-					actions.push(action);
-				}
+					if (action && isActionIncomplete(action)) {
+						actions.push(action);
+					}
+			    }
 			}
 		  }
 		}
@@ -424,15 +429,15 @@
 		var pageSlug = action["page slug"].trim();
 		
 		var slugIsGood = ((pageSlug && c4c.action_pages[pageSlug]) ||
-									 action["Ignore Page Missing"] == "Y");
+									 action["Page ID"].trim());
 
 		if (! slugIsGood) {
 			$log.error("action hidden (slug: " + action["Slug"] + ") Reason: no matching page (did you set it's status to published?). You must create a signup page that is a child of this page. The child page must have the slug: " + pageSlug);
 			
-			$log.debug("If the page is located elsewhere (eg host, facilitate), put a Y in the 'Ignore Page Missing' column to force this action to show");
+			$log.debug("If the page is located elsewhere (eg host, facilitate), put the ID number of the page in the Page ID column to force this action to show");
 
 			// If demoMode is set, show the action anyway for easy debugging
-			if (c4c.demoMode) {
+			if (isDemoMode()) {
 				$log.info("Running in demo mode, showing action anyway: " + pageSlug);
 			}
 			else {

@@ -336,7 +336,7 @@ function ActionListItemController($scope, $log, $timeout) {
 			// element can be found with the dynamic id
 			$timeout(function() {
 				var slug = action["Slug"],
-					page_id = c4c.action_pages[action["page slug"].trim()];
+					page_id = action["Page ID"].trim() || c4c.action_pages[action["page slug"].trim()];
 
 				$('#act_' + slug).find("input[name='page_id']").attr('value', page_id);
 			}, 0);
