@@ -1,13 +1,13 @@
 <!-- Template for actions reminder -->
 <script type="text/ng-template" id="actions_reminder.html">
 
-<section id="reminder">
+<section id="reminder" ng-show="show">
   <div class="container">
 	<div class="row">
 	  <div class="col-md-8 col-md-offset-2">
    		<div class="well">
-   		
-   		
+   		  <action-season ng-show="show=='season'"></action-season>
+   		  <action-unfinished ng-if="show=='unfinished'"></action-unfinished>   		
 		</div>
 	  </div>
 	</div>
@@ -18,23 +18,25 @@
 
 <!-- Template for unfinished actions -->
 <script type="text/ng-template" id="action_season.html">
-	
 		<h3>{[{ season["Notice Title"] }]}</h3>
 		<p>{[{ season["Notice"] }]}</p>
-		<p><a href="/actions#/season/{[{ season["Slug"] }]} class="btn btn-sm btn-primary">Yes, I want to take more action!</a></p>
+		<p><a href="/actions#/season/{[{ season['Slug'] }]}" class="btn btn-sm btn-primary">Yes, I want to take more action!</a></p>
 </script>
 
 <!-- Template for unfinished actions -->
 <script type="text/ng-template" id="action_unfinished.html">
 		
 		<h3>Finish Taking Action</h3>
-		<p>You started taking action to {[{ action['Title'] }]}, but you didn't finish.</p>
+		<p>You started taking action to <strong>{[{ action['Title'] }]}</strong>, but you didn't finish.</p>
 		<p>Would you like to finish that action?</p>
-		<p class="small">If you're having trouble with the action, or don't want to finish it please click, I can't finish it.</p>
-		<a href="/{[{ action['page slug'] }]}" class="btn btn-primary btn-xs pull-right">Finish the Action</a>
-		<button class="btn btn-none btn-xs pull-right">I can't finish it</button>
 
-	<div id="#reminder_fail" class="collapse fail_form" ng-controller="ActionFailForm">
+		<p class="text-right">
+		<button data-target="#reminder_fail" data-toggle="collapse" class="btn btn-none btn-xs ">I can't finish</button>
+
+		<a href="/{[{ action['page slug'] }]}" class="btn btn-primary btn-xs">Finish the Action</a>
+		</p>
+
+	<div id="reminder_fail" class="collapse fail_form" ng-controller="ActionFailForm">
 	  <!-- Fail form -->
       {% form_for signup %}
 

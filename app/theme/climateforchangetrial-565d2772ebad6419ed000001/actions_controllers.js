@@ -33,13 +33,13 @@ angular.module('c4cWebsite.actions')
 
 .controller('ActionFlashController', ['$scope', 'ActionService', ActionFlashController])
 
-.controller('ActionsGuideController', ['$scope', '$routeParams', 'ActionService', ActionsGuideController])
+.controller('ActionsGuideController', ['$scope', '$routeParams', '$log', 'ActionService', ActionsGuideController])
 
 .directive('actionShare', function ActionShareDirective() {
   return {
     restrict: 'E',
     templateUrl: 'action_share.html',
-    controller:  ['$scope', '$log', 'Tabletop', ActionShareController],
+    controller:  ['$scope', '$log', ActionShareController],
     link: ActionShareLink
   }
 })
@@ -86,6 +86,30 @@ angular.module('c4cWebsite.actions')
   }
 })
 
+.directive('actionsReminder', function ActionsReminderDirective() {
+  return {
+    restrict: 'E',
+    controller:  ['$scope', '$log', '$routeParams', 'ActionService', ActionsReminderController],
+    templateUrl: 'actions_reminder.html',
+  }
+})
+
+.directive('actionSeason', function ActionSeasonDirective() {
+  return {
+    restrict: 'E',
+    controller:  [ActionSeasonController],
+    templateUrl: 'action_season.html',
+  }
+})
+
+.directive('actionUnfinished', function ActionUnfinishedDirective() {
+  return {
+    restrict: 'E',
+    controller:  [ActionUnfinishedController],
+    templateUrl: 'action_unfinished.html',
+  }
+})
+
 .directive('badgesList', function BadgesListDirective() {
   return {
     restrict: 'E',
@@ -120,7 +144,7 @@ function ActionsGridController($scope, Tabletop) {
   * * title	 - Title (if any) to display
   * * description - Description to display
   */
-function ActionsGuideController($scope, $routeParams, ActionService) {
+function ActionsGuideController($scope, $routeParams, $log, ActionService) {
 	var suggestions = [];
 	var suggestionsIndex = 0,
 		seasonSlug = $routeParams.seasonSlug;
@@ -139,13 +163,15 @@ function ActionsGuideController($scope, $routeParams, ActionService) {
 		var slugList = [];
 		
 		// If a season was specified, show the guide for that season
-		if (seasonName) {
-			season = actionSheet.findSeasonBySlug(seasonSlug);
+		if (seasonSlug) {
+			$log.debug('Displaying guide for season: ' + seasonSlug);
+		
+			var season = actionSheet.findSeasonBySlug(seasonSlug);
 			$scope.title = season['Title'];
 			$scope.description = season['Notice'];
 			
 			// Convert the action slugs into an array
-			slugList = season["Action Slugs"].trim().split(/[ ,]+/);
+			var slugList = season["Action Slugs"].trim().split(/[ ,]+/);
 
 			suggestions = actionSheet.actionsFromSlugs(slugList, season);
 		
@@ -324,19 +350,11 @@ function ActionListItemController($scope, $log, $timeout) {
   * $scope variables
   *		shareContentElement - The input that contains the text of the post
   */
-function ActionShareController($scope, $log, Tabletop) {
+function ActionShareController($scope, $log) {
 	var default_share_text = "I'm taking this action on climate change ...";
 
 	$scope.$watch('shareContentElement', function() {
 		$($scope.shareContentElement).attr('value', default_share_text);
-	});
-
-	Tabletop.then(function(sheets) {
-		// Find this category
-		var actions = sheets[0]["Actions"].all();
-		
-		// Change the value of the tweet
-//		$($scope.shareContentElement).attr('value', 'SHARE CONTENT');
 	});
 }
 
@@ -345,7 +363,7 @@ function ActionShareLink(scope, element, attributes) {
 }
 
 /**
-  * Sets the correct tag for failing
+  * Sets the correct tag for success
   *
   * $scope
   * * success_tag - The tag to be applied to the user if they succeed
@@ -418,7 +436,7 @@ function ActionCustomFieldsSuccessForm($scope, $log, ActionService) {
 function ActionFailForm($scope, ActionService) {
 	ActionService.then(function(actions) {
 		// Find the correct action
-		var action = actions.findByPage(c4c.page_slug);
+		var action = $scope.action || actions.findByPage(c4c.page_slug);
 		
 		// Set the tag to the giveup tag
 		$scope.fail_tag = action["giveup tag"];
@@ -511,6 +529,94 @@ function ActionCustomFieldController($scope, $log) {
 }
 
 /**
+  * ActionsReminderController
+  *
+  * $scope
+  * show - What to display: false, season or unfinished
+  * season - season to display
+  * action - unfinished action to display
+  */
+function ActionsReminderController($scope, $log, $routeParams, ActionService) {
+	$scope.show = false;
+	
+	ActionService.then(function(actions) {
+		$scope.$on('$routeChangeSuccess', function(next, current) {
+			displayReminder(actions);
+		});
+		
+		displayReminder(actions);
+	});
+
+	function displayReminder(actions) {
+		// Check if this is a page that the reminder should be shown on
+		if (canShowReminder()) {
+			// Do they have incomplete actions??
+			var incompleteActions = actions.unfinishedActions();
+			
+			if (incompleteActions.length) {
+				$scope.action = incompleteActions[0];
+				$scope.show = 'unfinished';
+			} else {
+				var unfinishedSeasons = actions.unfinishedSeasons();
+			
+				if (unfinishedSeasons.length) {
+					// Suggest seasonal action
+					$scope.season = unfinishedSeasons[0];
+					
+					// Don't hint at this season if they're looking at it
+					if ($routeParams.seasonSlug != $scope.season['Slug']) {
+						$scope.show = 'season';
+					} else {
+						$scope.show = false;
+					}
+				}
+			}
+		}
+	}
+	
+	function canShowReminder(config) {
+		var canShow = true,
+			atLeastOneRule = false;
+		/*
+		for (i=0; i<config.length(); i++) {
+			var row = config[i];
+			
+			if (row['Page type'].trim() && (c4c.page_type == row['Page type'])) {
+				if (row['Rule'] == 'Include')
+					canShow = canShow && true;
+				else if (row['Rule'] == 'Exclude')
+					// Stop here, it's been explicitly excluded
+					return false;
+			}
+			
+			if (row['Page tags'].trim()) {
+				
+			
+			  for (j=0; j
+			   && (c4c.page_tags == row['Page tags'])) {
+				if (row['Rule'] == 'Include')
+					canShow = canShow && true;
+				else if (row['Rule'] == 'Exclude')
+					// Stop here, it's been explicitly excluded
+					return false;
+			}
+					
+		// Inclusions
+		// page type
+		// page tags
+		// page slug
+
+		// Inclusions
+		// page type
+		// page tags
+		// page slug
+		}*/
+		
+		return (c4c.page_slug == "actions");
+	}
+}
+
+/**
   * Facilitator Admin Controller
   * $scope
   * * transactionReference - The reference for facilitator cash transactions
@@ -530,6 +636,11 @@ function FacilitatorAdminController($scope, $log) {
   */
 function SelectFieldController($scope, $log) {
 	$scope.choices = $scope.customField.choices;
+}
+
+function ActionUnfinishedController() {
+}
+function ActionSeasonController() {
 }
 
 })();
