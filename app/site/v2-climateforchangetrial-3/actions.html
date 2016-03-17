@@ -4,6 +4,14 @@
 
 <div id="content">
 
+  {% if request.sorta_logged_in? == false %}
+  <h3>Sign in to take action!</h3>
+  <p>We ask that you sign in before taking action, that way we can help you keep tabs on your progress and suggest the best actions for you every time you come back.</p>
+    
+  <p class="text-center"><a class="btn btn-primary btn-lg" href="/login">Sign in</a></p>
+    
+  {% else %}
+
   <div class="view-container">
 	  <ng-view class="action-content view-frame"></ng-view>
   </div>
@@ -22,6 +30,8 @@
     <strong>Do you like this page?</strong>
     {% include "like_page" %}
   </div>
+
+  {% endif %}
 
   {% if page.show_stream? %}
   {% include "page_stream" %}

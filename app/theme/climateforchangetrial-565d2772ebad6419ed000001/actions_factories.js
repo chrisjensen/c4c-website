@@ -50,7 +50,7 @@
 			
 			if (row["Slug"] == slug) {
 			  if (season) {
-			  	applySeason(row, season);
+			  	row = applySeason(row, season);
 			  }
 			  return row;
 			}
@@ -283,9 +283,9 @@
 			action = jQuery.extend(true, {}, action);
 		
 			// Change slugs
-			action['start tag'] = season['Slug'] + action['Slug'] + '_start';
-			action['end tag'] = season['Slug'] + action['Slug'] + '_done';
-			action['giveup tag'] = season['Slug'] + action['Slug'] + '_giveup';
+			action['start tag'] = season['Slug'] + '_' + action['Slug'] + '_start';
+			action['end tag'] = season['Slug'] + '_' + action['Slug'] + '_done';
+			action['giveup tag'] = season['Slug'] + '_' + action['Slug'] + '_giveup';
 		}
 		
 		return action;
@@ -451,7 +451,7 @@
 	
 	function isDemoMode() {
 		if ($.isNumeric(c4c.demo_mode)) {
-			return c4c.demo_mode == c4c.user.id;
+			return (c4c.user) && (c4c.demo_mode == c4c.user.id);
 		}
 	}
 })();
