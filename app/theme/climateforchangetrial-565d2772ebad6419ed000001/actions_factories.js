@@ -457,7 +457,7 @@
 			} else {
 				// Otherwise find all actions in that season
 				actions = actionsFromSlugs(season['Action Slugs'].split(/[ ,]+/),
-							season['Slug']);
+							season);
 			}
 			
 			for (var j=0; j<actions.length; j++) {
