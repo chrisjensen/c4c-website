@@ -6,11 +6,12 @@
 	  * Returns a promise when the action service is loaded
 	  */
 	function actionService($q, $log, Tabletop) {
-		var service = init(),
+		var svc = init(),
 			actionSheet,
+			configuration,
 			allSheets;
 		
-		return service;
+		return svc;
 
 		function init() {
 			var service = {
@@ -24,7 +25,9 @@
 				allActiveSeasons: allActiveSeasons,
 				unfinishedActions: unfinishedActions,
 				unfinishedSeasons: unfinishedSeasons,
-				actionsFromSlugs: actionsFromSlugs
+				actionsFromSlugs: actionsFromSlugs,
+				config: config,
+				badgesForUser: badgesForUser
 			}
 			
 			var deferred = $q.defer();			
@@ -159,8 +162,9 @@
 	  * Returns an array of actions from an array of slugs
 	  * slugList - The array of slugs to search
 	  * season - The slug of the season, if any, the slugs are from
+	  * hideDone - Don't include actions that have been completed/givenup
 	  */
-	function actionsFromSlugs(slugList, season) {
+	function actionsFromSlugs(slugList, season, hideDone) {
 		var actions = [];
 	
 		for (var i=0; i<slugList.length; i++) {
@@ -170,8 +174,10 @@
 			// + it can be found
 			// + it can be shown
 			// + it should be suggested
-			if (action && canShow(action) && shouldSuggest(action)) {
+			if (action && canShow(action)) {
+			  if (!hideDone || shouldSuggest(action)) {
 				actions.push(action);
+			  }
 			}
 		}
 		
@@ -391,6 +397,132 @@
 		}
 		  
 		return seasons;
+	}
+	
+	/** 
+	  * Return the Settings sheet as a map
+	  */
+	function config() {
+		if (!configuration) {
+			var	configSheet = allSheets["Settings"].all();
+		
+			// Turn it into a map
+			configuration = {};
+			
+			for (var i=0; i<configSheet.length; i++) {
+				var setting = configSheet[i];
+				configuration[setting['Name']] = setting['Value'];
+			}
+		}
+		
+		return configuration;
+	}
+
+    /**
+      * getAllDoneTags
+      * Map all done tags into 
+      * {
+      *   "done_tag" : {
+      *			seasonTitle: "",
+      *			badgeName: "",
+      *			pageSlug: ''
+      *		}
+      * }
+      */
+	function getAllDoneTags() {
+		var	seasonSheet = allSheets["Seasonal Actions"].all();
+		
+		var doneTags = {};
+
+		// Clone seasons
+		var seasons = seasonSheet.slice();
+
+		// Add non-seasonal action to the seasons list
+		seasons.push({
+			'Slug' : null,
+			'Badge Title' : 'Other Actions'
+		});
+
+		// Put all actions into a done tags map
+		for (var i=0; i<seasons.length; i++) {
+			var season = seasons[i];
+			season['page slug'] = season['Slug'];
+			
+			var actions;
+			
+			// If it's the "everything" group
+			if (season['Slug'] == null) {
+				// Get all showable actions from the actionSheet
+				actions = $.grep(actionSheet, canShow);
+			} else {
+				// Otherwise find all actions in that season
+				actions = actionsFromSlugs(season['Action Slugs'].split(/[ ,]+/),
+							season['Slug']);
+			}
+			
+			for (var j=0; j<actions.length; j++) {
+				var action = actions[j];
+			
+				// Create map
+				doneTags[action['end tag']] = {
+					season: season,
+					badgeName: action['Badge'],
+					pageSlug: action['page slug']
+				};
+			}
+		}
+		
+		return doneTags;
+	}
+
+    /**
+      * Returns all the badges for a user
+      * in the form
+      * [
+      *		{ season: {
+      *				'Slug': ...
+      *			},
+      *		  badges: [
+      *				{
+      *					badgeName: ...
+      *					pageSlug: ...
+      *				}
+      *			]
+      *     }
+      * ]
+      */
+	function badgesForUser(userTags) {
+		
+		var doneTagsMap = getAllDoneTags();
+		
+		var badges = [];
+
+		// Apply tags and seasons in the order they appear
+		for (var doneTag in doneTagsMap) {
+		  if (doneTagsMap.hasOwnProperty(doneTag)) {
+		  	// Has the user been tagged?
+			if ($.inArray(doneTag, userTags) > -1 ) {
+			  var badge = doneTagsMap[doneTag];
+			  
+			  // Does the tag have a badge?
+			  if (badge['badgeName']) {
+			    // Is this season already in the users list?
+			    if ((badges.length == 0) ||
+			     (badges[badges.length - 1]['season']['Slug'] !=   badge['season']['Slug'])) {
+			    	badges.push({
+			    		season: badge['season'],
+			    		badges: []
+			    	});
+			    }
+			    
+			    // Add the tag to the season
+			    badges[badges.length - 1]['badges'].push(badge);
+			  }
+			}
+		  }
+		}
+
+		return badges;
 	}
 	
     /**

@@ -85,17 +85,6 @@
 		{% endunless %}
 	{% endif %}
 
-	<div class="badges">
-		{% if profile.id == 164 %}
-		  <h4 class="padtopmore">Action Taken</h4>
-		  <p>Chris has taken the following actions:</p>
-		  <h5 class="padtopmore"  style="margin-bottom: 0">Federal Election 2016</h5>
-  		  <p style="font-size: 1.2em;"><a class="label label-success" href="#">Phone Banking</a> <a href="#" class="label label-success">Handed Out How To Vote Cards</a></p>
-		<h5 class="padtopmore" style="margin-bottom: 0">Other Actions</h5>
-		<p style="font-size: 1.2em;"><a class="label label-default">Changed power</a> <a class="label label-default">Switched Superannuation</a> <a class="label label-default">Switched bank</a> <a class="label label-default">Hosted a gathering</a> <a class="label label-default">Trained to be a facilitator</a></p>
-		{% endif %}
- 
-	</div>
     {% if profile.has_fundraising_goal? %}
     {% assign thermo_width = 100 %}
     <div class="clearfix">
@@ -112,6 +101,8 @@
     </div>
     {% endif %}
 
+	<badges-list></badges-list>
+	
     {% comment %}<p class="uppercase">
       <a href="/our_people"> <strong><span class="ss-icon ss-standard ss-navigateleft" style="padding-right: 5px; font-size: .8em;"></span>
           See the Full Team</strong>
@@ -120,27 +111,36 @@
   </div>
 </div>
 
-<!-- Template for badges -->
+<!-- Template for badge list -->
 <script type="text/ng-template" id="badges_list.html">
-	<ul>
-		<action-list-item ng-repeat="badge in badges" action="badge" />
-	</ul>
+	<div ng-show="showBadges" class="badges">
+	  <h4 class="padtopmore">Action Taken</h4>
+	  <p>{{ profile.first_name }} has taken the following actions:</p>
+
+		<badge-season ng-repeat="season in badges"></badge-season>
+	</div>
 </script>
 
-<script type="text/ng-template" id="action_list_item.html">
-	<li ng-class="action['class']" ng-click="big = !big" ng-class="{'wide' : big}">
-		{[{ action['Title'] }]}
-		<div ng-show="big">
-			<p>{[{ action['Description'] }]}</p>
-			<button>Choose This</button>
-		</div>
-	</li>
+<!-- Template for badges list -->
+<script type="text/ng-template" id="badge_season.html">
+	<h5 class="padtopmore" style="margin-bottom: 0"><a href="{[{ '/' + season['pageSlug'] }]}">{[{ season['Badge Title'] }]}</a></h5>
+	<p style="font-size: 1.2em;">
+		<a class="label label-success" href="{[{ '/' + badge['pageSlug'] }]}" ng-repeat="badge in season.badges">{[{ badge['badgeName'] }]}</a>
+	</p>
 </script>
 
 <script type="text/javascript">
 (function() {
 	window.c4c = window.c4c || {};
+	
+	window.c4c.profile_tags = '{{ request.current_profile.tags }}'.split(', ');
 
-	c4c.demoMode = true;
+    // Save the child pages as an object mapping slug to id
+	window.c4c.action_pages = {
+    {% for child in page.descendants %}
+    	'{{ child.slug }}': '{{ child.id}}',
+    {% endfor %}
+		};
+
 })();
 </script>

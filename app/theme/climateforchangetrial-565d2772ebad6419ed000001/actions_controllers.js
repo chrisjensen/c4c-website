@@ -114,7 +114,15 @@ angular.module('c4cWebsite.actions')
   return {
     restrict: 'E',
     templateUrl: 'badges_list.html',
-    controller:  ['$scope', '$log', 'Tabletop', BadgesListController]
+    controller:  ['$scope', '$log', 'ActionService', BadgesListController]
+  }
+})
+
+.directive('badgeSeason', function BadgeSeasonDirective() {
+  return {
+    restrict: 'E',
+    templateUrl: 'badge_season.html',
+    controller:  [BadgeSeasonController]
   }
 });
 
@@ -173,7 +181,7 @@ function ActionsGuideController($scope, $routeParams, $log, ActionService) {
 			// Convert the action slugs into an array
 			var slugList = season["Action Slugs"].trim().split(/[ ,]+/);
 
-			suggestions = actionSheet.actionsFromSlugs(slugList, season);
+			suggestions = actionSheet.actionsFromSlugs(slugList, season, true);
 		
 		// Otherwise use the default guide
 		} else {
@@ -204,43 +212,69 @@ function ActionsGuideController($scope, $routeParams, $log, ActionService) {
   * BadgesListController
   *
   * $scope variables
-  * * badges	array of badges the current user has earned of the form:
-  *		{ 
-  *			Badge: 'Label of the Badge'
-  *			Description: 'Description of the badge'
-  *		}
+  * * showBadges  True if badges can be shown
+  * * badges	  array of badges the current user has earned of the form:
+  *     [{
+  *			season: {
+  *				pageSlug: ...
+  *					},
+  *			badges: [
+  *			{ 
+  *				Badge: 'Label of the Badge'
+  *				Description: 'Description of the badge'
+  *			}
+  *		}, ...]
   */
-function BadgesListController($scope, $log, Tabletop) {
-	$scope.badges = [];
+function BadgesListController($scope, $log, ActionService) {
+	$scope.badges = {};
 	
-	Tabletop.then(function(sheets) {
-		// Find this category
-		var actions = sheets[0]["Actions"].all();
+	ActionService.then(function(actionSheet) {
+		$scope.showBadges = showBadges(actionSheet.config(), c4c.profile_tags);
+	
+		// Don't bother loading badges unless we're going to show them
+		if ($scope.showBadges) {
+			var badges = actionSheet.badgesForUser(c4c.profile_tags);
 
-		angular.forEach(actions, function(action) {
-			var showBadge = true;
-		
-			if (!action["Badge"]) {
-				$log.debug('Not showing badge for action (' + action["tag"] + ') because there is no badge name set.');
-			}
-		
-			if ($.inArray(action["end tag"], c4c.user_tags) > -1) {
-				$log.debug('Not showing badge for action (' + action["tag"] + ") because the user hasn't completed that action.");
-				
-				if (c4c.demoMode) {
-					$log.info('Showing badge anyway because demoMode is on: ' + action["tag"]);
-				}
-				else {
-					showBadge = false;
-				}
-			}
+			// Add a page slug so that we can link to where they can go
+			for (var i=0; i < badges.length; i++) {
+				var season = badges[i]['season'];
 			
-			if (showBadge) {
-				$scope.badges.push(angular.copy(action));
+				season['pageSlug'] = season['slug'] ? 'actions#/season/' + season['slug'] : 'actions';
 			}
-		});
+
+			// Hide badges it there are no badges to show
+			if (badges.length > 0) {
+				$scope.badges = badges;
+			} else {
+				$scope.showBadges = false;
+			}
+		}
 	});
+	
+	/*
+	 * Return true unless a hide tag in the config is present on the profile tag
+	 */
+	function showBadges(config, profileTags) {
+		var hideTags = config['Hide Badges if Tagged'].split(', ');
+	
+		for (var i=0; i<hideTags.length; i++) {
+			if (hideTags[i]) {
+				// Is the tag present?
+				if ($.inArray(hideTags[i], profileTags) > -1) {
+				  $log.info('Not showing badges because user is tagged: ' + hideTags[i]);
+				  $log.info('Configure which tags hide badges in the Settings tab of the actions matrix spreadsheet');
+				
+				  return false;
+				}
+			}
+		}
+		
+		return true;
+	}
 }
+
+function BadgeSeasonController() {
+};
 
 /**
   * ActionsListController
