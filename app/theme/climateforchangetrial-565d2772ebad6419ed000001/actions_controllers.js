@@ -151,6 +151,9 @@ function ActionsGridController($scope, Tabletop) {
   * * action - The suggested action
   * * title	 - Title (if any) to display
   * * description - Description to display
+  * * loaded - True when guide has loaded
+  * * finishedAll - True if the user has finished all suggestions
+  * * season - The season, if any, being guided through
   */
 function ActionsGuideController($scope, $routeParams, $log, ActionService) {
 	var suggestions = [];
@@ -177,6 +180,7 @@ function ActionsGuideController($scope, $routeParams, $log, ActionService) {
 			var season = actionSheet.findSeasonBySlug(seasonSlug);
 			$scope.title = season['Title'];
 			$scope.description = season['Notice'];
+			$scope.season = season;
 			
 			// Convert the action slugs into an array
 			var slugList = season["Action Slugs"].trim().split(/[ ,]+/);
@@ -188,7 +192,10 @@ function ActionsGuideController($scope, $routeParams, $log, ActionService) {
 			slugList = actionSheet.defaultGuide();
 			suggestions = actionSheet.actionsFromSlugs(slugList);
 		}
-	
+		
+		$scope.loaded = true;
+		$scope.finishedAll = (suggestions.length == 0);
+		
 		loadAction();
 	});
 	

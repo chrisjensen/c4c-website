@@ -126,12 +126,25 @@
 		<p>{[{ description }]}</p>
 
 		<div class="row padbottommore padtopmore grid-loading text-center"
-				 ng-hide="action">
+				 ng-hide="loaded">
 			<img src="assets/bert-loader-small.gif" alt="Loading ..."  />
 		</div>
 
 		<div class="row action-container" ng-if="action">
 			<action-list-item ng-repeat="action in [ action ]" action="action" big="true" class="rotate"></action-list-item>
+		</div>
+
+		<div class="row action-container" ng-if="finishedAll">
+			<div class="col-md-12">
+				<div class="bg-info action-notice marginbottom">
+					<p style="color: white; margin: 0;">Well done! You've finished all the actions
+					<span ng-show="season">for {[{ season['Notice Title'] }]}.</span>
+					<span ng-hide="season">that we have to suggest.</span>
+					</p>
+				</div>
+				<p ng-show="season">Why not try something from our <a href="#/">regular actions</a>?</p>
+				<p>Browse <a href="#/actions">all of the actions</a>.</p>
+			</div>			
 		</div>
 
 		<div class="row">
