@@ -446,7 +446,6 @@
 		// Put all actions into a done tags map
 		for (var i=0; i<seasons.length; i++) {
 			var season = seasons[i];
-			season['page slug'] = season['Slug'];
 			
 			var actions;
 			
