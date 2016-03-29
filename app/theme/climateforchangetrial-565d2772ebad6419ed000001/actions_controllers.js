@@ -239,7 +239,7 @@ function BadgesListController($scope, $log, ActionService) {
 			for (var i=0; i < badges.length; i++) {
 				var season = badges[i]['season'];
 			
-				season['pageSlug'] = season['slug'] ? 'actions#/season/' + season['slug'] : 'actions';
+				season['pageSlug'] = season['Slug'] ? 'actions#/season/' + season['Slug'] : 'actions';
 			}
 
 			// Hide badges it there are no badges to show
