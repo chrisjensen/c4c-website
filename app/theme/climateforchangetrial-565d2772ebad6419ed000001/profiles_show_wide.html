@@ -123,7 +123,7 @@
 
 <!-- Template for badges list -->
 <script type="text/ng-template" id="badge_season.html">
-	<h5 class="padtopmore" style="margin-bottom: 0"><a href="{[{ '/' + season['pageSlug'] }]}">{[{ season['Badge Title'] }]}</a></h5>
+	<h5 class="padtopmore" style="margin-bottom: 0"><a href="{[{ '/' + season.season['pageSlug'] }]}">{[{ season.season['Badge Title'] }]}</a></h5>
 	<p style="font-size: 1.2em;">
 		<a class="label label-success" href="{[{ '/' + badge['pageSlug'] }]}" ng-repeat="badge in season.badges">{[{ badge['badgeName'] }]}</a>
 	</p>
