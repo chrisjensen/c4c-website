@@ -186,7 +186,7 @@ function ActionsGuideController($scope, $routeParams, $log, ActionService) {
 		// Otherwise use the default guide
 		} else {
 			slugList = actionSheet.defaultGuide();
-			suggestions = actionSheet.actionsFromSlugs(slugList);
+			suggestions = actionSheet.actionsFromSlugs(slugList, null, true);
 		}
 		
 		$scope.loaded = true;
