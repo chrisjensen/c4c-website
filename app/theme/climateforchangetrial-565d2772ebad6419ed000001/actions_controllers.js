@@ -165,10 +165,6 @@ function ActionsGuideController($scope, $routeParams, $log, ActionService) {
 	$scope.title = "";
 	$scope.description = "Your suggested action for this week:";
 
-	$scope.hint = {
-		slug: 'power'
-	}
-
 	// Load up the guides
 	ActionService.then(function(actionSheet) {
 		var slugList = [];
