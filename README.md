@@ -8,7 +8,7 @@ At the moment this is the following pages:
 * User profiles - Displays badges for actions completed
 
 ## Notes on Angular Templates
-As BationBuilder doesn't easily support serving of Angular templates, Angular templates are embedded as scripts within the pages that require them.
+As NationBuilder doesn't easily support serving of Angular templates, Angular templates are embedded as scripts within the pages that require them.
 To strike a balance between minimising file size and avoiding duplication, templates are embedded within the lowest level theme file that will serve all pages that need the template.
 
 eg Templates required by all pages would be placed at the bottom of `layout.html`, while templates required only by the actions page are placed at the bottom of `actions.html`
