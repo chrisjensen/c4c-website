@@ -299,16 +299,26 @@ function BadgesListController($scope, $log, ActionService) {
 function ActionButtonController($scope, $uibModal) {
 	$scope.login = login;
 	
+	var modalInstance,
+		modalScope = $scope.$new();
+	
+	modalScope.dismiss = dismiss;
+
 	function login(action) {
-		var modalInstance = $uibModal.open({
+		modalInstance = $uibModal.open({
 		  templateUrl: 'login_modal.html',
 		  controller: 'LoginModalController',
+		  scope: modalScope,
 		  resolve: {
 			action: function(){
 			  return action;
 			}
 		  }
 		});		
+	}
+	
+	function dismiss() {
+		modalInstance.dismiss('cancel');
 	}
 }
 
