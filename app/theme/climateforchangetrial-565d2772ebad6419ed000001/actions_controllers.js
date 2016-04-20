@@ -35,6 +35,8 @@ angular.module('c4cWebsite.actions')
 
 .controller('ActionsGuideController', ['$scope', '$routeParams', '$log', 'ActionService', ActionsGuideController])
 
+.controller('LoginModalController', ['$scope', 'action', LoginModalController])
+
 .directive('actionShare', function ActionShareDirective() {
   return {
     restrict: 'E',
@@ -107,6 +109,15 @@ angular.module('c4cWebsite.actions')
     restrict: 'E',
     controller:  [ActionUnfinishedController],
     templateUrl: 'action_unfinished.html',
+  }
+})
+
+.directive('actionButton', function ActionButtonDirective() {
+  return {
+    restrict: 'E',
+    scope: { action: '=' },
+    controller:  ['$scope', '$uibModal', ActionButtonController],
+    templateUrl: 'action_button.html',
   }
 })
 
@@ -276,6 +287,47 @@ function BadgesListController($scope, $log, ActionService) {
 	}
 }
 
+/**
+  * ActionButtonController
+  * Provides method to launch a login modal if the user is not logged in
+  * *scope*
+  *	* login - Method to launch a modal, requires the action be passed to it
+  */
+function ActionButtonController($scope, $uibModal) {
+	$scope.login = login;
+	
+	function login(action) {
+		var modalInstance = $uibModal.open({
+		  templateUrl: 'login_modal.html',
+		  controller: 'LoginModalController',
+		  size: null,
+		  resolve: {
+			action: function(){
+			  return action;
+			}
+		  }
+		});		
+	}
+}
+
+/**
+  * Controller for Login Modal
+  * *scope*
+  * * action - The action that the user wants to go to
+  * * state - the current state of the modal, 
+  *			used to allow multiple panes to be shown in one modal using button clicks
+  **/
+function LoginModalController($scope, action) {
+	$scope.state = 'main';
+	$scope.action = action;
+	
+	$scope.setState = setState;
+	
+	function setState(s) {
+		$scope.state = s;
+	}
+}
+
 function BadgeSeasonController() {
 };
 
@@ -373,7 +425,7 @@ function ActionListItemController($scope, $log, $timeout) {
 			// element can be found with the dynamic id
 			$timeout(function() {
 				var slug = action["Slug"],
-					page_id = action["Page ID"].trim() || c4c.action_pages[action["page slug"].trim()];
+					page_id = action["Page ID"];
 
 				$('#act_' + slug).find("input[name='page_id']").attr('value', page_id);
 			}, 0);
@@ -516,7 +568,7 @@ function ActionFlashController($scope, ActionService) {
 }
 
 /**
-  * ActionSetpsLink
+  * ActionStepsLink
   * Links the controller to the element it's tagged on 
   */
 function ActionStepsLink(scope, element, attributes) {

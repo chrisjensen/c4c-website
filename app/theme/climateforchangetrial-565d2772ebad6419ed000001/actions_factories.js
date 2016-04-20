@@ -103,11 +103,32 @@
 		actions = $.grep(actions, function(action) {
 			return (action["Category"] == categoryName);
 		});
+
+		// Add page ids for all possible
+		$.each(actions, function(index, action) {
+			addPageId(action)
+		});
 		
 		// Remove any actions that we can't show
 		actions = $.grep(actions, canShow);
-
+		
 		return actions;
+	}
+	
+	/**
+	  * Add a pageId to the action if it doesn't already have one
+	  * and if one can be found from it's slug
+	  */
+	function addPageId(action) {
+		var pageSlug = action["page slug"];
+	
+		action["Page ID"] = action["Page ID"].trim();
+	
+		if (pageSlug && (!action["Page ID"])) {
+			if (c4c.action_pages[pageSlug]) {
+				action["Page ID"] = c4c.action_pages[pageSlug];
+			}
+		}
 	}
 	
 	/**
@@ -169,6 +190,9 @@
 	
 		for (var i=0; i<slugList.length; i++) {
 			var action = findBySlug(slugList[i], season);
+
+			// Add page ids if possible
+			addPageId(action)
 			
 			// Add the action if
 			// + it can be found
@@ -451,8 +475,15 @@
 			
 			// If it's the "everything" group
 			if (season['Slug'] == null) {
+				actions = actionSheet;
+			
+				// Add page ids for all possible
+				$.each(actions, function(index, action) {
+					addPageId(action)
+				});
+
 				// Get all showable actions from the actionSheet
-				actions = $.grep(actionSheet, canShow);
+				actions = $.grep(actions, canShow);
 			} else {
 				// Otherwise find all actions in that season
 				actions = actionsFromSlugs(season['Action Slugs'].split(/[ ,]+/),
@@ -559,8 +590,7 @@
 		// Does it have a corresponding page?
 		var pageSlug = action["page slug"].trim();
 		
-		var slugIsGood = ((pageSlug && c4c.action_pages[pageSlug]) ||
-									 action["Page ID"].trim());
+		var slugIsGood = (pageSlug && action["Page ID"]);
 
 		if (! slugIsGood) {
 			$log.error("action hidden (slug: " + action["Slug"] + ") Reason: no matching page (did you set it's status to published?). You must create a signup page that is a child of this page. The child page must have the slug: " + pageSlug);

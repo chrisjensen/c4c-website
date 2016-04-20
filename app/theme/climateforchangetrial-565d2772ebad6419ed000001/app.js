@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('c4cWebsite.actions', ['ngRoute', 'times.tabletop']);
+angular.module('c4cWebsite.actions', ['ngRoute', 'times.tabletop', 'ui.bootstrap']);
 
 // Declare app level module which depends on views, and components
 angular.module('c4cWebsite', [

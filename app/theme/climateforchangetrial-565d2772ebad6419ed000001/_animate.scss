@@ -1,3 +1,23 @@
+/* cross fade hide and show */
+
+.crossfade.ng-hide {
+  opacity: 0;
+}
+
+.crossfade.ng-hide-remove,
+.crossfade.ng-hide-add {
+  display: block !important;
+}
+
+.crossfade.ng-hide-remove {
+  transition: all linear 500ms;
+}
+
+.crossfade.ng-hide-add {
+  transition: all linear 500ms;
+  position: absolute;
+}
+
 /* cross fading between routes with ngView */
 
 .view-container {
@@ -64,7 +84,7 @@
 
 @media (max-width: 768px) { 
 	.action-container {
-		min-height: 200px;
+		min-height: 400px;
 	}
 }
 

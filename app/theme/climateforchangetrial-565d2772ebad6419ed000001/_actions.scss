@@ -89,7 +89,6 @@ ul.action-list {
 
 li.action-item {
 	list-style: none;
-	width: 30%;
 	margin-left: 1%;
 	margin-right: 2%;
     display: table;
@@ -99,6 +98,18 @@ li.action-item {
     padding: 10px;
     float: left;
     height: 100px;
+}
+
+@media (max-width: 768px) { 
+	li.action-item {
+		width: 45%;
+	}
+}
+
+@media (min-width: 768px) { 
+	li.action-item {
+		width: 30%;
+	}
 }
 
 li.action-item.action-wide {
