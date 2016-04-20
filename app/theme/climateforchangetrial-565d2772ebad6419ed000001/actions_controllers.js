@@ -174,6 +174,7 @@ function ActionsGuideController($scope, $routeParams, $log, ActionService) {
 	$scope.nextAction = nextAction;
 
 	$scope.title = "";
+	$scope.name_or_email = c4c.user.name_or_email;
 	$scope.description = "Your suggested action for this week:";
 
 	// Load up the guides

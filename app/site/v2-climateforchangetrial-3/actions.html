@@ -134,8 +134,8 @@
 	<div>
 		<h2>{[{ title }]}</h2>
 		
-		{% if request.sorta__logged_in? %}
-		<p>Hi {{ request.current_signup.name_or_email }},
+		{% if request.sorta_logged_in? %}
+		<p>Hi {[{ name_or_email }]},
 		 <span class="pull-right">(<a href="/logout?page_id={{ page.id }}" class="">
 		 	Not {{ request.current_signup.name_or_email }}?</a>)
 		 </span></p>

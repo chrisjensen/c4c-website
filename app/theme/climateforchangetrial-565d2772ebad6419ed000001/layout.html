@@ -117,8 +117,11 @@
 			c4c.user = {
 				id: {{ request.current_signup.id }},
 				first_name: '{{ request.current_signup.first_name }}',
-				last_name: '{{ request.current_signup.last_name }}'
+				last_name: '{{ request.current_signup.last_name }}',
+				email: '{{ request.current_signup.email }}',
 			};
+
+			c4c.user.name_or_email = c4c.user.first_name || c4c.user.email;
 		{% endif %}
 
 		// Save the slug of the current page
