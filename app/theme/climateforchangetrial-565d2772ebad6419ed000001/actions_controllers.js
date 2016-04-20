@@ -35,6 +35,8 @@ angular.module('c4cWebsite.actions')
 
 .controller('ActionsGuideController', ['$scope', '$routeParams', '$log', 'ActionService', ActionsGuideController])
 
+.controller('ActionButtonController', ['$scope', '$uibModal', ActionButtonController])
+
 .controller('LoginModalController', ['$scope', 'action', LoginModalController])
 
 .directive('actionShare', function ActionShareDirective() {
@@ -174,7 +176,7 @@ function ActionsGuideController($scope, $routeParams, $log, ActionService) {
 	$scope.nextAction = nextAction;
 
 	$scope.title = "";
-	$scope.name_or_email = c4c.user.name_or_email;
+	$scope.name_or_email = (c4c.user ? c4c.user.name_or_email : '');
 	$scope.description = "Your suggested action for this week:";
 
 	// Load up the guides
@@ -301,7 +303,6 @@ function ActionButtonController($scope, $uibModal) {
 		var modalInstance = $uibModal.open({
 		  templateUrl: 'login_modal.html',
 		  controller: 'LoginModalController',
-		  size: null,
 		  resolve: {
 			action: function(){
 			  return action;

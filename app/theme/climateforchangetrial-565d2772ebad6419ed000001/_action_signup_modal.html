@@ -5,7 +5,7 @@
       
 <div class="modal-body">
 <div id="login-main" class="crossfade" ng-show="state=='main'">
-  <p>By signing in, you'll help us to understand which actions are popular, and how we can improve them. We'll also help you keep track of which actions you've completed and suggest new ones for you.</p>
+  <p>By signing in, you'll help us to understand which actions are popular, and how we can improve them.</p><p>We'll also help you keep track of which actions you've completed and suggest new ones for you.</p>
 
   <!-- start from scratch -->
 
@@ -54,11 +54,11 @@
 
 </div> <!-- padtopmore -->
 
-<hr class="marginbottomless" />
+<hr class="marginbottomless" ng-if="action" />
 
 </div>
 
-<div class="padbottommore margintopmore">
+<div class="padbottommore margintopmore" ng-if='action'>
   <a class="pull-right" href="/{[{ action['page slug'] }]}" class="small">No thanks, just take me to the action</a>
 </div>
 

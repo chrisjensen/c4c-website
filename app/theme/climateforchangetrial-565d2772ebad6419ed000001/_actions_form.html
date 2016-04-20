@@ -1,6 +1,8 @@
   <div class="form-wrap">
     <div class="form">
 
+  {% if request.sorta_logged_in? %}
+
 	  <!-- Success form -->
 	  <div id="question_form" ng-controller="ActionSimpleSuccessForm">
       {% form_for signup %}
@@ -8,6 +10,8 @@
       <div class="form-errors">{% error_messages_for signup %}</div>
 
 	  <input type="hidden" name="signup[optional_tag]" value="{[{ success_tag }]}" />
+
+	  <input id="signup_email" name="signup[email]" type="hidden" value="{{ request.current_signup.email }}" />
 
 	  <div class="row">
 	  	  <!-- Submit straight away if no more data needed -->
@@ -45,6 +49,9 @@
 	  </div>
 
       {% form_for signup %}
+
+	  <input id="signup_email" name="signup[email]" type="hidden" value="{{ request.current_signup.email }}" />
+
       <div class="form-errors padtopmore">{% error_messages_for signup %}</div>
 
 		<div class="row">
@@ -69,6 +76,8 @@
 
 	  <!-- Fail form -->
       {% form_for signup %}
+
+	  <input id="signup_email" name="signup[email]" type="hidden" value="{{ request.current_signup.email }}" />
 
       <div class="row">
         <div class="col-md-12"><div class="form-group"><label for="volunteer_signup_action_problem">What was the problem?</label>
@@ -102,8 +111,22 @@ But instead ...</textarea>
       </div>
       {% endif %}
 
+    {% else %} <!-- Not logged in -->
 
-    </div>
+	  <p>Thank you for taking action!</p>
+	  <h4>What next?</h4>
+	  <p>Sign in to get suggestions on what action to take next and track your progress.</p>
+	  <p>By signing in, you'll help us to track which actions are popular so we can improve the actions we offer.</p>
+
+	  <div class="row" ng-controller="ActionButtonController">
+		  <div class="col-md-12 text-center">
+			 <button class="btn btn-primary" ng-click="login()">Sign in</button>
+		  </div>
+	  </div> <!-- row -->
+    
+    {% endif %}
+
+    </div> <!-- class="form" -->
   </div>
   
 <script type="text/ng-template" id="action_custom_field.html">
@@ -131,6 +154,10 @@ But instead ...</textarea>
 	<select id="signup_custom_values_{[{ customField.slug }]}_custom" name="signup[custom_values][{[{ customField.slug }]}]">
 		<option ng-repeat="choice in choices" value="{[{ choice.id }]}">{[{ choice.name  }]}</option>
 	</select>
+</script>
+  
+<script type="text/ng-template" id="login_modal.html">
+	{% include "action_signup_modal" %}
 </script>
   
 <script type="text/javascript">
