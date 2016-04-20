@@ -1,16 +1,6 @@
 {% include "breadcrumbs" %}
 
-
-
 <div id="content">
-
-  {% if request.sorta_logged_in? == false %}
-  <h3>Sign in to take action!</h3>
-  <p>We ask that you sign in before taking action, that way we can help you keep tabs on your progress and suggest the best actions for you every time you come back.</p>
-    
-  <p class="text-center"><a class="btn btn-primary btn-lg" href="/login">Sign in</a></p>
-    
-  {% else %}
 
   <div class="view-container">
 	  <ng-view class="action-content view-frame"></ng-view>
@@ -30,8 +20,6 @@
     <strong>Do you like this page?</strong>
     {% include "like_page" %}
   </div>
-
-  {% endif %}
 
   {% if page.show_stream? %}
   {% include "page_stream" %}
@@ -102,20 +90,42 @@
 		<div ng-show="big">
 			<p>{[{ action['Description'] }]}</p>
 
-	  <div ng-click="$event.stopPropagation()">
+			  <div ng-click="$event.stopPropagation()">
+
+				  <action-button action='action'/>
+
+				  <div class="form-submit"></div>
+			  </div>
+      
+		</div>
+	</li>
+</script>
+
+<!-- Template for button -->
+<script type="text/ng-template" id="action_button.html">
+  <!-- If they're logged in, then the button can tag them and take them straight to the
+       action -->
+  {% if request.sorta_logged_in? %}
+
       {% form_for signup %}
 
 	  <input type="hidden" name="signup[optional_tag]" value="{[{ action['start tag'] }]}" />
+
+	  <!-- If they have an email, make it a hidden element so that the button works -->	  
+	  {% if request.current_signup.has_email? %}
+	  <input id="signup_email" name="signup[email]" type="hidden" value="{{ request.current_signup.email }}" />
+	  {% endif %}
 
 	  {% submit_tag "Do this action", class:"pull-right submit-button btn btn-primary" %}
 
       {% endform_for %}
 
 	  <div class="form-submit"></div>
-      </div>
-      
-		</div>
-	</li>
+	  
+  <!-- if they're not logged in, then the button will have to launch the login prompt -->
+  {% else %}
+      <button class="pull-right submit-button btn btn-primary" ng-click="login(action)">Do this action</button>
+  {% endif %}
 </script>
 
 <!-- Template for actions guide -->
@@ -123,6 +133,14 @@
 
 	<div>
 		<h2>{[{ title }]}</h2>
+		
+		{% if request.sorta__logged_in? %}
+		<p>Hi {{ request.current_signup.name_or_email }},
+		 <span class="pull-right">(<a href="/logout?page_id={{ page.id }}" class="">
+		 	Not {{ request.current_signup.name_or_email }}?</a>)
+		 </span></p>
+		{% endif %}
+
 		<p>{[{ description }]}</p>
 
 		<div class="row padbottommore padtopmore grid-loading text-center"
@@ -157,6 +175,10 @@
 		  </div>
 		</div>
 	</div>
+</script>
+
+<script type="text/ng-template" id="login_modal.html">
+	{% include "action_signup_modal" %}
 </script>
 
 <script type="text/javascript">
