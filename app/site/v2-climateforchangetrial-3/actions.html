@@ -111,10 +111,7 @@
 
 	  <input type="hidden" name="signup[optional_tag]" value="{[{ action['start tag'] }]}" />
 
-	  <!-- If they have an email, make it a hidden element so that the button works -->	  
-	  {% if request.current_signup.has_email? %}
 	  <input id="signup_email" name="signup[email]" type="hidden" value="{{ request.current_signup.email }}" />
-	  {% endif %}
 
 	  {% submit_tag "Do this action", class:"pull-right submit-button btn btn-primary" %}
 
