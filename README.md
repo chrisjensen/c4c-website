@@ -13,10 +13,12 @@ To strike a balance between minimising file size and avoiding duplication, templ
 
 eg Templates required by all pages would be placed at the bottom of `layout.html`, while templates required only by the actions page are placed at the bottom of `actions.html`
 
+More information on how Angular is integrated into the application is available [here](http://broadthought.co/2016/03/20/using-angularjs-with-nationbuilder/).
+
 ## Updating
 
-The theme files are best edited and updated via NationBuilders [ThemeSync](http://nationbuilder.com/theme_sync) app.
+The theme files are best edited and updated via NationBuilder's [ThemeSync](http://nationbuilder.com/theme_sync) app.
 Use the app to sync the theme and site and when prompted for the folder to sync with, choose `app/theme` and `app/site` respectively.
 
 ## Other Folders
-`app/action_pages` and `app_kt` are not updated via ThemeSync, but serve as a staging point for the HTML content for the action pages and kitchen table conversations as there is no other place to easily track revisions in these documents which include non-simple HTML.
+`app/action_pages` and `app/kt` are not updated via ThemeSync, but serve as a place to hold revisions of the HTML content for the action pages and kitchen table conversations as there is no other place to easily track revisions in these documents which include non-trivial HTML.
