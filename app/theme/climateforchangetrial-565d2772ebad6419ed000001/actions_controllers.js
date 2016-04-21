@@ -471,6 +471,8 @@ function ActionShareLink(scope, element, attributes) {
   * * hasCustomFields - true if the action has custom fields
   */
 function ActionSimpleSuccessForm($scope, ActionService) {
+	$scope.name_or_email = (c4c.user ? c4c.user.name_or_email : '');
+
 	ActionService.then(function(actions) {
 		// Find the correct action
 		var action = actions.findByPage(c4c.page_slug);

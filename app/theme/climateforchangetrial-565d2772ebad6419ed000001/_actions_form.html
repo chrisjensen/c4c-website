@@ -3,8 +3,17 @@
 
   {% if request.sorta_logged_in? %}
 
+	
+
 	  <!-- Success form -->
 	  <div id="question_form" ng-controller="ActionSimpleSuccessForm">
+
+		<p>Thanks for taking action {[{ name_or_email }]}, <br/>
+		help us to see which actions are being successful by clicking one of the buttons below.
+		 <span class="pull-right">(<a href="/logout?page_id={{ page.id }}" class="">
+		 	Not {{ request.current_signup.name_or_email }}?</a>)
+		 </span></p>
+
       {% form_for signup %}
 
       <div class="form-errors">{% error_messages_for signup %}</div>
