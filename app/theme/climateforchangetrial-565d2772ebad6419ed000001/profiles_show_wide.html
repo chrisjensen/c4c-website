@@ -126,10 +126,11 @@
 	<h5 class="padtopmore" style="margin-bottom: 0" ng-if="badges.length > 1">
 	<a href="{[{ '/' + season.season['pageSlug'] }]}">{[{ season.season['Badge Title'] }]}</a></h5>
 	<p style="font-size: 1.2em;">
-		<a ng-repeat="badge in season.badges"
-		 class="label"
-		 ng-class="(badge.season['Slug']) ? 'bg-primary' : 'bg-success'"
-		 href="{[{ '/' + badge['pageSlug'] }]}">{[{ badge['badgeName'] }]}</a>
+		<span ng-repeat="badge in season.badges">
+			<a class="label"
+			 ng-class="(badge.season['Slug']) ? 'bg-primary' : 'bg-success'"
+			 href="{[{ '/' + badge['pageSlug'] }]}">{[{ badge['badgeName'] }]}</a>
+		</span>
 	</p>
 </script>
 
