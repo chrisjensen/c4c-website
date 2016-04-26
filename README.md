@@ -19,11 +19,11 @@ More information on how Angular is integrated into the application is available 
 
 The following key Javascript files define the angular content, all are within the `app/theme` directory.
 
-* apps.js - Define modules and initialisation
-* actions_factories.js - Service to provide the action configuration (used by actions and badges)
-* actions_controllers.js - Controllers and directives for action pages
-* badge_controllers.js - Cotrollers and directives for displaying badges on user profiles
-* facilitator_controllers.js - Dynamic content for the /facilitator_admin page
+* `app.js` - Define modules and initialisation
+* `actions_factories.js` - Service to provide the action configuration (used by actions and badges)
+* `actions_controllers.js` - Controllers and directives for action pages
+* `badge_controllers.js` - Controllers and directives for displaying badges on user profiles
+* `facilitator_controllers.js` - Dynamic content for the /facilitator_admin page
 
 ## Updating
 
