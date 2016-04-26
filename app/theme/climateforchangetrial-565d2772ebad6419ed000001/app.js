@@ -1,12 +1,16 @@
 'use strict';
 
 angular.module('c4cWebsite.actions', ['ngRoute', 'times.tabletop', 'ui.bootstrap']);
+angular.module('c4cWebsite.facilitator', []);
+angular.module('c4cWebsite.badges', ['c4cWebsite.actions']);
 
 // Declare app level module which depends on views, and components
 angular.module('c4cWebsite', [
   'ngRoute',
   'ngAnimate',
-  'c4cWebsite.actions'
+  'c4cWebsite.actions',
+  'c4cWebsite.facilitator',
+  'c4cWebsite.badges'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/'});
