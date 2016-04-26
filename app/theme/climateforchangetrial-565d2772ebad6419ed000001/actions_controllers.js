@@ -83,13 +83,6 @@ angular.module('c4cWebsite.actions')
   }
 })
 
-.directive('facilitatorAdmin', function FacilitatorAdminDirective() {
-  return {
-    restrict: 'A',
-    controller:  ['$scope', '$log', FacilitatorAdminController],
-  }
-})
-
 .directive('actionsReminder', function ActionsReminderDirective() {
   return {
     restrict: 'E',
@@ -120,22 +113,6 @@ angular.module('c4cWebsite.actions')
     scope: { action: '=' },
     controller:  ['$scope', '$uibModal', ActionButtonController],
     templateUrl: 'action_button.html',
-  }
-})
-
-.directive('badgesList', function BadgesListDirective() {
-  return {
-    restrict: 'E',
-    templateUrl: 'badges_list.html',
-    controller:  ['$scope', '$log', 'ActionService', BadgesListController]
-  }
-})
-
-.directive('badgeSeason', function BadgeSeasonDirective() {
-  return {
-    restrict: 'E',
-    templateUrl: 'badge_season.html',
-    controller:  [BadgeSeasonController]
   }
 });
 
@@ -226,71 +203,6 @@ function ActionsGuideController($scope, $routeParams, $log, ActionService) {
 }
 
 /**
-  * BadgesListController
-  *
-  * $scope variables
-  * * showBadges  True if badges can be shown
-  * * badges	  array of badges the current user has earned of the form:
-  *     [{
-  *			season: {
-  *				pageSlug: ...
-  *					},
-  *			badges: [
-  *			{ 
-  *				Badge: 'Label of the Badge'
-  *				Description: 'Description of the badge'
-  *			}
-  *		}, ...]
-  */
-function BadgesListController($scope, $log, ActionService) {
-	$scope.badges = {};
-	
-	ActionService.then(function(actionSheet) {
-		$scope.showBadges = showBadges(actionSheet.config(), c4c.profile_tags);
-	
-		// Don't bother loading badges unless we're going to show them
-		if ($scope.showBadges) {
-			var badges = actionSheet.badgesForUser(c4c.profile_tags);
-
-			// Add a page slug so that we can link to where they can go
-			for (var i=0; i < badges.length; i++) {
-				var season = badges[i]['season'];
-			
-				season['pageSlug'] = season['Slug'] ? 'actions#/season/' + season['Slug'] : 'actions';
-			}
-
-			// Hide badges it there are no badges to show
-			if (badges.length > 0) {
-				$scope.badges = badges;
-			} else {
-				$scope.showBadges = false;
-			}
-		}
-	});
-	
-	/*
-	 * Return true unless a hide tag in the config is present on the profile tag
-	 */
-	function showBadges(config, profileTags) {
-		var hideTags = config['Hide Badges if Tagged'].split(', ');
-	
-		for (var i=0; i<hideTags.length; i++) {
-			if (hideTags[i]) {
-				// Is the tag present?
-				if ($.inArray(hideTags[i], profileTags) > -1) {
-				  $log.info('Not showing badges because user is tagged: ' + hideTags[i]);
-				  $log.info('Configure which tags hide badges in the Settings tab of the actions matrix spreadsheet');
-				
-				  return false;
-				}
-			}
-		}
-		
-		return true;
-	}
-}
-
-/**
   * ActionButtonController
   * Provides method to launch a login modal if the user is not logged in
   * *scope*
@@ -339,9 +251,6 @@ function LoginModalController($scope, action) {
 		$scope.state = s;
 	}
 }
-
-function BadgeSeasonController() {
-};
 
 /**
   * ActionsListController
@@ -475,7 +384,7 @@ function ActionSimpleSuccessForm($scope, ActionService) {
 
 	ActionService.then(function(actions) {
 		// Find the correct action
-		var action = actions.findByPage(c4c.page_slug);
+		var action = actions.findUnfinishedAction(c4c.page_slug);
 		
 		$scope.action = action;
 		
@@ -497,7 +406,7 @@ function ActionSimpleSuccessForm($scope, ActionService) {
 function ActionCustomFieldsSuccessForm($scope, $log, ActionService) {
 	ActionService.then(function(actions) {
 		// Find the correct action
-		var action = actions.findByPage(c4c.page_slug);
+		var action = actions.findUnfinishedAction(c4c.page_slug);
 		
 		$scope.action = action;
 		
@@ -539,7 +448,7 @@ function ActionCustomFieldsSuccessForm($scope, $log, ActionService) {
 function ActionFailForm($scope, ActionService) {
 	ActionService.then(function(actions) {
 		// Find the correct action
-		var action = $scope.action || actions.findByPage(c4c.page_slug);
+		var action = $scope.action || actions.findUnfinishedAction(c4c.page_slug);
 		
 		// Set the tag to the giveup tag
 		$scope.fail_tag = action["giveup tag"];
@@ -571,11 +480,9 @@ function ActionFlashController($scope, ActionService) {
 
 	ActionService.then(function(actions) {
 		// What action are we on
-		var action = actions.findByPage(c4c.page_slug);
+		var finished = action.isPageActionFinished(c4c.page_slug, c4c.user_tags);
 		
-		// If they've done it, then unhide
-		var doneTag = action["end tag"];
-		if (doneTag && ($.inArray(doneTag, c4c.user_tags) > -1)) {
+		if (finished) {
 		  $scope.showFlash = true;
 		}
 	});
@@ -717,18 +624,6 @@ function ActionsReminderController($scope, $log, $routeParams, ActionService) {
 		
 		return (c4c.page_slug == "actions");
 	}
-}
-
-/**
-  * Facilitator Admin Controller
-  * $scope
-  * * transactionReference - The reference for facilitator cash transactions
-  */
-function FacilitatorAdminController($scope, $log) {
-	$scope.transactionReference = 'Gath' +
-		c4c.user.first_name.charAt(0).toUpperCase() +
-		c4c.user.last_name.charAt(0).toUpperCase() +
-		c4c.user.id;
 }
 
 /**
