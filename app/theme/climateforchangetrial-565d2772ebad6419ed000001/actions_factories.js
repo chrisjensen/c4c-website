@@ -27,7 +27,9 @@
 				unfinishedSeasons: unfinishedSeasons,
 				actionsFromSlugs: actionsFromSlugs,
 				config: config,
-				badgesForUser: badgesForUser
+				badgesForUser: badgesForUser,
+				findUnfinishedAction: findUnfinishedAction,
+				isPageActionFinished: isPageActionFinished
 			}
 			
 			var deferred = $q.defer();			
@@ -349,12 +351,14 @@
 				($.inArray(action['giveup tag'], tags) > -1)));
 	};
 
-
-	/**
-	  * Returns an array of unfinished actions
-	  * Ignores actions with non-standard tag naming
-	  */
-	function unfinishedActions() {
+    /**
+      * Common method for unfinishedActions and finishedActions
+      *
+      * Returns an array of actions
+      * If find == "complete" then returns all completed actions
+      * If find == "incomplete" then returns all uncompleted actions
+      */
+    function findCompleteOrIncompleteActions(find) {
 		var actions = [];
 
 		// Get list of seasons, ordered by soonest expiring
@@ -372,8 +376,8 @@
 		  for (var j=0; j<c4c.user_tags.length; j++) {
 		    var tag = c4c.user_tags[j], 
 		    
-		    	// Tag prefix will be act_ or seasons slug
-		    	prefix = ((seasons[i] == 'act_') ? 'act_' : (seasons[i]["Slug"] + "_"));
+		    // Tag prefix will be act_ or seasons slug
+		    prefix = ((seasons[i] == 'act_') ? 'act_' : (seasons[i]["Slug"] + "_"));
 
 			// Does this tag start with the prefix of this season (or act_)
 		    if (tag.lastIndexOf(prefix,0) != -1) {
@@ -385,8 +389,14 @@
 					var action = ((prefix == 'act_') ? findActionByStartTag(tag) : 
 									findActionByStartTag(tag, seasons[i]))
 
-					if (action && isActionIncomplete(action)) {
-						actions.push(action);
+					if (action) {
+						var incomplete = isActionIncomplete(action);
+
+						// Add the action if it's what we're looking for
+						if (((find=="incomplete") && incomplete) || 
+							((find=="complete") && (!incomplete))) {
+							actions.push(action);
+						}
 					}
 			    }
 			}
@@ -394,6 +404,68 @@
 		}
 
 		return actions;
+    }
+
+	/**
+	  * Returns an array of unfinished actions
+	  * Ignores actions with non-standard tag naming
+	  */
+	function unfinishedActions() {
+		return findCompleteOrIncompleteActions("incomplete");
+	}
+	
+	/**
+	  * Returns an array of finished actions
+	  * Ignores actions with non-standard tag naming
+	  */
+	function finishedActions() {
+		return findCompleteOrIncompleteActions("complete");
+	}
+	
+	/**
+	  * Given a page slug, tries to find the best match for an unfinished action
+	  * Either it will match a started but not finished seasonal action, or
+	  * it will default to findByPage(pageSlug)
+	  */
+	function findUnfinishedAction(pageSlug) {
+		var possibleActions = unfinishedActions();
+		
+		for (var i=0; i<possibleActions; i++) {
+			if (possibleActions[i]['page slug'].trim() == pageSlug) {
+				return possibleActions[i];
+			}
+		}
+		
+		return findByPage(pageSlug);
+	}
+	
+	/**
+	  * Returns true if the action for the given page slug is finished
+	  * searches through seasons as well
+	  * Returns true if
+	  * * The action has been completed at least once
+	  * * There exists no actions that have been started but not finished for this slug
+	  * Returns false if
+	  * * The action has never been completed
+	  * * There exists at least one action that is incomplete for this slug
+	  */
+	function isPageActionFinished(pageSlug, tags) {
+		var finished = $.grep(finishedActions(), function(action) {
+			return action['page slug'] == pageSlug;
+		});
+		
+		// If it's never been finished, then 
+		if (finished.length == 0)
+		  return false;
+		
+		// Since there has been at least one finished, we need to see if there's
+		// any unfinished
+		var unfinished = $.grep(finishedActions(), function(action) {
+			return action['page slug'] == pageSlug;
+		});
+	
+	    // If there's nothing unfinished, then we can say it is finished
+		return (unfinished.length == 0);
 	}
 	
 	/**
