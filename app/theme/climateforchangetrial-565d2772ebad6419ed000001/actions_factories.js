@@ -460,7 +460,7 @@
 		
 		// Since there has been at least one finished, we need to see if there's
 		// any unfinished
-		var unfinished = $.grep(finishedActions(), function(action) {
+		var unfinished = $.grep(unfinishedActions(), function(action) {
 			return action['page slug'] == pageSlug;
 		});
 	

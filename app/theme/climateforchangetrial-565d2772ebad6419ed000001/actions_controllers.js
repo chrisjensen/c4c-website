@@ -480,7 +480,7 @@ function ActionFlashController($scope, ActionService) {
 
 	ActionService.then(function(actions) {
 		// What action are we on
-		var finished = action.isPageActionFinished(c4c.page_slug, c4c.user_tags);
+		var finished = actions.isPageActionFinished(c4c.page_slug, c4c.user_tags);
 		
 		if (finished) {
 		  $scope.showFlash = true;
