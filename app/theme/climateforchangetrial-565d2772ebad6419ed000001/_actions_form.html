@@ -189,7 +189,7 @@ But instead ...</textarea>
 		
 		var cf = {
 			slug: '{{ custom_field.slug }}',
-			name: '{{ custom_field.name }}',
+			name: "{{ custom_field.name }}",
 		{% if custom_field.is_text? %}
 			kind: 'text',
 		{% elsif custom_field.is_number? %}
