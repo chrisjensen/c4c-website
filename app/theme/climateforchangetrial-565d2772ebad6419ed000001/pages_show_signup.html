@@ -62,6 +62,9 @@
   {% endif %}
 
 <script type="text/javascript">
+/** Scroll to top of collapse so a long collapse followed by a short collapse
+  * doesn't leave the user at the bottom of the page 
+  **/
 $(function () {
     $('#steps').on('shown.bs.collapse', function (e) {
         var offset = $(this).find('.collapse.in').prev('.panel-heading');
@@ -72,4 +75,21 @@ $(function () {
         }
     }); 
 });
+
+/**
+  * Allow linking from another page directly into a step
+  */
+$(document).ready(function () {
+  var collapse = $(location.hash + '.collapse')
+
+  // Does the hash reference a collapse element
+  if (collapse.length) {
+    // Hide it's siblings
+    $('#steps .collapse.in').collapse('hide')
+
+    // Show it
+    $(collapse).collapse('show');
+  }
+});
 </script>
+
