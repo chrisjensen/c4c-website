@@ -218,3 +218,25 @@ p.category-description {
 		color: black;
 	}
 }
+
+table.table-alternate {
+  thead {
+    background-color: #0E5FAA;
+    color: white;
+    
+    a {
+      color: white;
+    }
+  }
+
+  th {
+  	text-align: center;
+  }
+  
+  tbody tr:nth-child(even) {
+    background: #AADBFB;
+    a {
+      color: black;
+    }
+  }
+}
