@@ -80,15 +80,17 @@ $(function () {
   * Allow linking from another page directly into a step
   */
 $(document).ready(function () {
-  var collapse = $(location.hash + '.collapse')
+  if (location.hash) {
+	  var collapse = $(location.hash + '.collapse')
 
-  // Does the hash reference a collapse element
-  if (collapse.length) {
-    // Hide it's siblings
-    $('#steps .collapse.in').collapse('hide')
+	  // Does the hash reference a collapse element
+	  if (collapse.length) {
+		// Hide it's siblings
+		$('#steps .collapse.in').collapse('hide')
 
-    // Show it
-    $(collapse).collapse('show');
+		// Show it
+		$(collapse).collapse('show');
+	  }
   }
 });
 </script>
