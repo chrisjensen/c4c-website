@@ -7,22 +7,11 @@
 		{% if request.sorta_logged_in? %}
 		<!-- Only show score to even users -->
 		{% if request.current_signup.id % 2 == 0 %}
-{% assign score = request.current_signup.capital_amount_in_cents %}
-{% capture score_pretty %}{{ score | divided_by:100 }}{% endcapture %}		
 
-  <!-- how big does the circle need to be? -->
-		{% if score < 1000 %}
-		  {% assign unit = 'tens' %}
-		{% elsif score < 10000 %}
-		  {% assign unit = 'hundreds' %}
-		{% else %}
-		  {% assign unit = 'thousands' %}
-		{% endif %}
-		<a class="climate-points navbar-score-{{ unit }}"
-			 href="{{ request.current_signup.profile_url }}"
-			 title="You have earned {{ score_pretty }} climate action points">{{ score_pretty }}</a>
-		{% endif %}
-		{% endif %}
+{% include 'climate_points' %}
+
+{% endif %}
+{% endif %}
 
   climate action points from the following actions:</p>
 
