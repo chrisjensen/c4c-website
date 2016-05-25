@@ -1,11 +1,13 @@
 <!-- Template for badge list -->
 <script type="text/ng-template" id="badges_list.html">
 	<div ng-show="showBadges" class="badges">
-	  <h4 class="padtopmore">Action Taken</h4>
-	  <p>
-	  <span ng-if="for == 'user'">You have</span>
-	  <span ng-if="for == 'profile'">{{ profile.first_name }} has</span>
-	   taken the following actions:</p>
+	  <div ng-show="header">
+		  <h4 class="padtopmore">Action Taken</h4>
+		  <p>
+		  <span ng-if="for == 'user'">You have</span>
+		  <span ng-if="for == 'profile'">{{ profile.first_name }} has</span>
+		   taken the following actions:</p>
+	  </div>
 
       <p style="font-size: 1.2em;">
 	  	<span ng-show='profile.tags.indexOf("host")>-1'>

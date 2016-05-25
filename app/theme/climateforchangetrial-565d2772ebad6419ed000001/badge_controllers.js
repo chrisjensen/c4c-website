@@ -12,7 +12,8 @@ angular.module('c4cWebsite.badges')
   return {
     restrict: 'E',
     templateUrl: 'badges_list.html',
-    scope: { for: '@' },
+    scope: { for: '@',
+    		  header: '=' },
     controller:  ['$scope', '$window', '$log', 'ActionService', BadgesListController]
   }
 })
