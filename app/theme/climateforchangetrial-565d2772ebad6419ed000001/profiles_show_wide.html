@@ -120,7 +120,7 @@
 	window.c4c.profile_tags = '{{ profile.tag_list }}'.split(', ');
 	
 	window.c4c.profile = {
-		id: {{ request.current_signup.id }},
+		id: {{ profile.id }},
 		first_name: '{{ profile.first_name }}',
 		is_volunteer: {{ profile.is_volunteer? }},
 		has_donated: {{ profile.has_donated? }},
