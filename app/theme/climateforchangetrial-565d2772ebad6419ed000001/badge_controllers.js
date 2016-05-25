@@ -12,7 +12,7 @@ angular.module('c4cWebsite.badges')
   return {
     restrict: 'E',
     templateUrl: 'badges_list.html',
-    scope: { for: '=' },
+    scope: { for: '@' },
     controller:  ['$scope', '$window', '$log', 'ActionService', BadgesListController]
   }
 })
@@ -52,7 +52,7 @@ function BadgesListController($scope, $window, $log, ActionService) {
 	$scope.badges = {};
 	
 	// Assign the correct profile to the scope
-	if ($scope.profileFrom == 'profile') {
+	if ($scope.for == 'profile') {
 		$scope.profile = c4c.profile
 	} else {
 		$scope.profile = c4c.user
