@@ -2,7 +2,10 @@
 <script type="text/ng-template" id="badges_list.html">
 	<div ng-show="showBadges" class="badges">
 	  <h4 class="padtopmore">Action Taken</h4>
-	  <p>{{ profile.first_name }} has taken the following actions:</p>
+	  <p>
+	  <span ng-if="for == 'user'">You have</span>
+	  <span ng-if="for == 'profile'">{{ profile.first_name }} has</span>
+	   taken the following actions:</p>
 
       <p style="font-size: 1.2em;">
 	  	<span ng-show='profile.tags.indexOf("host")>-1'>

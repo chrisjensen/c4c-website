@@ -121,6 +121,9 @@
 				first_name: '{{ request.current_signup.first_name }}',
 				last_name: '{{ request.current_signup.last_name }}',
 				email: '{{ request.current_signup.email }}',
+				is_volunteer: {{ request.current_signup.is_volunteer? }},
+				has_donated: {{ request.current_signup.has_donated? }},
+				tags: '{{ request.current_signup.tag_list }}'.split(', ')
 			};
 
 			c4c.user.name_or_email = c4c.user.first_name || c4c.user.email;
