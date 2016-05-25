@@ -12,6 +12,7 @@ angular.module('c4cWebsite.badges')
   return {
     restrict: 'E',
     templateUrl: 'badges_list.html',
+    scope: { profile: '=' },
     controller:  ['$scope', '$log', 'ActionService', BadgesListController]
   }
 })
