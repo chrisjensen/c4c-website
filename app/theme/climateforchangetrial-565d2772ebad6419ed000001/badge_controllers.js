@@ -76,10 +76,21 @@ function BadgesListController($scope, $window, $log, ActionService) {
 			if (badges.length > 0) {
 				$scope.badges = badges;
 			} else {
-				$scope.showBadges = false;
+				// If they haven't got action badges, still show badges section
+				// if they have core activity badges
+				$scope.showBadges = hasKeyBadges($scope.profile);
 			}
 		}
 	});
+	
+	/**
+	  * Returns true if the profile has: facilitated, donated, hosted or volunteered
+	  */
+	function hasKeyBadges(profile) {
+		return profile.has_donated ||
+				 profile.has_volunteered ||
+				 profile.tags.indexOf("host")>-1 || profile.tags.indexOf("facilitator")>-1;
+	};
 	
 	/*
 	 * Return true unless a hide tag in the config is present on the profile tag
