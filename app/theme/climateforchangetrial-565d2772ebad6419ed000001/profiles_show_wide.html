@@ -111,50 +111,7 @@
   </div>
 </div>
 
-<!-- Template for badge list -->
-<script type="text/ng-template" id="badges_list.html">
-	<div ng-show="showBadges" class="badges">
-	  <h4 class="padtopmore">Action Taken</h4>
-	  <p>{{ profile.first_name }} has taken the following actions:</p>
-
-      <p style="font-size: 1.2em;">
-	  	<span ng-show='profile.tags.indexOf("host")>-1'>
-			<a class="label bg-primary"
-			 href="/host">Hosted a Gathering</a>
-		</span>
-	  
-	  	<span ng-show='profile.tags.indexOf("facilitator")>-1'>
-			<a class="label bg-primary"
-			 href="/facilitate">Become a Facilitator</a>
-		</span>
-
-	  	<span ng-show='profile.has_donated'>
-			<a class="label bg-primary"
-			 href="/donate">Donated</a>
-		</span>
-
-	  	<span ng-show='profile.is_volunteer'>
-			<a class="label bg-primary"
-			 href="/volunteer">Volunteered</a>
-		</span>
-	  </p>
-
-		<badge-season ng-repeat="season in badges"></badge-season>
-	</div>
-</script>
-
-<!-- Template for badges list -->
-<script type="text/ng-template" id="badge_season.html">
-	<h5 class="padtopmore" style="margin-bottom: 0" ng-if="badges.length > 1">
-	<a href="{[{ '/' + season.season['pageSlug'] }]}">{[{ season.season['Badge Title'] }]}</a></h5>
-	<p style="font-size: 1.2em;">
-		<span ng-repeat="badge in season.badges">
-			<a class="label"
-			 ng-class="(badge.season['Slug']) ? 'bg-primary' : 'bg-success'"
-			 href="{[{ '/' + badge['pageSlug'] }]}">{[{ badge['badgeName'] }]}</a>
-		</span>
-	</p>
-</script>
+{% include 'badge_templates' %}
 
 <script type="text/javascript">
 (function() {
