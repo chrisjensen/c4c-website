@@ -384,11 +384,33 @@ h6.subhead {
 }
 
 // Leaderboard
-.leaderboard-rank {
-	position: relative;
-	display: block;
-	float: left;
-	margin: -20px 0 0 4px;
+.leaderboard {
+    .people-list-pic img.profile_image {
+	    max-width: 48px;
+		height: auto;
+	}
+	
+	.people-list {
+		margin-top: 0;
+		padding-top: 0;
+		
+		.people-list-score,
+		.people-list-rank {
+			display: table-cell;
+		}
+		
+		.people-list-rank {
+			min-width: 42px;
+		}		
+
+		.people-list-score {
+			padding-top: 10px;
+		}
+	}
+	
+	.users-rank {
+		background: #C7D1DE;
+	}
 }
 
 @media (min-width: $screen-sm-min) {

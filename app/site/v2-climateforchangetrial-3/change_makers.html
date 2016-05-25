@@ -1,0 +1,97 @@
+{% include "breadcrumbs" %}
+
+<p class="inline-score">You have 
+  
+		{% if request.sorta_logged_in? %}
+		<!-- Only show score to even users -->
+		{% if request.current_signup.id % 2 == 0 %}
+{% assign score = request.current_signup.capital_amount_in_cents %}
+{% capture score_pretty %}{{ score | divided_by:100 }}{% endcapture %}		
+
+  <!-- how big does the circle need to be? -->
+		{% if score < 1000 %}
+		  {% assign unit = 'tens' %}
+		{% elsif score < 10000 %}
+		  {% assign unit = 'hundreds' %}
+		{% else %}
+		  {% assign unit = 'thousands' %}
+		{% endif %}
+		<a class="climate-points navbar-score-{{ unit }}"
+			 href="{{ request.current_signup.profile_url }}"
+			 title="You have earned {{ score_pretty }} climate action points">{{ score_pretty }}</a>
+		{% endif %}
+		{% endif %}
+
+  climate action points from the following actions.</p>
+
+	<badges-list for='user'></badges-list>
+
+<hr/>
+<h3>Take more climate action</h3>
+<p class="text-center">
+<a class="btn btn-primary marginbottom" href="/host">Host a Gathering</a>
+<a class="btn btn-primary marginbottom" href="/donate">Donate</a>
+<a class="btn btn-primary marginbottom" href="/facilitate">Become a Facilitator</a>
+<a class="btn btn-primary marginbottom" href="/actions">Take Action</a>
+</p>
+
+<hr/>
+
+<div id="content">
+
+  {% if page.leaderboard.content.size > 0 %}
+  <div id="intro" class="intro">
+    {{ page.leaderboard.content }}
+  </div>
+  {% endif %}
+
+  {% for leaderboard in page.page_leaderboards %}
+
+  <div class="leaderboard{% if forloop.last %} last{% endif %}">
+
+    {% if leaderboard.has_goal? %}
+    {% assign thermo_width = 100 %}
+    <div class="clearfix">
+      <div class="progress" style="width: {{ thermo_width }}%;">
+        <div class="bar progress-bar" role="progressbar" style="width: {{ leaderboard.percent_of_goal | times:100 }}%;">
+          <div class="bar-text">{{ leaderboard.total }} {{ leaderboard.goal_name_short }}</div>
+        </div>
+      </div>
+
+      <div class="bar-goal">{{ leaderboard.goal }} {{ leaderboard.goal_name }}</div>
+    </div>
+
+    {% endif %}
+
+    {% if leaderboard.display_number_results > 0 %}
+
+    <h4>Top {{ leaderboard.display_number_results }} {{ leaderboard.display_name }}</h4>
+
+    {% for entry in leaderboard.entries %}
+    <div class="people-list media {% cycle 'odd', 'even' %} {% if entry.signup.id == request.current_signup.id %}users-rank{% endif %}">
+      <div class="people-list-rank">
+        <span class="leaderboard-rank label label-default">{{ entry.position }}</span>        
+      </div>
+      <div class="people-list-pic media-left">{{ entry.signup.bigger_profile_image }} </div>
+      <div class="media-body">
+		<div class="people-name">{{ entry.signup.published_name_linked }}</div>
+      </div>
+      <div class="people-list-score">
+        {{ entry.total | remove:'+' }} 
+      </div>
+    </div>
+    {% endfor %}
+
+    {% endif %}
+
+  </div>
+
+  {% endfor %}
+
+  <div class="like-page">
+    <strong>Do you like this?</strong>
+    {% include "like_page" %}
+  </div>
+</div>
+
+{% include 'badge_templates' %}
