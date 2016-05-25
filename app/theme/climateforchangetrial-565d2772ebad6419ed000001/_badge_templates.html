@@ -42,3 +42,16 @@
 		</span>
 	</p>
 </script>
+
+<script type="text/javascript">
+(function() {
+	window.c4c = window.c4c || {};
+	
+    // Save the child pages as an object mapping slug to id
+	window.c4c.action_pages = {
+    {% for child in page.descendants %}
+    	'{{ child.slug }}': '{{ child.id}}',
+    {% endfor %}
+		};
+})();
+</script>
