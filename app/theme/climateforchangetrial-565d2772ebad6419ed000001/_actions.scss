@@ -247,10 +247,34 @@ table.table-alternate {
 }
 
 .climate-points {
-	border-radius: 50%;
-    background: #E20D0D !important;
+    background-image: url(icon_blank_50.png) !important;
     color: #FFF !important;
     text-align: center;
+}
+
+@media (min-width: 768px) {
+  .mobile-points {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+	#menu-collapse .climate-points {
+		display: none;
+	}
+}
+
+.mobile-points {
+    float: right;
+    margin-right: 20px;
+    margin-top: 25px;
+    width: 50px;
+    height: 50px;
+    
+    .climate-points {
+    	margin: 0;
+    	display: inline-block;
+    }
 }
 
 .navbar-score-tens {

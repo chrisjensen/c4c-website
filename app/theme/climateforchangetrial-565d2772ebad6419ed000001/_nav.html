@@ -7,6 +7,14 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+	{% if request.sorta_logged_in? %}
+	<!-- Only show score to even users -->
+	{% if request.current_signup.id % 2 == 0 %}
+	<div class="mobile-points">
+		{% include 'climate_points' %}
+	</div>
+	{% endif %}
+	{% endif %}
       {% if site.has_meta_image? %}
         <a class="navbar-brand" href="/"><img alt="{{ site.long_name }}" src="{{ site.meta_image_url }}"></a>
       {% else %}
@@ -41,6 +49,17 @@
           <a href="/facilitator_admin">Facilitator Admin</a>
         </li>
         {% endif %}
+
+		{% if request.sorta_logged_in? %}
+		<!-- Only show score to even users -->
+		{% if request.current_signup.id % 2 == 0 %}
+
+		<li>
+		{% include 'climate_points' %}
+		</li>
+
+		{% endif %}
+		{% endif %}
 
         {% if request.logged_in? or request.sorta_logged_in? %}
         <li id="user-nav" class="dropdown">
