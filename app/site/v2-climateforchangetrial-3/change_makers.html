@@ -4,14 +4,7 @@
 
 <p class="inline-score">You have 
   
-		{% if request.sorta_logged_in? %}
-		<!-- Only show score to even users -->
-		{% if request.current_signup.id % 2 == 0 %}
-
 {% include 'climate_points' %}
-
-{% endif %}
-{% endif %}
 
   climate action points from the following actions:</p>
 
