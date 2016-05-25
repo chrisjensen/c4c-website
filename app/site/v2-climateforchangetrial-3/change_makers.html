@@ -1,5 +1,7 @@
 {% include "breadcrumbs" %}
 
+{% if request.sorta_logged_in? %}
+
 <p class="inline-score">You have 
   
 		{% if request.sorta_logged_in? %}
@@ -27,7 +29,14 @@
 	<badges-list for='user' header='false'></badges-list>
 
 <hr/>
+
+{% endif %}
+
+{% if request.sorta_logged_in? %}
 <h3>Take more climate action</h3>
+{% else %}
+<h3>Take climate action</h3>
+{% endif %}
 <p class="text-center">
 <a class="btn btn-primary marginbottom" href="/host">Host a Gathering</a>
 <a class="btn btn-primary marginbottom" href="/donate">Donate</a>
