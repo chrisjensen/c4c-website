@@ -101,7 +101,7 @@
     </div>
     {% endif %}
 
-	<badges-list profile='c4c.profile'></badges-list>
+	<badges-list for='profile'></badges-list>
 	
     {% comment %}<p class="uppercase">
       <a href="/our_people"> <strong><span class="ss-icon ss-standard ss-navigateleft" style="padding-right: 5px; font-size: .8em;"></span>
@@ -118,12 +118,12 @@
 	  <p>{{ profile.first_name }} has taken the following actions:</p>
 
       <p style="font-size: 1.2em;">
-	  	<span ng-show='profile.tag_list.indexOf("host")!=-1'>
+	  	<span ng-show='profile.tags.indexOf("host")>-1'>
 			<a class="label bg-primary"
 			 href="/host">Hosted a Gathering</a>
 		</span>
 	  
-	  	<span ng-show='profile.tag_list.indexOf("facilitator")!=-1'>
+	  	<span ng-show='profile.tags.indexOf("facilitator")>-1'>
 			<a class="label bg-primary"
 			 href="/facilitate">Become a Facilitator</a>
 		</span>
@@ -166,7 +166,7 @@
 		id: {{ request.current_signup.id }},
 		first_name: '{{ profile.first_name }}',
 		is_volunteer: {{ profile.is_volunteer? }},
-		has_donated: {{ profile.is_volunteer? }},
+		has_donated: {{ profile.has_donated? }},
 		tags: '{{ profile.tag_list }}'.split(', ')
 	};
 
