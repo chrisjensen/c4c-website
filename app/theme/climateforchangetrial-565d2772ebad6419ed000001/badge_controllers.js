@@ -18,6 +18,13 @@ angular.module('c4cWebsite.badges')
   }
 })
 
+.directive('climatePoints', function ClimatePointsDirective() {
+  return {
+    restrict: 'A',
+    controller:  ['$scope', '$log', ClimatePointsController]
+  }
+})
+
 .directive('badgeSeason', function BadgeSeasonDirective() {
   return {
     restrict: 'E',
@@ -113,6 +120,17 @@ function BadgesListController($scope, $window, $log, ActionService) {
 		
 		return true;
 	}
+}
+
+/**
+  * ClimatePointsController
+  * Determines if points should be shown
+  **/
+function ClimatePointsController($scope, $log) {
+	$scope.showPoints = ((c4c.user) && ((c4c.user.id % 2) == 0));
+	
+	$log.debug('User id is: ' + c4c.user.id + ' ' +
+		 ($scope.showPoints ? 'showing' : 'hiding') + ' climate action points' );
 }
 
 /**

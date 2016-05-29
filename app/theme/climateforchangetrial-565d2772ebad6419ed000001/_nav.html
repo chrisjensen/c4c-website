@@ -8,12 +8,9 @@
         <span class="icon-bar"></span>
       </button>
 	{% if request.sorta_logged_in? %}
-	<!-- Only show score to even users -->
-	{% if request.current_signup.id % 2 == 0 %}
-	<div class="mobile-points">
+	<div climate-points class="mobile-points ng-hide" ng-show="showPoints">
 		{% include 'climate_points' %}
 	</div>
-	{% endif %}
 	{% endif %}
       {% if site.has_meta_image? %}
         <a class="navbar-brand" href="/"><img alt="{{ site.long_name }}" src="{{ site.meta_image_url }}"></a>
@@ -54,7 +51,7 @@
 		<!-- Only show score to even users -->
 		{% if request.current_signup.id % 2 == 0 %}
 
-		<li>
+		<li climate-points class="ng-hide" ng-show="showPoints">
 		{% include 'climate_points' %}
 		</li>
 
