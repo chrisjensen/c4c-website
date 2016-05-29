@@ -68,7 +68,11 @@
     <div id="intro" class="intro">{{ profile.profile_content }}</div>
     {% else %}
 		{% if profile.bio.size > 0 %}
-		<p>{{ profile.bio }}</p>
+	    {% if tags_list contains "Board" %}
+		<p class="">{{ profile.bio }}</p>
+	    {% else %}
+		<p class="marginbottommore bio">{{ profile.bio }}</p>
+		{% endif %}
 		{% endif %}
 	{% endif %}
 
